@@ -1,0 +1,323 @@
+.container {
+    display: flex;
+    width: 50%;
+    max-width: 1000px;
+    margin: 40px auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    font-size: 14px;
+    background: white;
+    color: #1a1a1a;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007AFF;
+}
+
+select option {
+    padding: 10px;
+}
+
+.logo-section {
+    width: 40%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.logo {
+    width: 220px;
+    height: auto;
+    filter: brightness(0) invert(1);
+    transition: filter 0.3s ease;
+}
+
+.form-section {
+    width: 60%;
+    padding: 40px 48px;
+    background: white;
+    position: relative;
+}
+
+h1 {
+    font-size: 17px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+}
+
+.login-link {
+    position: absolute;
+    top: 40px;
+    right: 48px;
+}
+
+.login-link a {
+    color: #007AFF;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: #666;
+    font-size: 13px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    font-size: 14px;
+    background: white;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #007AFF;
+}
+
+.terms-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 24px 0;
+}
+
+.terms-group input[type="checkbox"] {
+    margin-top: 3px;
+}
+
+.terms-group label {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.terms-group a {
+    color: #007AFF;
+    text-decoration: none;
+    margin: 0 2px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 11px;
+    background: #1a1a1a;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #333;
+}
+
+.submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: #d00;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    
+    .logo-section {
+        padding: 40px;
+    }
+    
+    .form-section {
+        padding: 30px;
+    }
+}
+
+.footer {
+    width: 100%;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    font-size: 14px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: auto;
+    background: white;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin-left: 24px;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.university-search {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    font-size: 14px;
+    background: white;
+}
+
+.university-search:focus {
+    outline: none;
+    border-color: #007AFF;
+}
+
+.university-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.university-option {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.university-option:hover {
+    background-color: #f5f5f5;
+}
+
+/* Add smooth transitions */
+.form-group input,
+.form-group select,
+.submit-btn {
+    transition: all 0.3s ease;
+}
+
+/* Loading state for button */
+.submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.submit-btn.loading::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Password strength indicator */
+.password-strength {
+    margin-top: 8px;
+}
+
+.password-strength-text {
+    font-size: 12px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.password-strength-text::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.password-strength-text.weak::before { background-color: #ff4444; }
+.password-strength-text.medium::before { background-color: #ffbb33; }
+.password-strength-text.strong::before { background-color: #00C851; }
+
+.password-strength-bar {
+    width: 100%;
+    height: 4px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 4px 0;
+}
+
+.password-strength-bar > div {
+    height: 100%;
+    width: 0;
+    transition: all 0.3s ease;
+}
+
+.password-requirements {
+    color: #666;
+    font-size: 12px;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+/* Remove the old strength classes since we're using inline styles */
+.strength-weak,
+.strength-medium,
+.strength-strong {
+    width: auto;
+} 

@@ -1,0 +1,162 @@
+.login-container {
+  min-height: calc(100vh - 57px);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  align-items: center;
+}
+
+.login-box {
+  display: flex;
+  margin: 40px auto;
+  width: 800px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.login-left {
+  width: 400px;
+  padding: 40px;
+  background: white;
+}
+
+.login-right {
+  width: 400px;
+  background-color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.login-right img {
+  width: 200px;
+  height: 200px;
+  filter: drop-shadow(0 0 8px rgb(255, 255, 255));
+  transition: filter 0.3s ease;
+}
+
+.logo-small {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 32px;
+}
+
+.error-message {
+  color: #d00;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 4px;
+  font-weight: normal;
+  color: #000;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.text-input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.text-input:focus {
+  border-color: #000;
+}
+
+.text-input::placeholder {
+  color: #666;
+}
+
+.password-hint {
+  color: #666;
+  font-size: 12px;
+  margin: 4px 0 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+
+.login-button {
+  width: 100%;
+  height: 40px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.google-button {
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #000;
+  cursor: pointer;
+}
+
+.google-button:disabled {
+  color: #666;
+  cursor: not-allowed;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Rest of your LoginPage.css styles... */
+
+.subtitle a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.subtitle a:hover {
+  text-decoration: underline;
+} 
