@@ -1,0 +1,143 @@
+import React from 'react';
+import './App.css';
+import Header from './Header';
+import Footer from './Footer';
+import image1 from './assets/image1.png';
+import image2 from './assets/image2.png';
+import image3 from './assets/image3.png';
+import image4 from './assets/image4.png';
+import member1 from './assets/member1.png';
+import member2 from './assets/member2.png';
+import member3 from './assets/member3.png';
+import member4 from './assets/member4.png';
+import member5 from './assets/member5.png';
+import member6 from './assets/member6.png';
+import featureNoteSharing from './assets/feature1.png';
+import featureNoteSummarize from './assets/feature2.png';
+import featureChatbot from './assets/feature3.png';
+import featureQA from './assets/feature4.png';
+import featureGroupChat from './assets/feature5.png';
+import featureQuiz from './assets/feature6.png';
+
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <main className="content">
+        <section className="middle-section">
+        
+          <div className="intro-features-container">
+            
+            <div className="intro-text">
+            <h2 className="section-heading">Welcome To\ StudyHive</h2>
+              <p>
+                Welcome to Study Hive, your hub for accessible and organized studying. 
+                We offer notes, deadline tracking, and peer connections to support your academic journey. 
+                Let’s make learning enjoyable!
+              </p>
+            </div>
+            <div className="features-grid">
+
+              <div className="feature-item">
+              
+                <img src={featureNoteSharing} alt=" Note Sharing" className="feature-icon" />
+                Note Sharing
+                
+              </div>
+              <div className="feature-item">
+                <img src={featureNoteSummarize} alt="Note Summarize" className="feature-icon" />
+                Note Summa rize
+              </div>
+              <div className="feature-item">
+                <img src={featureChatbot} alt="Chatbot" className="feature-icon" />
+                Chatbot
+              </div>
+              <div className="feature-item">
+                <img src={featureQA} alt="Q & A" className="feature-icon" />
+                Q & A
+              </div>
+              <div className="feature-item">
+                <img src={featureGroupChat} alt="Group Chat" className="feature-icon" />
+                Group Chat
+              </div>
+              <div className="feature-item">
+                <img src={featureQuiz} alt="Quiz" className="feature-icon" />
+                Quiz zer 
+              </div>
+            </div>
+          </div>
+          
+          
+          <div className="curved-box">
+            <div className="box-image-container">
+              <img src={image1} alt="Imag 1" className="box-image" />
+            </div>
+            <div className="box-image-container">
+              <img src={image2} alt="Imag 2" className="box-image" />
+            </div>
+            <div className="box-image-container">
+              <img src={image3} alt="Imag 3" className="box-image" />
+            </div>
+            <div className="box-image-container">
+              <img src={image4} alt="Imag 4" className="box-image" />
+            </div>
+          </div>
+        
+
+        <section className="mission-section">
+          <h2 className="section-heading">Our Mission</h2>
+          <p>To empower students with innovative tools and a collaborative platform that simplifies learning, fosters connections, and drives academic excellence.</p>
+        </section>
+
+        <section className="testimonial-section">
+          <h2 className="section-heading">Testimonials</h2>
+          <p>Don't take our word for it. Take theirs</p>
+          <div className="testimonial-box">
+            <div className="box-container">
+              <h3 className="box-heading">"Study Hive is an exceptional platform for students! Its features like advanced keyword search, automated note summaries, and personalized resource suggestions make studying so much easier. The chatbot is incredibly helpful, and the integration with LMS keeps everything organized. This app has transformed the way I approach my studies. Highly recommended!"</h3>
+              <p className="box-text">Senuri Hansamini</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="team-section">
+          <h2 className="section-heading">Our Team</h2>
+          <div className="team-grid">
+            <div className="team-member">
+              <img src={member1} alt="Imag 1" className="team-photo" />
+              <p className="team-name">Yasara Madana</p>
+            </div>
+            <div className="team-member">
+              <img src={member2} alt="Imag 2" className="team-photo" />
+              <p className="team-name">Rashmina Fernando</p>
+            </div>
+            <div className="team-member">
+              <img src={member3} alt="Imag 3" className="team-photo" />
+              <p className="team-name">Miuni Weerasinghe</p>
+            </div>
+            <div className="team-member">
+              <img src={member4} alt="Imag 4" className="team-photo" />
+              <p className="team-name">Thisakya Pathirathne</p>
+            </div>
+            <div className="team-member">
+              <img src={member5} alt="Imag 5" className="team-photo" />
+              <p className="team-name">Thevindu Jayakody</p>
+            </div>
+            <div className="team-member">
+              <img src={member6} alt="Imag 6" className="team-photo" />
+              <p className="team-name">Nirasha Thilakarathne</p>
+            </div>
+          </div>
+        </section>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default App;
+
+
+

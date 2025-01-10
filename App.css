@@ -1,0 +1,247 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@700&display=swap');
+
+* {
+  margin: 0.1px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+/* App Container */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Makes the container fill the full viewport height */
+}
+
+/* Main Content */
+.content {
+  flex: 1; /* Allows content to expand, pushing the footer down */
+  padding: 2rem;
+  
+  margin-left: 3rem;
+  margin-right: 2rem;
+}
+
+
+
+/* Box Container */
+.box-container {
+  background-color: #ffffff;
+  border-radius: 15px; /* Rounded corners */
+  padding: 2rem; /* Padding inside the box */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+  width: 60%; 
+  height: 60%;/* Box width */
+  max-width: 1000px; /* Max width for larger screens */
+  margin-left: auto; /* Centering the box horizontally */
+  margin-right: auto;
+}
+
+/* Box Heading */
+.box-heading {
+  font-family:'lato';
+  
+  font-size: 0.9rem; /* Larger text size for the heading */
+  color: #607D8B;
+  margin-bottom: 1rem; /* Space below the heading */
+}
+
+
+
+
+/* General Section Styles */
+.middle-section {
+  text-align: center;
+  padding: 2rem;
+  background-color: #ffffff;
+}
+
+/* Section Heading Styles */
+.section-heading {
+  font-family: 'Public Sans', sans-serif;
+  font-weight: bold;
+  font-size: 50px; /* Adjusted font size */
+  margin-bottom: 1rem;
+  color: #000000;
+  text-align: left;
+  margin-right: 100px;
+}
+
+/* Space between sections */
+h2 + p {
+  margin-top: 0.5rem; /* Add space between heading and paragraph */
+}
+.mission-section {
+  margin-bottom: 5rem;
+}
+
+.testimonial-section {
+  margin-bottom: 5rem; /* Add larger space for testimonials if needed */
+}
+
+.team-section {
+  margin-bottom: 3rem;
+}
+
+/* Curved Box with 4 Images */
+.curved-box {
+  display: flex;
+  justify-content: space-between; /* Distributes images evenly */
+  background-color: #f6f6f6;
+  border-radius: 20px; /* Curved edges */
+  padding: 0.1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  width: 90%; /* Adjust the width percentage to make the box smaller */
+  max-width: 1500px; /* Optional: Limit the maximum width */
+  margin-left: auto; /* Center horizontally */
+  margin-right: auto;
+  margin-bottom: 2rem; /* Add space below the curved box */
+}
+
+/* Image Container for each image */
+.box-image-container {
+  flex: 1;
+  text-align: center;
+  padding: 0;
+  transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
+}
+
+/* Hover effect to scale the image container */
+.box-image-container:hover {
+  transform: scale(1.1); /* Slightly enlarge the container on hover */
+}
+
+/* Image Styling */
+.box-image {
+  width: 100%;
+  height: auto;
+ 
+  max-width: 300px; /* Limit the width to prevent images from stretching */
+  transition: transform 0.2s ease-in-out; /* Smooth transition for scaling */
+}
+
+/* If you want the image itself to enlarge on hover */
+.box-image-container:hover .box-image {
+  transform: scale(1.1); /* Enlarge the image inside the container on hover */
+}
+
+/* Space between sections */
+section {
+  margin-bottom: 3rem; /* Adds space between sections */
+}
+
+/* Team Section */
+.team-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Grid Layout for Team Members */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for team members */
+  gap: 20px; /* Spacing between items */
+  justify-content: center; /* Centers the grid */
+  
+}
+
+/* Team Member Box */
+.team-member {
+  text-align: center;
+  background-color: #f9f9f9; /* Light background */
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.team-member:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Team Member Photo */
+.team-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 50%; /* Circular photos */
+  max-width: 150px; /* Restrict size */
+  margin-bottom: 10px;
+}
+
+/* Team Member Name */
+.team-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #555;
+}
+
+/* Footer */
+footer {
+  margin-top: auto; /* Ensures footer stays at the bottom when the content is less */
+}
+
+/* Intro and Features Container */
+.intro-features-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.1rem;
+  
+  margin-left: 2rem;  /* Left margin for the whole container */
+  margin-right: 2rem; /* Right margin for the whole container */
+}
+
+/* Intro Text Styling */
+.intro-text {
+  flex: 1;
+  font-size: 1rem;
+  color: #333333;
+  line-height: 1.6;
+  
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2,auto); /* 2 columns */
+  grid-template-rows: repeat(3, auto); /* 3 rows */
+  gap: 0.1rem; /* Space between grid items */
+  flex: 0.2;
+  padding-right: 2rem;  /* Right padding inside the grid */
+}
+
+/* Feature Item Styling */
+.feature-item {
+  background-color: #ffffff;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease-in-out;
+  padding-left: 2rem;  /* Left padding */
+  padding-right: 2rem; /* Right padding */
+  margin-left: 1rem;   /* Space between items */
+  margin-right: 1rem;  /* Space between items */
+  margin-bottom: 2rem; /* Bottom margin for spacing */
+}
+
+.feature-item:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Feature Icon Styling */
+.feature-icon {
+  
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1.5rem;
+  object-fit: content;
+}
+
