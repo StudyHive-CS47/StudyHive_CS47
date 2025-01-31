@@ -1,0 +1,84 @@
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 80px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-logo {
+  height: 24px;
+  width: auto;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 32px;
+}
+
+.header-nav a {
+  color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.header-nav a:hover {
+  color: #000000;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-button,
+.profile-button {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover,
+.profile-button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.search-button svg path,
+.profile-button svg path {
+  fill: rgba(0, 0, 0, 0.7);
+}
+
+.search-button:hover svg path,
+.profile-button:hover svg path {
+  fill: #000000;
+} 
