@@ -1,1 +1,0 @@
-# StudyHive_Frontend
