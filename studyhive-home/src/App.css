@@ -269,7 +269,7 @@
 .curved-box {
   display: flex;
   justify-content: space-between;
-  background-color: #f5f5f5;
+  background-color: #f6f4f4;
   
   padding: 1rem;
   margin: 2rem auto;
@@ -448,6 +448,7 @@
 /* Team Section */
 .team-section {
   display: flex;
+
   flex-direction: column; /* Stack content vertically */
   position: 1200px;
   gap: 2rem;
@@ -520,12 +521,12 @@
   font-style: italic;
   color: #777; /* Adjust the color to your design */
 }
-.team-member:nth-child(1) { background-color: #ffadad; } /* Light Red */
-.team-member:nth-child(2) { background-color: #ffd6a5; } /* Light Orange */
-.team-member:nth-child(3) { background-color: #fdffb6; } /* Light Yellow */
-.team-member:nth-child(4) { background-color: #caffbf; } /* Light Green */
-.team-member:nth-child(5) { background-color: #9bf6ff; } /* Light Blue */
-.team-member:nth-child(6) { background-color: #a0c4ff; } /* Light Purple */ /* Light Purple */
+.team-member:nth-child(1) { background-color: #e0c387; } /* Light Red */
+.team-member:nth-child(2) { background-color: #e0c387; } /* Light Orange */
+.team-member:nth-child(3) { background-color: #e0c387; } /* Light Yellow */
+.team-member:nth-child(4) { background-color: #e0c387; } /* Light Green */
+.team-member:nth-child(5) { background-color: #e0c387; } /* Light Blue */
+.team-member:nth-child(6) { background-color: #e0c387; } /* Light Purple */ /* Light Purple */
 
 
 
