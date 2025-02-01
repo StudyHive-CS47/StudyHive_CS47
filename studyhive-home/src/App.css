@@ -202,12 +202,12 @@
   .intro-features-container {
     flex-direction: column;
   }
-  
+
   .features-grid {
     padding-right: 0;
     margin-top: 2rem;
   }
-  
+
   .bottom-feature-container {
     padding: 1rem;
   }
@@ -227,7 +227,7 @@
   color: #1a1a1a;
   padding: 1rem 2.5rem;
   border: none;
-  
+
   font-weight: 600;
   font-size: 1.1rem;
   cursor: pointer;
@@ -245,7 +245,7 @@
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .feature-button {
     width: 100%;
     max-width: 300px;
@@ -258,7 +258,7 @@
     grid-template-columns: 1fr;
     padding-right: 0;
   }
-  
+
   .bottom-feature-image {
     max-width: 100%;
     margin: 1rem auto;
@@ -270,7 +270,7 @@
   display: flex;
   justify-content: space-between;
   background-color: #f6f4f4;
-  
+
   padding: 1rem;
   margin: 2rem auto;
   width: 100%;
@@ -297,7 +297,7 @@
   height: auto; /* Maintain aspect ratio */
   max-width: 400px; /* Adjust as needed to fit within the container */
   max-height: 400px; /* Reduce the height */
-  
+
   object-fit: cover; /* Ensure the image fills the area while maintaining proportion */
 }
 
@@ -310,7 +310,7 @@
   margin-bottom: 1.5rem;
   text-align: left;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  
+
 
 }
 
@@ -324,6 +324,7 @@
   gap: 2rem;
   padding: 2rem;
   max-width: 1200px;
+
 }
 
 .mission-content {
@@ -355,11 +356,11 @@
     flex-direction: column;
     padding: 1rem;
   }
-  
+
   .mission-content {
     max-width: 100%;
   }
-  
+
   .mission {
     max-width: 100%;
     margin-top: 1rem;
@@ -377,6 +378,7 @@
   padding: 2rem;
   max-width: 1200px;
   margin-left: 0;
+  margin-bottom: 50px;
 }
 
 /* Testimonial Container - New wrapper for box and image */
@@ -417,11 +419,11 @@
   .testimonial-container {
     flex-direction: column;
   }
-  
+
   .testimonial-box {
     max-width: 100%;
   }
-  
+
   .testimonial-image {
     max-width: 100%;
     margin-top: 1rem;
@@ -448,14 +450,27 @@
 /* Team Section */
 .team-section {
   display: flex;
-
+  margin-bottom: 0px;
   flex-direction: column; /* Stack content vertically */
-  position: 1200px;
-  gap: 2rem;
+  position: 800px;
+  gap: 0.5rem;
   padding: 2rem;
   max-width: 1200px;
-  margin-left: 0; /* Ensure it starts from the left */
+  margin-left: auto;
+  margin-right: auto/* Ensure it starts from the left */
+
 }
+
+/* Section Heading inside team-section */
+.team-section .section-heading {
+  font-size: 2rem; /* Adjust font size */
+  font-weight: bold; /* Make the heading bold */
+  color: #333; /* Set text color */
+  text-align: center; /* Center align the heading */
+  margin-bottom: 0.5rem; /* Add space below the heading */
+  text-transform: uppercase; /* Optional: Make the heading uppercase */
+}
+
 
 /* Team Grid */
 .team-grid {
@@ -464,17 +479,17 @@
   display: grid;
   padding: 2rem;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin: 0.1rem 0;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
   justify-content: start; /* Align grid to the left */
 }
 
 .team-member {
-  
+
   padding: 3rem;
   transition: transform 0.3s ease;
-  
-  width: 350px; /* Adjust width */
+  border-radius: 25px;
+  width: 100%; /* Adjust width */
   height: 300px; /* Adjust height */
   display: flex;
   flex-direction: column;
@@ -497,7 +512,7 @@
 
 /* Adjusting Team Photo to Fit */
 .team-photo {
-  
+
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -537,12 +552,12 @@
   .intro-features-container {
     flex-direction: column;
   }
-  
+
   .features-grid {
     padding-right: 0;
     margin-top: 2rem;
   }
-  
+
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -552,20 +567,20 @@
   .content {
     margin: 0 1rem;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .curved-box {
     flex-direction: column;
   }
-  
+
   .section-heading {
     font-size: 2rem;
     text-align: center;
   }
-  
+
   .team-grid {
     grid-template-columns: 1fr;
   }
@@ -577,6 +592,223 @@
   color: #2c3e50; /* Add a distinct color if desired */
   margin-bottom: 1rem; /* Add spacing below */
   text-align: left;
-  padding-top: 0rem; 
+  padding-top: 0rem;
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+
+/* [Previous CSS remains exactly the same until the media queries section] */
+
+/* ==========================================================================
+   Enhanced Mobile Responsiveness
+   ========================================================================== */
+
+/* Large Tablets and Small Laptops */
+@media (max-width: 1200px) {
+  .intro-features-container {
+    margin: 0 1rem;
+  }
+
+  .team-member {
+    width: 300px;
+    height: 280px;
+  }
+
+  .curved-box {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .content {
+    padding: 2rem;
+    margin: 0 1rem;
+  }
+
+  .large-heading {
+    font-size: 5rem;
+  }
+
+  .section-heading {
+    font-size: 2rem;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .team-member {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .box-image-container {
+    flex: 0.4;
+  }
+
+  .intro-text p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Large Phones and Small Tablets */
+@media (max-width: 768px) {
+  .content {
+    padding: 1.5rem;
+    margin: 0;
+  }
+
+  .large-heading {
+    font-size: 3.5rem;
+    text-align: center;
+  }
+
+  .section-heading {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .intro-text {
+    text-align: center;
+  }
+
+  .features-button-container {
+    justify-content: center;
+  }
+
+  .curved-box {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .box-image-container {
+    flex: 1;
+    width: 100%;
+    order: -1; /* Move image to top on mobile */
+  }
+
+  .box-image {
+    max-width: 100%;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .middle-section {
+    padding: 1rem;
+  }
+
+  .intro-features-container {
+    padding: 1rem 0;
+  }
+
+  .mission-content p {
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 480px) {
+  .large-heading {
+    font-size: 2.5rem;
+  }
+
+  .section-heading {
+    font-size: 1.5rem;
+  }
+
+  .intro-text p {
+    font-size: 1rem;
+  }
+
+  .feature-item {
+    padding: 1rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .feature-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .cta-button,
+  .feature-button {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .testimonial-box {
+    padding: 1.5rem;
+  }
+
+  .box-heading {
+    font-size: 0.9rem;
+  }
+
+  .box-text {
+    font-size: 1rem;
+  }
+
+  .team-member {
+    padding: 2rem;
+    height: 250px;
+  }
+
+  .team-photo {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Small Mobile Phones */
+@media (max-width: 360px) {
+  .large-heading {
+    font-size: 2rem;
+  }
+
+  .section-heading {
+    font-size: 1.3rem;
+  }
+
+  .feature-item {
+    padding: 0.8rem;
+  }
+
+  .team-member {
+    height: 220px;
+    padding: 1.5rem;
+  }
+}
+
+/* Handle Height-Based Media Queries */
+@media (max-height: 800px) {
+  .team-member {
+    height: auto;
+    min-height: 250px;
+    padding: 2rem;
+  }
+}
+
+/* Print Media Query */
+@media print {
+  .fade-in,
+  .slide-up {
+    animation: none;
+    opacity: 1;
+  }
+
+  .feature-item:hover,
+  .team-member:hover,
+  .testimonial-box:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }

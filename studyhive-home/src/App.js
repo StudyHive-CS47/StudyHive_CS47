@@ -34,20 +34,24 @@ function App() {
         <section className="middle-section">
         
           <div className="intro-features-container">
-            
-            <div className="intro-text">
-            <h2 className="section-heading large-heading">Welcome to StudyHive</h2>
-              <p>
-                Welcome to Study Hive – your go-to space for easy, organized, and stress-free studying!
-We’re here to make learning simple and enjoyable. With Study Hive, you can share notes, track deadlines effortlessly, and connect with classmates who are on the same journey as you.
 
-Need help staying on top of everything? We’ve got tools to keep you organized and motivated, so you can focus on what really matters – learning and growing. Whether it’s acing your exams, finishing assignments, or just staying ahead, we’re here to support you every step of the way.
+              <div className="intro-text">
+                  <h2 className="section-heading large-heading">Welcome to</h2>
+                  <h2 className="section-heading large-heading">StudyHive</h2>
+                  <p>
+                      Welcome to Study Hive – your go-to space for easy, organized, and stress-free studying!
+                      We’re here to make learning simple and enjoyable. With Study Hive, you can share notes, track
+                      deadlines effortlessly, and connect with classmates who are on the same journey as you.
 
-Let’s make studying something you actually look forward to!
-              </p>
-            </div>
-            <div className="features-section">
-            <div className="features-grid">
+                      Need help staying on top of everything? We’ve got tools to keep you organized and motivated, so
+                      you can focus on what really matters – learning and growing. Whether it’s acing your exams,
+                      finishing assignments, or just staying ahead, we’re here to support you every step of the way.
+
+                      Let’s make studying something you actually look forward to!
+                  </p>
+              </div>
+              <div className="features-section">
+                  <div className="features-grid">
 
               <div className="feature-item">
               
