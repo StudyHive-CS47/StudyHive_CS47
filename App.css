@@ -1,0 +1,581 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap');
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Classes */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+/* Animation Delays */
+.delay-1 {
+  animation-delay: 0.2s;
+}
+
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+.delay-3 {
+  animation-delay: 0.6s;
+}
+
+.delay-4 {
+  animation-delay: 0.8s;
+}
+
+.delay-5 {
+  animation-delay: 1s;
+}
+
+.delay-6 {
+  animation-delay: 1.2s;
+}
+
+/* Main Styles */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Public Sans', sans-serif;
+}
+
+.content {
+  flex: 1;
+  padding: 3rem;
+  margin: 0 2rem;
+  background-color: #f5f5f5;
+}
+
+.middle-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Enhanced Intro Section */
+.intro-features-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 0 2rem;
+  padding: 2rem 0;
+}
+
+.intro-text {
+  flex: 1;
+  text-align: left;
+}
+
+.intro-text p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #4a5568;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: #FFC107;
+  color: #1a1a1a;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #FFB300;
+  transform: translateY(-2px);
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding-right: 2rem;
+  padding-top: 4rem;
+  margin-bottom: 2rem; /* Add space before the image */
+}
+
+.feature-item {
+  background-color: #efecec;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* Enhanced Intro Section */
+.intro-features-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  margin: 0 2rem;
+  padding: 2rem 0;
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding-right: 2rem;
+  padding-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+/* Bottom Feature Container */
+.bottom-feature-container {
+  width: 100%;
+  padding: 2rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-feature-image {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.bottom-feature-image:hover {
+  transform: scale(1.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .intro-features-container {
+    flex-direction: column;
+  }
+  
+  .features-grid {
+    padding-right: 0;
+    margin-top: 2rem;
+  }
+  
+  .bottom-feature-container {
+    padding: 1rem;
+  }
+}
+
+/* Button Container */
+.features-button-container {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* Feature Button */
+.feature-button {
+  background-color: #e0c387;
+  color: #1a1a1a;
+  padding: 1rem 2.5rem;
+  border: none;
+  
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: #d4b777;
+}
+
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    padding-right: 0;
+  }
+  
+  .bottom-feature-image {
+    max-width: 100%;
+    margin: 1rem auto;
+  }
+}
+
+/* Curved Box */
+.curved-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f5f5f5;
+  
+  padding: 1rem;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1500px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.box-image-container {
+  flex: 0.3; /* Adjust flex ratio */
+  padding: 0rem;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center; /* Align image vertically */
+  justify-content: center; /* Center image horizontally */
+}
+
+
+.box-image-container:hover {
+  transform: scale(1.05);
+}
+
+.box-image {
+  width: 100%; /* Ensure the image scales within the container */
+  height: auto; /* Maintain aspect ratio */
+  max-width: 400px; /* Adjust as needed to fit within the container */
+  max-height: 400px; /* Reduce the height */
+  
+  object-fit: cover; /* Ensure the image fills the area while maintaining proportion */
+}
+
+
+/* Section Headings */
+.section-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+
+}
+
+/* Mission Section */
+
+/* Mission Section */
+.mission-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+.mission-content {
+  flex: 1;
+  max-width: 60%;
+}
+
+.mission-content p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #4a5568;
+  max-width: 800px;
+  text-align: left;
+}
+
+/* Add specific styling for the mission image */
+.mission {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 300px;  /* Control maximum width */
+  height: auto;      /* Maintain aspect ratio */
+   /* Optional: adds rounded corners */
+  object-fit: cover;   /* Ensures image covers area without distortion */
+}
+
+/* Add responsive handling */
+@media (max-width: 768px) {
+  .mission-section {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .mission-content {
+    max-width: 100%;
+  }
+  
+  .mission {
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+
+/* Testimonial Section */
+/* Testimonial Section */
+.testimonial-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin-left: 0;
+}
+
+/* Testimonial Container - New wrapper for box and image */
+.testimonial-container {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* Testimonial Box */
+.testimonial-box {
+  flex: 1;
+  background-color: #f6f4f4;
+  padding: 2rem;
+  margin: 0.5rem 0;
+  max-width: 800px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.testimonial-box:hover {
+  transform: translateY(-5px);
+}
+
+.testimonial-image {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .testimonial-container {
+    flex-direction: column;
+  }
+  
+  .testimonial-box {
+    max-width: 100%;
+  }
+  
+  .testimonial-image {
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+
+.box-heading {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.box-text {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 1.2rem;
+
+}
+
+/* Team Section */
+/* Team Section */
+.team-section {
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  position: 1200px;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin-left: 0; /* Ensure it starts from the left */
+}
+
+/* Team Grid */
+.team-grid {
+  background-color: #f6f4f4;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  display: grid;
+  padding: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0.1rem 0;
+  justify-content: start; /* Align grid to the left */
+}
+
+.team-member {
+  
+  padding: 3rem;
+  transition: transform 0.3s ease;
+  
+  width: 350px; /* Adjust width */
+  height: 300px; /* Adjust height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+
+
+
+
+
+.team-member:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Adjusting Team Photo to Fit */
+.team-photo {
+  
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+/* Team Name & Role */
+.team-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #958e80;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+.team-role {
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+.team-position {
+  font-style: italic;
+  color: #777; /* Adjust the color to your design */
+}
+.team-member:nth-child(1) { background-color: #ffadad; } /* Light Red */
+.team-member:nth-child(2) { background-color: #ffd6a5; } /* Light Orange */
+.team-member:nth-child(3) { background-color: #fdffb6; } /* Light Yellow */
+.team-member:nth-child(4) { background-color: #caffbf; } /* Light Green */
+.team-member:nth-child(5) { background-color: #9bf6ff; } /* Light Blue */
+.team-member:nth-child(6) { background-color: #a0c4ff; } /* Light Purple */ /* Light Purple */
+
+
+
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .intro-features-container {
+    flex-direction: column;
+  }
+  
+  .features-grid {
+    padding-right: 0;
+    margin-top: 2rem;
+  }
+  
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin: 0 1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .curved-box {
+    flex-direction: column;
+  }
+  
+  .section-heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.large-heading {
+  font-size: 7rem; /* Adjust size as needed */
+  font-weight: bold; /* Make it stand out */
+  color: #2c3e50; /* Add a distinct color if desired */
+  margin-bottom: 1rem; /* Add spacing below */
+  text-align: left;
+  padding-top: 0rem; 
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
