@@ -37,18 +37,23 @@ function App() {
                         <div className="intro-text">
                             <h2 className="section-heading large-heading">Welcome to </h2>
                             <h2 className="section-heading large-heading2">StudyHive!</h2>
+                            <h2 className="section-heading large-heading3">Connect, collaborate, conquer</h2>
                             <p>
                                 Welcome to Study Hive – your go-to space for easy, organized, and stress-free studying!
-                                We’re here to make learning simple and enjoyable. With Study Hive, you can share notes, track
+                                We’re here to make learning simple and enjoyable. With Study Hive, you can share notes,
+                                track
                                 deadlines effortlessly, and connect with classmates who are on the same journey as you.
-                                Need help staying on top of everything? We’ve got tools to keep you organized and motivated, so
-                                you can focus on what really matters – learning and growing. Whether it’s acing your exams,
-                                finishing assignments, or just staying ahead, we’re here to support you every step of the way.
+                                Need help staying on top of everything? We’ve got tools to keep you organized and
+                                motivated, so
+                                you can focus on what really matters – learning and growing. Whether it’s acing your
+                                exams,
+                                finishing assignments, or just staying ahead, we’re here to support you every step of
+                                the way.
                                 Let’s make studying something you actually look forward to!
                             </p>
                         </div>
                         <div className="features-section">
-                            <div className="features-grid">
+                        <div className="features-grid">
                                 <div className="feature-item">
                                     <img src={featureNoteSharing} alt="Note Sharing" className="feature-icon" />
                                     Note Sharing
@@ -154,7 +159,7 @@ function App() {
                                 <img src={member1} alt="Imag 1" className="team-photo" />
                                 <p className="team-name">Yasara Madana</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/yasara-madana" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/yasara-madana-93263b269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
@@ -162,7 +167,7 @@ function App() {
                                 <img src={member2} alt="Imag 2" className="team-photo" />
                                 <p className="team-name">Rashmina Fernando</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/rashmina-fernando" target="_blank" rel="noopener noreferrer">
+                                <a href="" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
@@ -170,7 +175,7 @@ function App() {
                                 <img src={member3} alt="Imag 3" className="team-photo" />
                                 <p className="team-name">Miuni Weerasinghe</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/miuni-weerasinghe" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/miuni-weerasinghe-1b922b270?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
@@ -186,7 +191,7 @@ function App() {
                                 <img src={member5} alt="Imag 5" className="team-photo" />
                                 <p className="team-name">Thevindu Jayakody</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/thevindu-jayakody" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/thevindu-jayakody-828311334?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
@@ -194,7 +199,7 @@ function App() {
                                 <img src={member6} alt="Imag 6" className="team-photo" />
                                 <p className="team-name">Nirasha Thilakarathne</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/nirasha-thilakarathne" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/nirasha-thilakarathna-8753a2296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>

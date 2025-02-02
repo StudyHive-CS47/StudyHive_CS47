@@ -57,7 +57,10 @@
   flex: 1;
   padding: 3rem;
   margin: 0 2rem;
-  background-color: #f5f5f5;
+
+    background: radial-gradient(circle, #ffffff 20%, #e0e0e0 100%);
+
+
 }
 
 .middle-section { text-align: center; padding: 2rem; }
@@ -77,12 +80,15 @@
   font-size: 1.2rem;
   line-height: 1.5;
   color: #4a5568;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
+  font-family: "Roboto", sans-serif;;
 }
 
 .cta-button {
   background-color: #FFC107;
   color: #1a1a1a;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
   padding: 1rem 2rem;
   border: none;
   border-radius: 8px;
@@ -106,6 +112,10 @@
 
 .feature-item {
   background-color: #efecec;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.8rem;
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -160,21 +170,30 @@
 .curved-box {
   display: flex;
   justify-content: space-between;
-  background-color: #f6f4f4;
+
   padding: 1rem;
   margin: 2rem auto;
   width: 100%;
   max-width: 1500px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+
+
+
+    background: linear-gradient(to right,#e73c7e, #23a6d5);
+
+
+
+
 }
 
 .box-image-container {
-  flex: 0.3;
+  flex: 0.2;
   padding: 0rem;
   transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
 
 .box-image-container:hover { transform: scale(1.05); }
@@ -182,12 +201,13 @@
 
 /* Section Headings */
 .section-heading {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #1a1a1a;
   margin-bottom: 1.5rem;
   text-align: left;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
 }
 
 /* Mission Section */
@@ -207,6 +227,7 @@
   color: #4a5568;
   max-width: 800px;
   text-align: left;
+  font-family: "Roboto", sans-serif;;
 }
 
 .mission { flex-shrink: 0; width: 100%; max-width: 300px; height: auto; object-fit: cover; }
@@ -241,6 +262,7 @@
   max-width: 800px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
+
 }
 .box-heading {
   font-size: 1rem;
@@ -248,6 +270,7 @@
   line-height: 1.8;
   margin-bottom: 2rem;
   font-style: italic;
+  font-family: "Roboto", sans-serif;
 }
 
 .box-text {
@@ -258,7 +281,21 @@
 }
 
 .testimonial-box:hover { transform: translateY(-5px); }
-.testimonial-image { flex-shrink: 0; width: 100%; max-width: 300px; height: auto; object-fit: cover; }
+.testimonial-image { flex-shrink: 0; width: 100%; max-width: 200px; height: auto; object-fit: cover;margin-left: 50px }
+
+body {
+  background: url('assets/testimonial.png') no-repeat fixed center center;
+  transition: background-position 0.5s ease-in-out;
+}
+
+body:hover {
+  background-position: center top;
+}
+
+
+body:hover {
+  background-position: center top;
+}
 
 /* Team Section */
 .team-section {
@@ -283,7 +320,7 @@
 }
 
 .team-grid {
-  background-color: #f6f4f4;
+  background: linear-gradient(to right,#e73c7e, #23a6d5);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
   display: grid;
   padding: 2rem;
@@ -329,21 +366,39 @@
 
 /* Large Headings */
 .large-heading {
-  font-size: 4rem;
+  font-size: 2rem;
+  font-weight: 600;
   color: #2c3e50;
   margin-bottom: 0rem;
   text-align: left;
-  padding-top: 0rem;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  padding-top: 0.5em;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .large-heading2 {
-  font-size: 7rem;
-  font-weight: bold;
+  font-size: 6rem;
+  letter-spacing: 4.95px;
+  font-weight: 700;
+
   color: #2c3e50;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   text-align: left;
-  font-family: Ebrima;
+  font-family: "Roboto", sans-serif;
+}
+.large-heading3{
+  font-size: 1.5rem;
+  font-weight: 750;
+  color: #2c3e50;
+  margin-bottom: 2.5rem;
+  text-align: left;
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  padding-top: 0em;
+  letter-spacing: 4.95px;
+
+
 }
 
 /* Responsive Design */
