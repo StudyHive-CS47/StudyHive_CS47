@@ -1,39 +1,29 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { GroupProvider } from './contexts/GroupContext';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import LoginPage from './pages/Login/LoginPage';
 import SignupPage from './pages/Signup/SignupPage';
-import GroupChatPage from './pages/GroupChat/GroupChatPage';
+import SuccessPage from './pages/Success/SuccessPage';
 import './App.css';
-
-// Protected Route component
-const ProtectedRoute = ({ children }) => {
-  const { currentUser } = useAuth();
-  return currentUser ? children : <Navigate to="/login" />;
-};
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <GroupProvider>
-          <div className="app">
-            <Header />
-            <main className="main-content">
-              <Routes>
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/group-chat" element={
-                  <ProtectedRoute>
-                    <GroupChatPage />
-                  </ProtectedRoute>
-                } />
-                <Route path="/" element={<Navigate to="/group-chat" />} />
-              </Routes>
-            </main>
-          </div>
-        </GroupProvider>
+        <div className="app">
+          <Header />
+          <main className="main-content">
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/success" element={<SuccessPage />} />
+              <Route path="/" element={<LoginPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </Router>
   );

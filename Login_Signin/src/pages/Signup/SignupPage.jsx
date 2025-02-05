@@ -128,27 +128,17 @@ export default function SignupPage() {
 
   const passwordStrength = checkPasswordStrength(formData.password);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const validateEmail = (email) => {
+    const universityDomains = ['.edu', '.ac'];
+    const isUniversityEmail = universityDomains.some(domain => email.toLowerCase().includes(domain));
     
-    if (formData.password !== formData.confirmPassword) {
-      return setError('Passwords do not match');
+    if (!isUniversityEmail) {
+      return {
+        isValid: false,
+        message: "StudyHive only allows users to use their university email address (.edu or .ac domain)"
+      };
     }
-
-    if (passwordStrength < 3) {
-      return setError('Please choose a stronger password');
-    }
-
-    try {
-      setError('');
-      setLoading(true);
-      await signup(formData.email, formData.password);
-      navigate('/login');
-    } catch (err) {
-      setError('Failed to create an account: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
+    return { isValid: true, message: '' };
   };
 
   const handleChange = (e) => {
@@ -157,6 +147,45 @@ export default function SignupPage() {
       ...prev,
       [name]: value
     }));
+
+    // Clear error when user starts typing again
+    if (error) setError('');
+
+    // Validate email when it changes
+    if (name === 'email') {
+      const emailValidation = validateEmail(value);
+      if (!emailValidation.isValid) {
+        setError(emailValidation.message);
+      }
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // Validate email before submission
+    const emailValidation = validateEmail(formData.email);
+    if (!emailValidation.isValid) {
+      setError(emailValidation.message);
+      return;
+    }
+
+    // Password validation
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      setError('');
+      setLoading(true);
+      await signup(formData.email, formData.password);
+      navigate('/success');
+    } catch (error) {
+      setError('Failed to create an account');
+      console.error(error);
+    }
+    setLoading(false);
   };
 
   const handleUniversityChange = (e, { value }) => {

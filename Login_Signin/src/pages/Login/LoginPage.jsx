@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import './LoginPage.css';
@@ -15,6 +15,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,23 +24,13 @@ export default function LoginPage() {
     try {
       setError('');
       setLoading(true);
-      await login(formData.email, formData.password);
-      navigate('/group-chat');
-    } catch (err) {
-      if (err.code === 'auth/invalid-credential') {
-        setError('Invalid email or password');
-      } else if (err.code === 'auth/invalid-email') {
-        setError('Please enter a valid university email');
-      } else if (err.code === 'auth/user-not-found') {
-        setError('No account found with this email');
-      } else if (err.code === 'auth/wrong-password') {
-        setError('Incorrect password');
-      } else {
-        setError('Failed to log in. Please try again.');
-      }
-    } finally {
-      setLoading(false);
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate('/success');
+    } catch (error) {
+      setError('Failed to sign in');
+      console.error(error);
     }
+    setLoading(false);
   };
 
   const handleChange = (e) => {
@@ -67,6 +59,7 @@ export default function LoginPage() {
               value={formData.email}
               onChange={handleChange}
               required
+              ref={emailRef}
             />
             
             <div className="password-field">
@@ -77,14 +70,17 @@ export default function LoginPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
+                ref={passwordRef}
               />
-              <button 
-                type="button" 
-                className="toggle-password"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-              </button>
+              <div className="show-password-toggle">
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                <label htmlFor="showPassword">Show password</label>
+              </div>
             </div>
             
             <button type="submit" disabled={loading}>

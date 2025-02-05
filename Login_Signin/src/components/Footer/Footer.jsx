@@ -24,6 +24,9 @@ function Footer() {
           <i className="fab fa-instagram"></i>
         </a>
         <a href="https://www.linkedin.com/company/studyhive/" className="social-link">
+          <i className="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/StudyHive-CS47" className="social-link">
           <i className="fab fa-github"></i>
         </a>
       </div>
