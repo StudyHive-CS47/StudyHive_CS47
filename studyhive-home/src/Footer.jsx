@@ -18,18 +18,22 @@ function Footer() {
           <a href="/donate">Donate</a>
           <a href="/team">Team</a>
         </div>
-        <div className="footer-right">
-          <a href="https://www.facebook.com/profile.php?id=61570160061839" className="social-link">
+    <div className="footer-right">
+        <a href="https://www.facebook.com/profile.php?id=61570160061839" className="social-link">
             <i className="fab fa-facebook-f"></i>
-          </a>
-          <a href="https://www.instagram.com/studyhive_edu/profilecard/?igsh=Zmo1cHlrc3E5dGht" className="social-link">
+        </a>
+        <a href="https://www.instagram.com/studyhive_edu/profilecard/?igsh=Zmo1cHlrc3E5dGht" className="social-link">
             <i className="fab fa-instagram"></i>
-          </a>
-          <a href="https://www.linkedin.com/company/studyhive/" className="social-link">
+        </a>
+        <a href="https://www.linkedin.com/company/studyhive/" className="social-link">
+            <i className="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/StudyHive-CS47" className="social-link">
             <i className="fab fa-github"></i>
-          </a>
-        </div>
-      </footer>
+        </a>
+    </div>
+</footer>
     );
 }
+
 export default Footer;

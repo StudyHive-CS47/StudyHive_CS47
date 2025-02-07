@@ -167,7 +167,7 @@ function App() {
                                 <img src={member2} alt="Imag 2" className="team-photo" />
                                 <p className="team-name">Rashmina Fernando</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/rashminafernando" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
@@ -183,7 +183,7 @@ function App() {
                                 <img src={member4} alt="Imag 4" className="team-photo" />
                                 <p className="team-name">Thisakya Pathirathne</p>
                                 <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/thisakya-pathirathne" target="_blank" rel="noopener noreferrer">
+                                <a href="https://www.linkedin.com/in/thisakya-pathirathne-a61720273" target="_blank" rel="noopener noreferrer">
                                     <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
                                 </a>
                             </div>
