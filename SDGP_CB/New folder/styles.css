@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container {
+    width: 90%;
+    max-width: 800px;
+    height: 80vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.chat-header h2 {
+    margin: 0;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.user-message {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+}
+
+.bot-message {
+    background-color: #e9ecef;
+    color: black;
+}
+
+.chat-input-container {
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 10px;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    resize: none;
+}
+
+#send-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#send-button:hover {
+    background-color: #0056b3;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    width: 100%;
+    padding: 16px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    margin-top: auto;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo {
+    height: 40px;
+    width: auto;
+}
+
+.footer-brand {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.footer-center {
+    display: flex;
+    gap: 32px;
+}
+
+.footer-center a {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.footer-center a:hover {
+    color: #666;
+}
+
+.footer-right {
+    display: flex;
+    gap: 24px;
+}
+
+.social-link {
+    color: #1a1a1a;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.social-link:hover {
+    color: #666;
+} 
