@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #333;
+    color: white;
+}
+.navbar ul {
+    list-style: none;
+    display: flex;
+}
+.navbar li {
+    margin: 0 15px;
+}
+.hero {
+    padding: 100px 20px;
+    background: #f4f4f4;
+}
+.cta-button {
+    padding: 10px 20px;
+    background: blue;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}

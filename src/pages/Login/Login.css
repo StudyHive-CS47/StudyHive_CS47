@@ -1,0 +1,301 @@
+.login-container {
+    min-height: calc(100vh - 57px)!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+    padding: 12px!important;
+    background-image: linear-gradient(#EBF8E1 1.1rem, #5454546d 1.2rem)!important;
+    background-size: 100% 1.2rem!important;
+    position: relative!important;
+}
+
+.login-container::before {
+    content: ''!important;
+    position: absolute!important;
+    top: 0!important;
+    left: 0!important;
+    right: 0!important;
+    bottom: 0!important;
+    background-color: rgba(235, 248, 225, 0.7)!important;
+    z-index: 0!important;
+}
+
+.login-box {
+    position: relative!important;
+    z-index: 1!important;
+    display: flex!important;
+    background: white!important;
+    border-radius: 12px!important;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1)!important;
+    overflow: hidden!important;
+    width: 95%!important;
+    max-width: 850px!important;
+}
+
+.login-left {
+    flex: 1!important;
+    padding: 32px!important;
+}
+
+.login-right {
+    flex: 1!important;
+    background-color: #000!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+    padding: 32px!important;
+}
+
+.login-right img {
+    width: 200px!important;
+    height: 200px!important;
+    filter: drop-shadow(0 0 8px rgb(255, 255, 255))!important;
+    transition: filter 0.3s ease!important;
+}
+
+.logo-small {
+    width: 40px!important;
+    height: 40px!important;
+    margin-bottom: 20px!important;
+}
+
+.error-message {
+    color: #dc3545!important;
+    background-color: #fdf0f0!important;
+    padding: 12px 16px!important;
+    border-radius: 8px!important;
+    margin-bottom: 20px!important;
+    border: 1px solid rgba(220, 53, 69, 0.1)!important;
+    font-size: 14px!important;
+    display: flex!important;
+    align-items: center!important;
+    gap: 8px!important;
+    animation: fadeIn 0.3s ease!important;
+}
+
+.error-message::before {
+    content: "!"!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+    width: 20px!important;
+    height: 20px!important;
+    background-color: #dc3545!important;
+    color: white!important;
+    border-radius: 50%!important;
+    font-weight: bold!important;
+    font-size: 12px!important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0!important;
+        transform: translateY(-10px)!important;
+    }
+    to {
+        opacity: 1!important;
+        transform: translateY(0)!important;
+    }
+}
+
+h1 {
+    font-size: 20px!important;
+    margin-bottom: 4px!important;
+    font-weight: normal!important;
+    color: #000!important;
+}
+
+.subtitle {
+    color: #666!important;
+    margin-bottom: 20px!important;
+    font-size: 14px!important;
+}
+
+.login-form {
+    display: flex!important;
+    flex-direction: column!important;
+    gap: 14px!important;
+    margin-top: 20px!important;
+}
+
+.login-form input {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 0 16px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease;
+    background-color: #f8f9fa !important;
+}
+
+.login-form input:focus {
+    border-color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+    outline: none!important;
+}
+
+.login-form button {
+    padding: 12px!important;
+    background-color: #000!important;
+    color: white!important;
+    border: none!important;
+    border-radius: 6px!important;
+    font-size: 16px!important;
+    cursor: pointer!important;
+    transition: background-color 0.2s!important;
+}
+
+.login-form button:disabled {
+    background-color: #666!important;
+    cursor: not-allowed!important;
+}
+
+.google-button {
+    width: 100%!important;
+    height: 40px!important;
+    background-color: white!important;
+    border: 1px solid #e0e0e0!important;
+    border-radius: 20px!important;
+    display: flex!important;
+    align-items: center!important;
+    justify-content: center!important;
+    gap: 8px!important;
+    font-size: 14px!important;
+    color: #000!important;
+    cursor: pointer!important;
+}
+
+.google-button:disabled {
+    color: #666!important;
+    cursor: not-allowed!important;
+}
+
+.google-icon {
+    width: 18px!important;
+    height: 18px!important;
+}
+
+.subtitle a {
+    color: #000!important;
+    text-decoration: none!important;
+    font-weight: 500!important;
+}
+
+.subtitle a:hover {
+    text-decoration: underline!important;
+}
+
+.signup-link {
+    margin-top: 16px!important;
+    text-align: center!important;
+}
+
+.signup-link a {
+    color: #000!important;
+    text-decoration: none!important;
+    font-weight: 500!important;
+}
+
+/* Password field styles */
+.password-field {
+    position: relative!important;
+    width: 100%!important;
+}
+
+.password-field input {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 0 16px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    transition: all 0.2s ease;
+    background-color: #f8f9fa !important;
+}
+
+.password-field input:focus {
+    border-color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+    outline: none!important;
+}
+
+/* Show password checkbox styles */
+.show-password-toggle {
+    margin-top: 8px!important;
+    display: flex!important;
+    align-items: center!important;
+    gap: 8px!important;
+}
+
+.show-password-toggle input[type="checkbox"] {
+    width: 16px !important;
+    height: 16px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: pointer!important;
+}
+
+.show-password-toggle label {
+    font-size: 14px!important;
+    color: #666!important;
+    cursor: pointer!important;
+    user-select: none!important;
+}
+
+.show-password-toggle:hover label {
+    color: #333!important;
+}
+
+/* Add these media queries at the end of your existing LoginPage.css */
+
+@media (max-width: 768px) {
+    .login-box {
+        flex-direction: column!important;
+        min-height: auto!important;
+        width: 95%!important;
+    }
+
+    .login-right {
+        display: none!important;
+    }
+
+    .login-left {
+        padding: 30px 20px!important;
+        width: 100%!important;
+    }
+
+    .login-form input,
+    .login-form button {
+        height: 45px!important;
+    }
+
+    h1 {
+        font-size: 24px!important;
+    }
+
+    .subtitle {
+        font-size: 14px!important;
+    }
+
+    .password-field {
+        margin-bottom: 15px!important;
+    }
+
+    .show-password-toggle {
+        font-size: 14px!important;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        width: 100%!important;
+        border-radius: 0!important;
+    }
+
+    .login-left {
+        padding: 20px 15px!important;
+    }
+}
