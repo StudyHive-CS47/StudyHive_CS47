@@ -1,0 +1,26 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  margin: 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .header,
+  .footer {
+    padding: 12px 0;
+  }
+
+  .header-content,
+  .footer-content {
+    padding: 0 16px;
+  }
+} 
