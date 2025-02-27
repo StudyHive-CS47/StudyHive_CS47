@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/groups")
@@ -20,6 +21,14 @@ public class GroupController {
     @PostMapping
     public ResponseEntity<Group> createGroup(@RequestBody Group group) {
         try {
+            // Set the creator as admin
+            group.setAdminEmail(group.getAdminEmail());
+
+            // Add creator to members list if not already present
+            if (!group.getMemberEmails().contains(group.getAdminEmail())) {
+                group.getMemberEmails().add(group.getAdminEmail());
+            }
+
             Group createdGroup = groupService.createGroup(group);
             return ResponseEntity.ok(createdGroup);
         } catch (Exception e) {
@@ -51,5 +60,16 @@ public class GroupController {
             @RequestParam String userEmail) {
         groupService.approveJoinRequest(groupId, userEmail);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{groupId}")
+    public ResponseEntity<Group> getGroupById(@PathVariable String groupId) {
+        try {
+            Optional<Group> group = groupService.getGroupById(groupId);
+            return group.map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

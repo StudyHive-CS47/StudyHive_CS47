@@ -4,6 +4,9 @@ import App from './App'
 import './styles/index.css'
 import { GroupProvider } from './contexts/GroupContext'
 
+// Add global polyfill
+window.global = window;
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GroupProvider>

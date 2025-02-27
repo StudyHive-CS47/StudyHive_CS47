@@ -1,8 +1,10 @@
 // src/services/api.js
 import axios from 'axios';
 import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const BASE_URL = 'http://localhost:8080/api';
+const WS_URL = 'http://localhost:8080/ws';
 
 // Simulating a logged-in user - replace with actual auth
 const currentUserEmail = "user@example.com"; 
@@ -73,37 +75,62 @@ export const api = {
     return response.data;
   },
 
+  getGroupById: async (groupId) => {
+    const response = await axios.get(`${BASE_URL}/groups/${groupId}`);
+    return response.data;
+  },
+
   connectToChat: (groupId, onMessageReceived) => {
-    if (stompClient) {
-      stompClient.deactivate();
-    }
-
-    stompClient = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
-      connectHeaders: {
-        login: currentUserEmail,
-      },
-      onConnect: () => {
-        console.log('Connected to WebSocket');
-        stompClient.subscribe(`/topic/group/${groupId}`, (message) => {
-          const receivedMessage = JSON.parse(message.body);
-          onMessageReceived(receivedMessage);
-        });
-      },
-      onDisconnect: () => {
-        console.log('Disconnected from WebSocket');
-      },
-      onError: (error) => {
-        console.error('WebSocket Error:', error);
-      }
-    });
-
-    stompClient.activate();
-    
-    return () => {
+    try {
       if (stompClient) {
         stompClient.deactivate();
       }
-    };
+
+      const socket = new SockJS(WS_URL);
+      
+      stompClient = new Client({
+        webSocketFactory: () => socket,
+        connectHeaders: {
+          login: currentUserEmail,
+        },
+        debug: (str) => {
+          console.log('STOMP: ' + str);
+        },
+        reconnectDelay: 5000,
+        heartbeatIncoming: 4000,
+        heartbeatOutgoing: 4000,
+        onConnect: () => {
+          console.log('Connected to WebSocket');
+          stompClient.subscribe(`/topic/group/${groupId}`, (message) => {
+            try {
+              const receivedMessage = JSON.parse(message.body);
+              onMessageReceived(receivedMessage);
+            } catch (error) {
+              console.error('Error parsing message:', error);
+            }
+          });
+        },
+        onDisconnect: () => {
+          console.log('Disconnected from WebSocket');
+        },
+        onError: (error) => {
+          console.error('WebSocket Error:', error);
+        },
+        onStompError: (frame) => {
+          console.error('STOMP Error:', frame);
+        }
+      });
+
+      stompClient.activate();
+      
+      return () => {
+        if (stompClient) {
+          stompClient.deactivate();
+        }
+      };
+    } catch (error) {
+      console.error('Error in connectToChat:', error);
+      return () => {};
+    }
   }
 };

@@ -13,7 +13,6 @@ const GroupDetail = () => {
   const [files, setFiles] = useState([]);
   const [members, setMembers] = useState([]);
 
-
   useEffect(() => {
     fetchGroupData();
     
@@ -28,30 +27,16 @@ const GroupDetail = () => {
 
   const fetchGroupData = async () => {
     try {
-      // Simulated data - replace with actual API calls
-      const groupData = {
-        id,
-        name: "Software Engineering (SE2100)",
-        university: "ESOFT Metro Campus",
-        memberCount: 69,
-        members: [
-          { id: 1, name: "kalindu rantharaka", email: "kalindu@example.com", isAdmin: true },
-          { id: 2, name: "Thejaka Sathruwan", email: "thejaka@example.com", isAdmin: false }
-        ],
-        files: [
-          { id: 1, name: "lecture_notes.pdf", uploadedBy: "kalindu", date: "2024-02-16" },
-          { id: 2, name: "assignment1.docx", uploadedBy: "thejaka", date: "2024-02-15" }
-        ],
-        messages: [
-          { id: 1, sender: "kalindu rantharaka", content: "hi", timestamp: "2024-08-08" },
-          { id: 2, sender: "Thejaka Sathruwan", content: "hi", timestamp: "2024-01-30" }
-        ]
-      };
+      // Use api service instead of direct axios call
+      const groupData = await api.getGroupById(id);
+      const messagesResponse = await api.getGroupMessages(id);
+      const filesResponse = await api.getGroupFiles(id);
 
       setGroup(groupData);
-      setMembers(groupData.members);
-      setFiles(groupData.files);
-      setMessages(groupData.messages);
+      setMembers(groupData.members || []);
+      setFiles(filesResponse || []);
+      setMessages(messagesResponse || []);
+
     } catch (error) {
       console.error('Error fetching group data:', error);
     }

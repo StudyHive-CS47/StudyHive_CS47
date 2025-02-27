@@ -13,7 +13,8 @@ const CreateGroup = () => {
     university: '',
     degree: '',
     module: '',
-    description: ''
+    description: '',
+    email: ''
   });
 
   const handleSubmit = async (e) => {
@@ -94,6 +95,17 @@ const CreateGroup = () => {
               value={groupData.description}
               onChange={(e) => setGroupData({ ...groupData, description: e.target.value })}
               rows="4"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Your Email</label>
+            <input
+              type="email"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              value={groupData.email}
+              onChange={(e) => setGroupData({ ...groupData, email: e.target.value })}
               required
             />
           </div>

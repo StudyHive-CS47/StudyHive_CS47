@@ -27,9 +27,12 @@ public class GroupService {
 
     public Group createGroup(Group group) {
         group.setCreatedAt(System.currentTimeMillis());
+
+        // Ensure admin is in member list
         if (!group.getMemberEmails().contains(group.getAdminEmail())) {
             group.getMemberEmails().add(group.getAdminEmail());
         }
+
         return groupRepository.save(group);
     }
 
@@ -73,5 +76,9 @@ public class GroupService {
         } else {
             throw new RuntimeException("Group or join request not found");
         }
+    }
+
+    public Optional<Group> getGroupById(String groupId) {
+        return groupRepository.findById(groupId);
     }
 }

@@ -7,7 +7,7 @@ import GroupList from './components/GroupChat/GroupList'
 
 function App() {
   return (
-    <Router>
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="min-h-screen bg-gray-100">
         <Routes>
           <Route path="/" element={<GroupList />} />

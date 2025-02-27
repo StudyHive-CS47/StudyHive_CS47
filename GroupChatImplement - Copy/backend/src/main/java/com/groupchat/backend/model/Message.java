@@ -1,25 +1,35 @@
 package com.groupchat.backend.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Getter
-@Setter
 @Document(collection = "messages")
 public class Message {
     @Id
     private String id;
     private String groupId;
+    private String senderEmail;
+    private String content;
 
-    public Message(String id, String groupId, String senderEmail, String content, Long timestamp) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public void setSenderEmail(String senderEmail) {
         this.senderEmail = senderEmail;
+    }
+
+    public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -43,27 +53,13 @@ public class Message {
         return timestamp;
     }
 
-    private String senderEmail;
-    private String content;
     private Long timestamp;
 
-    public void setId(String id) {
+    public Message(String id, String groupId, String senderEmail, String content, Long timestamp) {
         this.id = id;
-    }
-
-    public void setGroupId(String groupId) {
         this.groupId = groupId;
-    }
-
-    public void setSenderEmail(String senderEmail) {
         this.senderEmail = senderEmail;
-    }
-
-    public void setContent(String content) {
         this.content = content;
-    }
-
-    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 }
