@@ -1,10 +1,13 @@
 // src/services/api.js
 import axios from 'axios';
+import { Client } from '@stomp/stompjs';
 
 const BASE_URL = 'http://localhost:8080/api';
 
 // Simulating a logged-in user - replace with actual auth
 const currentUserEmail = "user@example.com"; 
+
+let stompClient = null;
 
 export const api = {
   createGroup: async (groupData) => {
@@ -29,8 +32,19 @@ export const api = {
   },
 
   sendMessage: async (groupId, message) => {
-    const response = await axios.post(`${BASE_URL}/groups/${groupId}/messages`, message);
-    return response.data;
+    if (stompClient && stompClient.connected) {
+      await stompClient.publish({
+        destination: '/app/chat',
+        body: JSON.stringify({
+          groupId,
+          senderEmail: currentUserEmail,
+          content: message,
+          timestamp: new Date().toISOString()
+        })
+      });
+    } else {
+      throw new Error('WebSocket not connected');
+    }
   },
 
   uploadFile: async (groupId, file) => {
@@ -57,5 +71,39 @@ export const api = {
   approveJoinRequest: async (requestId) => {
     const response = await axios.post(`${BASE_URL}/groups/approve-request/${requestId}`);
     return response.data;
+  },
+
+  connectToChat: (groupId, onMessageReceived) => {
+    if (stompClient) {
+      stompClient.deactivate();
+    }
+
+    stompClient = new Client({
+      brokerURL: 'ws://localhost:8080/ws',
+      connectHeaders: {
+        login: currentUserEmail,
+      },
+      onConnect: () => {
+        console.log('Connected to WebSocket');
+        stompClient.subscribe(`/topic/group/${groupId}`, (message) => {
+          const receivedMessage = JSON.parse(message.body);
+          onMessageReceived(receivedMessage);
+        });
+      },
+      onDisconnect: () => {
+        console.log('Disconnected from WebSocket');
+      },
+      onError: (error) => {
+        console.error('WebSocket Error:', error);
+      }
+    });
+
+    stompClient.activate();
+    
+    return () => {
+      if (stompClient) {
+        stompClient.deactivate();
+      }
+    };
   }
 };

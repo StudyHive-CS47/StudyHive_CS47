@@ -15,10 +15,15 @@ const GroupDetail = () => {
 
 
   useEffect(() => {
+    fetchGroupData();
+    
     const cleanup = api.connectToChat(id, (message) => {
       setMessages(prev => [...prev, message]);
     });
-    return cleanup;
+
+    return () => {
+      cleanup();
+    };
   }, [id]);
 
   const fetchGroupData = async () => {
@@ -64,15 +69,7 @@ const GroupDetail = () => {
 
   const handleSendMessage = async (content) => {
     try {
-      // Simulate sending message
-      const newMessage = {
-        id: messages.length + 1,
-        sender: "Current User",
-        content,
-        timestamp: new Date().toISOString()
-      };
-      setMessages([...messages, newMessage]);
-      // await api.sendMessage(id, { content });
+      await api.sendMessage(id, content);
     } catch (error) {
       console.error('Error sending message:', error);
     }
@@ -80,15 +77,10 @@ const GroupDetail = () => {
 
   const handleFileUpload = async (file) => {
     try {
-      // Simulate file upload
-      const newFile = {
-        id: files.length + 1,
-        name: file.name,
-        uploadedBy: "Current User",
-        date: new Date().toISOString().split('T')[0]
-      };
-      setFiles([...files, newFile]);
-      // await api.uploadFile(id, file);
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await api.uploadFile(id, formData);
+      setFiles(prev => [...prev, response.data]);
     } catch (error) {
       console.error('Error uploading file:', error);
     }

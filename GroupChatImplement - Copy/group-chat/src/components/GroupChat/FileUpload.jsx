@@ -1,13 +1,13 @@
 import React from 'react'
 import { api } from '../../services/api'
 
-const FileUpload = ({ groupId, onUploadComplete }) => {
+const FileUpload = ({ onUpload }) => {
   const handleFileChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
       try {
-        await api.uploadFile(groupId, file)
-        onUploadComplete?.()
+        await onUpload(file)
+        e.target.value = '' // Reset input after successful upload
       } catch (error) {
         console.error('Error uploading file:', error)
       }
