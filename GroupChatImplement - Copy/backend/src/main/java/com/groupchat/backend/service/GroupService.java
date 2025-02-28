@@ -40,45 +40,72 @@ public class GroupService {
         return groupRepository.findByMemberEmailsContaining(userEmail);
     }
 
-    public void createJoinRequest(String groupId, String userEmail) {
-        Optional<Group> group = groupRepository.findById(groupId);
-        if (group.isPresent()) {
-            if (group.get().getMemberEmails().contains(userEmail)) {
-                throw new RuntimeException("User is already a member of this group");
-            }
+    public void createJoinRequest(String groupId, JoinRequest joinRequest) {
+        // Check if group exists and get university
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
-            JoinRequest joinRequest = new JoinRequest();
-            joinRequest.setGroupId(groupId);
-            joinRequest.setUserEmail(userEmail);
-            joinRequest.setStatus("PENDING");
-            joinRequest.setRequestedAt(System.currentTimeMillis());
+        // Check if a request already exists
+        Optional<JoinRequest> existingRequest = joinRequestRepository.findByGroupIdAndEmail(
+                groupId,
+                joinRequest.getEmail());
+
+        if (existingRequest.isPresent()) {
+            throw new RuntimeException("Join request already exists");
+        }
+
+        // If universities match, automatically approve and add to group
+        if (group.getUniversity().equalsIgnoreCase(joinRequest.getUniversity())) {
+            joinRequest.setStatus("APPROVED");
             joinRequestRepository.save(joinRequest);
+
+            // Add user to group members
+            if (!group.getMemberEmails().contains(joinRequest.getEmail())) {
+                group.getMemberEmails().add(joinRequest.getEmail());
+                groupRepository.save(group);
+            }
         } else {
-            throw new RuntimeException("Group not found");
+            throw new RuntimeException("You can only join groups from your university");
         }
     }
 
     public void approveJoinRequest(String groupId, String userEmail) {
-        Optional<Group> groupOpt = groupRepository.findById(groupId);
-        Optional<JoinRequest> requestOpt = joinRequestRepository.findByGroupIdAndUserEmail(groupId, userEmail);
+        // Find the join request using email field
+        JoinRequest joinRequest = joinRequestRepository.findByGroupIdAndEmail(groupId, userEmail)
+                .orElseThrow(() -> new RuntimeException("Join request not found"));
 
-        if (groupOpt.isPresent() && requestOpt.isPresent()) {
-            Group group = groupOpt.get();
-            JoinRequest request = requestOpt.get();
+        // Update the status
+        joinRequest.setStatus("APPROVED");
+        joinRequestRepository.save(joinRequest);
 
-            if (!group.getMemberEmails().contains(userEmail)) {
-                group.getMemberEmails().add(userEmail);
-                groupRepository.save(group);
-            }
+        // Get the group and add the user
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
-            request.setStatus("APPROVED");
-            joinRequestRepository.save(request);
-        } else {
-            throw new RuntimeException("Group or join request not found");
+        if (!group.getMemberEmails().contains(userEmail)) {
+            group.getMemberEmails().add(userEmail);
+            groupRepository.save(group);
         }
     }
 
-    public Optional<Group> getGroupById(String groupId) {
-        return groupRepository.findById(groupId);
+    public Group getGroupById(String groupId) {
+        return groupRepository.findById(groupId)
+                .orElseThrow(() -> new RuntimeException("Group not found"));
+    }
+
+    public List<Group> getAllGroups() {
+        return groupRepository.findAll();
+    }
+
+    public List<Group> searchGroups(String searchTerm) {
+        if (searchTerm == null || searchTerm.trim().isEmpty()) {
+            return groupRepository.findAll();
+        }
+        return groupRepository.findByNameContainingIgnoreCase(searchTerm.trim());
+    }
+
+    // Get groups where user is a member
+    public List<Group> getMyGroups(String userEmail) {
+        return groupRepository.findByMemberEmailsContaining(userEmail);
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface GroupRepository extends MongoRepository<Group, String> {
     List<Group> findByMemberEmailsContaining(String userEmail);
+
+    List<Group> findByNameContainingIgnoreCase(String name);
 }

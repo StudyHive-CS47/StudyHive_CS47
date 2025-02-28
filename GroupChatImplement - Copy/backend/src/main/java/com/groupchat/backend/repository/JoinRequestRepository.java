@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface JoinRequestRepository extends MongoRepository<JoinRequest, String> {
-    Optional<JoinRequest> findByGroupIdAndUserEmail(String groupId, String userEmail);
+    Optional<JoinRequest> findByGroupIdAndEmail(String groupId, String email);
 }

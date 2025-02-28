@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { SearchBar } from '../common/SearchBar';
 import { api } from '../../services/api';
-import JoinGroupModal from '../Groups/JoinGroupModal';
+import JoinGroupModal from './JoinGroupModal';
 
-const ExploreGroups = () => {
+const GroupList = () => {
   const [groups, setGroups] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [showJoinModal, setShowJoinModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const [joinError, setJoinError] = useState(null);
 
   useEffect(() => {
@@ -22,15 +21,11 @@ const ExploreGroups = () => {
       const response = await api.searchGroups(searchTerm);
       setGroups(response.data);
     } catch (error) {
-      console.error('Error fetching groups:', error);
       setError('Failed to fetch groups');
+      console.error('Error fetching groups:', error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
   };
 
   const handleJoinClick = (group) => {
@@ -54,36 +49,39 @@ const ExploreGroups = () => {
   };
 
   return (
-    <div className="p-4">
-      <div className="mb-6">
-        <SearchBar 
-          placeholder="Find new groups" 
-          onSearch={handleSearch}
+    <div className="container mx-auto p-4">
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search groups by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full px-4 py-2 border rounded-lg"
         />
       </div>
-      
+
       {loading ? (
         <div className="text-center p-4">Loading...</div>
       ) : error ? (
         <div className="text-red-500 text-center p-4">{error}</div>
       ) : (
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {groups.map((group) => (
-            <div key={group.id} className="bg-white p-4 rounded-lg shadow-md">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-lg font-semibold">{group.name}</h3>
-                  <p className="text-sm text-gray-600">{group.university}</p>
-                  <p className="text-sm text-gray-500">{group.memberEmails?.length || 0} students</p>
-                  <p className="text-sm text-gray-600">{group.description}</p>
-                </div>
-                <button
-                  onClick={() => handleJoinClick(group)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                >
-                  Join +
-                </button>
-              </div>
+            <div key={group.id} className="bg-white rounded-lg shadow p-4">
+              <h3 className="text-xl font-semibold">{group.name}</h3>
+              <p className="text-gray-600">{group.description}</p>
+              <p className="text-sm text-gray-500 mt-2">
+                University: {group.university}
+              </p>
+              <p className="text-sm text-gray-500">
+                Members: {group.memberEmails?.length || 0}
+              </p>
+              <button
+                onClick={() => handleJoinClick(group)}
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                Join Group
+              </button>
             </div>
           ))}
         </div>
@@ -104,4 +102,4 @@ const ExploreGroups = () => {
   );
 };
 
-export default ExploreGroups;
+export default GroupList; 

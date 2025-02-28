@@ -15,17 +15,22 @@ export const api = {
   createGroup: async (groupData) => {
     const response = await axios.post(`${BASE_URL}/groups`, {
       ...groupData,
-      adminEmail: currentUserEmail,
-      memberEmails: [currentUserEmail],
+      adminEmail: groupData.adminEmail,
+      memberEmails: [groupData.adminEmail],
       fileIds: [],
       createdAt: Date.now()
     });
     return response;
   },
 
-  getMyGroups: async () => {
-    const response = await axios.get(`${BASE_URL}/groups?userEmail=${currentUserEmail}`);
-    return response;
+  getMyGroups: async (userEmail) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(userEmail)}`);
+      return response;
+    } catch (error) {
+      console.error('Error fetching my groups:', error);
+      throw error;
+    }
   },
 
   getGroupMessages: async (groupId) => {
@@ -66,8 +71,15 @@ export const api = {
   },
 
   joinGroup: async (groupId, userData) => {
-    const response = await axios.post(`${BASE_URL}/groups/${groupId}/join`, userData);
-    return response.data;
+    try {
+      const response = await axios.post(`${BASE_URL}/groups/${groupId}/join`, userData);
+      // After successful join, refresh my groups
+      await api.getMyGroups(userData.email);
+      return response;
+    } catch (error) {
+      console.error('Error joining group:', error);
+      throw error;
+    }
   },
 
   approveJoinRequest: async (requestId) => {
@@ -132,5 +144,22 @@ export const api = {
       console.error('Error in connectToChat:', error);
       return () => {};
     }
+  },
+
+  getAllGroups: async () => {
+    const response = await axios.get(`${BASE_URL}/groups/all`);
+    return response;
+  },
+
+  searchGroups: async (searchTerm) => {
+    const url = searchTerm 
+      ? `${BASE_URL}/groups/search?name=${encodeURIComponent(searchTerm)}`
+      : `${BASE_URL}/groups/all`;
+    const response = await axios.get(url);
+    return response;
+  },
+
+  joinGroup: async (groupId, data) => {
+    return axios.post(`${BASE_URL}/groups/${groupId}/join`, data);
   }
 };

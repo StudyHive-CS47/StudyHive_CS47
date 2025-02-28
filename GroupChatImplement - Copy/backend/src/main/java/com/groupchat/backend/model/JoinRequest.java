@@ -1,26 +1,30 @@
 package com.groupchat.backend.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Getter
-@Setter
 @Document(collection = "joinRequests")
 public class JoinRequest {
-    public JoinRequest(String id, String groupId, String userEmail, String status, Long requestedAt) {
-        this.id = id;
-        this.groupId = groupId;
-        this.userEmail = userEmail;
-        this.status = status;
-        this.requestedAt = requestedAt;
-    }
+    @Id
+    private String id;
+    private String groupId;
+    private String email;
+    private String university;
+    private String status; // PENDING, APPROVED, REJECTED
+    private Long createdAt;
 
     public JoinRequest() {
+    }
 
+    public JoinRequest(String id, String groupId, String email, String university, String status, Long createdAt) {
+        this.id = id;
+        this.groupId = groupId;
+        this.email = email;
+        this.university = university;
+        this.status = status;
+        this.createdAt = createdAt;
     }
 
     public String getId() {
@@ -31,8 +35,20 @@ public class JoinRequest {
         return groupId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Long getCreatedAt() {
+        return createdAt;
     }
 
     public void setId(String id) {
@@ -43,30 +59,19 @@ public class JoinRequest {
         this.groupId = groupId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setRequestedAt(Long requestedAt) {
-        this.requestedAt = requestedAt;
+    public void setCreatedAt(Long createdAt) {
+        this.createdAt = createdAt;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Long getRequestedAt() {
-        return requestedAt;
-    }
-
-    @Id
-    private String id;
-    private String groupId;
-    private String userEmail;
-    private String status; // PENDING, APPROVED, REJECTED
-    private Long requestedAt;
 }
