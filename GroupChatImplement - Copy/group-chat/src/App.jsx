@@ -4,6 +4,7 @@ import CreateGroup from './components/GroupChat/CreateGroup'
 import ExploreGroups from './components/GroupChat/ExploreGroups'
 import GroupDetail from './components/GroupChat/GroupDetail'
 import GroupList from './components/GroupChat/GroupList'
+import MyGroups from './components/Groups/MyGroups'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/create" element={<CreateGroup />} />
           <Route path="/explore" element={<ExploreGroups />} />
           <Route path="/group/:id" element={<GroupDetail />} />
+          <Route path="/my-groups" element={<MyGroups />} />
         </Routes>
       </div>
     </Router>

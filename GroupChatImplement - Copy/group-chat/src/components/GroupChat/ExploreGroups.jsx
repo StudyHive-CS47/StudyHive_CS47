@@ -41,15 +41,23 @@ const ExploreGroups = () => {
 
   const handleJoinSubmit = async (formData) => {
     try {
-      await api.joinGroup(selectedGroup.id, {
+      // Store email in localStorage
+      localStorage.setItem('userEmail', formData.email);
+      
+      const response = await api.joinGroup(selectedGroup.id, {
         email: formData.email,
         university: formData.university
       });
-      setShowJoinModal(false);
-      setJoinError(null);
-      alert('Join request sent successfully!');
+      
+      if (response.status === 200) {
+        setShowJoinModal(false);
+        setJoinError(null);
+        // Redirect to My Groups after successful join
+        window.location.href = '/my-groups';
+      }
     } catch (error) {
       setJoinError(error.response?.data || 'Error sending join request');
+      alert(error.response?.data || 'Failed to join group');
     }
   };
 

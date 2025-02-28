@@ -23,9 +23,9 @@ export const api = {
     return response;
   },
 
-  getMyGroups: async (userEmail) => {
+  getMyGroups: async (email) => {
     try {
-      const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(userEmail)}`);
+      const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(email)}`);
       return response;
     } catch (error) {
       console.error('Error fetching my groups:', error);

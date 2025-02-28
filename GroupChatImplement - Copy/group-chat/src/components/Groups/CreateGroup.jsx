@@ -8,23 +8,24 @@ const CreateGroup = () => {
     university: '',
     degree: '',
     module: '',
-    adminEmail: '' // Add email field
+    adminEmail: '',
+    memberEmails: [] // Initialize empty array for members
   });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.createGroup(formData);
-      // Reset form or redirect
-      setFormData({
-        name: '',
-        description: '',
-        university: '',
-        degree: '',
-        module: '',
-        adminEmail: ''
-      });
+      // Store email in localStorage
+      localStorage.setItem('userEmail', formData.adminEmail);
+      
+      const groupData = {
+        ...formData,
+        memberEmails: [formData.adminEmail]
+      };
+      
+      await api.createGroup(groupData);
       alert('Group created successfully!');
+      window.location.href = '/my-groups';
     } catch (error) {
       console.error('Error creating group:', error);
       alert('Failed to create group');

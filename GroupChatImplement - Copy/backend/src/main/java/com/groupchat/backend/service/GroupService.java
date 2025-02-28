@@ -54,18 +54,19 @@ public class GroupService {
             throw new RuntimeException("Join request already exists");
         }
 
-        // If universities match, automatically approve and add to group
-        if (group.getUniversity().equalsIgnoreCase(joinRequest.getUniversity())) {
-            joinRequest.setStatus("APPROVED");
-            joinRequestRepository.save(joinRequest);
-
-            // Add user to group members
-            if (!group.getMemberEmails().contains(joinRequest.getEmail())) {
-                group.getMemberEmails().add(joinRequest.getEmail());
-                groupRepository.save(group);
-            }
-        } else {
+        // Validate university match
+        if (!group.getUniversity().equalsIgnoreCase(joinRequest.getUniversity())) {
             throw new RuntimeException("You can only join groups from your university");
+        }
+
+        // If universities match, automatically approve and add to group
+        joinRequest.setStatus("APPROVED");
+        joinRequestRepository.save(joinRequest);
+
+        // Add user to group members
+        if (!group.getMemberEmails().contains(joinRequest.getEmail())) {
+            group.getMemberEmails().add(joinRequest.getEmail());
+            groupRepository.save(group);
         }
     }
 
