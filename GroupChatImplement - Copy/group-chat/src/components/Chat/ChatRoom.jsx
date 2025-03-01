@@ -1,106 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { supabase } from '../../services/supabase';
 import { api } from '../../services/api';
-import SockJS from 'sockjs-client';
-import { Client } from '@stomp/stompjs';
+import FileUpload from '../GroupChat/FileUpload';
+import MembersList from '../GroupChat/MembersList';
 
 const ChatRoom = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [loading, setLoading] = useState(true);
   const [group, setGroup] = useState(null);
   const [files, setFiles] = useState([]);
-  const [stompClient, setStompClient] = useState(null);
-  const userEmail = localStorage.getItem('userEmail');
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [uploadError, setUploadError] = useState(null);
+  const userEmail = localStorage.getItem('userEmail');
 
   useEffect(() => {
-    let stompClientInstance = null;
-    
-    const initializeWebSocket = async () => {
-      try {
-        const socket = new SockJS('http://localhost:8080/ws');
-        const client = new Client({
-          webSocketFactory: () => socket,
-          connectHeaders: {
-            login: userEmail,
-          },
-          debug: (str) => {
-            console.log('STOMP: ' + str);
-          },
-          reconnectDelay: 5000,
-          heartbeatIncoming: 4000,
-          heartbeatOutgoing: 4000,
-        });
-
-        client.onConnect = () => {
-          console.log('WebSocket Connected');
-          setStompClient(client);
-          stompClientInstance = client;
-          
-          client.subscribe(`/topic/group/${groupId}`, (message) => {
-            const receivedMessage = JSON.parse(message.body);
-            setMessages(prev => [...prev, receivedMessage]);
-          });
-        };
-
-        client.onStompError = (frame) => {
-          console.error('STOMP Error:', frame);
-        };
-
-        client.activate();
-      } catch (error) {
-        console.error('Failed to connect to WebSocket:', error);
-      }
-    };
-
-    const initialize = async () => {
-      await fetchGroupDetails();
-      await fetchMessages();
-      await fetchFiles();
-      await initializeWebSocket();
-    };
-
-    initialize();
-
-    return () => {
-      if (stompClientInstance) {
-        stompClientInstance.deactivate();
-      }
-    };
+    if (!groupId || !userEmail) {
+      navigate('/');
+      return;
+    }
+    fetchGroupDetails();
+    setupSupabaseSubscription();
   }, [groupId, userEmail]);
 
   const fetchGroupDetails = async () => {
     try {
+      setLoading(true);
+      setError(null);
+
+      // Fetch group details from MongoDB
       const groupData = await api.getGroupById(groupId);
-      setGroup(groupData);
-    } catch (error) {
-      console.error('Error fetching group details:', error);
-      setError('Error fetching group details. Please refresh the page.');
+      console.log('Fetched group data:', groupData); // Debug log
+
+      if (!groupData) {
+        throw new Error('Group not found');
+      }
+
+      // Ensure memberEmails is always an array
+      const sanitizedGroupData = {
+        ...groupData,
+        memberEmails: Array.isArray(groupData.memberEmails) ? groupData.memberEmails : []
+      };
+
+      setGroup(sanitizedGroupData);
+      
+      // Fetch files from MongoDB
+      const filesData = await api.getGroupFiles(groupId);
+      setFiles(filesData || []);
+
+      // Fetch messages from Supabase
+      const messagesData = await api.getMessages(groupId);
+      setMessages(messagesData || []);
+
+    } catch (err) {
+      console.error('Error fetching group details:', err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchMessages = async () => {
-    try {
-      const messages = await api.getGroupMessages(groupId);
-      setMessages(messages);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    }
-  };
+  const setupSupabaseSubscription = () => {
+    const channel = supabase
+      .channel(`room-${groupId}`)
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+        filter: `group_id=eq.${groupId}`
+      }, payload => {
+        setMessages(prev => [...prev, payload.new]);
+      })
+      .subscribe();
 
-  const fetchFiles = async () => {
-    try {
-      const files = await api.getGroupFiles(groupId);
-      setFiles(files);
-    } catch (error) {
-      console.error('Error fetching files:', error);
-    }
+    return () => channel.unsubscribe();
   };
 
   const sendMessage = async (e) => {
@@ -108,149 +83,122 @@ const ChatRoom = () => {
     if (!newMessage.trim()) return;
 
     try {
-      if (!stompClient?.active) {
-        throw new Error('WebSocket not connected');
-      }
+      const { error } = await supabase
+        .from('messages')
+        .insert([{
+          group_id: groupId,
+          sender_email: userEmail,
+          content: newMessage.trim(),
+          created_at: new Date().toISOString()
+        }]);
 
-      const messageData = {
-        groupId,
-        senderEmail: userEmail,
-        content: newMessage,
-        timestamp: new Date().toISOString()
-      };
-
-      stompClient.publish({
-        destination: "/app/chat.send",
-        body: JSON.stringify(messageData)
-      });
-      
+      if (error) throw error;
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
-      alert('Failed to send message. Please refresh the page.');
+      alert('Failed to send message');
     }
   };
 
-  const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  if (loading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
 
-    try {
-      const maxSize = 5 * 1024 * 1024; // 5MB limit
-      if (file.size > maxSize) {
-        throw new Error('File size should be less than 5MB');
-      }
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-xl text-red-500">{error}</div>
+      </div>
+    );
+  }
 
-      const response = await api.uploadFile(groupId, file);
-      console.log('File upload successful:', response);
-      await fetchFiles(); // Refresh files list
-      event.target.value = ''; // Reset file input
-      alert('File uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      setUploadError(error.response?.data?.message || 'Failed to upload file. Please try again.');
-    }
-  };
+  if (!group) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="text-xl">Group not found</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen">
-      {/* Group Details Sidebar */}
-      <div className="w-64 bg-gray-100 p-4 border-r">
-        {loading ? (
-          <div>Loading group details...</div>
-        ) : error ? (
-          <div className="text-red-500">{error}</div>
-        ) : group ? (
-          <>
-            <h2 className="text-xl font-bold mb-4">{group.name}</h2>
-            <p className="text-sm text-gray-600 mb-2">{group.university}</p>
-            <p className="text-sm text-gray-600 mb-4">{group.description}</p>
-            <div className="mb-4">
-              <h3 className="font-semibold mb-2">Members ({group.memberEmails?.length})</h3>
-              <ul className="text-sm">
-                {group.memberEmails?.map((email, index) => (
-                  <li key={index} className="mb-1">
-                    {email === group.adminEmail ? (
-                      <span className="text-green-600">{email} (Admin)</span>
-                    ) : (
-                      email
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            {/* File Upload Section */}
-            <div className="mt-4">
-              <h3 className="font-semibold mb-2">Files</h3>
-              <input
-                type="file"
-                onChange={handleFileUpload}
-                className="mb-2"
-                accept=".pdf,.doc,.docx,.txt" // Limit file types
-              />
-              {uploadError && (
-                <p className="text-red-500 text-sm mb-2">{uploadError}</p>
-              )}
-              <ul className="text-sm">
-                {files.map((file, index) => (
-                  <li key={index} className="mb-1">
-                    <a 
-                      href={file.url} 
-                      className="text-blue-500 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {file.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        ) : null}
-      </div>
-
-      {/* Chat Section */}
+      {/* Main chat area */}
       <div className="flex-1 flex flex-col">
-        {/* Messages */}
+        {/* Group header */}
+        <div className="bg-white border-b p-4">
+          <h1 className="text-xl font-semibold">{group?.name || 'Loading...'}</h1>
+          <p className="text-sm text-gray-500">{group?.description}</p>
+        </div>
+
+        {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((msg, index) => (
+          {messages.map((message) => (
             <div
-              key={index}
-              className={`p-2 rounded-lg max-w-[70%] ${
-                msg.senderEmail === userEmail
-                  ? 'ml-auto bg-blue-500 text-white'
-                  : 'bg-gray-200'
+              key={message.id}
+              className={`max-w-[70%] ${
+                message.sender_email === userEmail ? 'ml-auto' : ''
               }`}
             >
-              <p className="text-sm font-semibold">{msg.senderEmail}</p>
-              <p>{msg.content}</p>
-              <p className="text-xs opacity-75">
-                {new Date(msg.timestamp).toLocaleTimeString()}
-              </p>
+              <div className="bg-white rounded-lg shadow p-3">
+                <div className="font-medium text-sm">
+                  {message.sender_email === userEmail ? 'You' : message.sender_email}
+                </div>
+                <div className="mt-1">{message.content}</div>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Message Input */}
-        <form onSubmit={sendMessage} className="p-4 border-t">
+        {/* Message input */}
+        <form onSubmit={sendMessage} className="p-4 bg-white border-t">
           <div className="flex space-x-2">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              className="flex-1 border rounded-lg p-2"
               placeholder="Type a message..."
+              className="flex-1 p-2 border rounded-lg"
             />
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg"
             >
               Send
             </button>
           </div>
         </form>
+      </div>
+
+      {/* Sidebar */}
+      <div className="w-64 bg-gray-50 border-l p-4">
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-2">Files</h3>
+          <FileUpload 
+            groupId={groupId} 
+            onFileUpload={(newFile) => setFiles(prev => [...prev, newFile])}
+          />
+          <div className="mt-2">
+            {files.map(file => (
+              <div key={file.id} className="text-sm text-blue-500 hover:underline">
+                {file.name}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Members</h3>
+          {group && (
+            <MembersList 
+              members={group.memberEmails || []}
+              adminEmail={group.adminEmail}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

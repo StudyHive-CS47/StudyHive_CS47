@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
+import { supabase } from './supabase';
 
 const BASE_URL = 'http://localhost:8080/api';
 const WS_URL = 'http://localhost:8080/ws';
@@ -12,21 +13,23 @@ const currentUserEmail = "user@example.com";
 let stompClient = null;
 
 export const api = {
+  // MongoDB operations
   createGroup: async (groupData) => {
     try {
-      const response = await axios.post(`${BASE_URL}/groups`, {
-        ...groupData,
-        adminEmail: groupData.adminEmail,
-        memberEmails: [groupData.adminEmail],
-        fileIds: [],
-        createdAt: Date.now()
-      });
-      
-      // After creating group, fetch my groups to update the list
-      await api.getMyGroups(groupData.adminEmail);
-      return response;
+      const response = await axios.post(`${BASE_URL}/groups`, groupData);
+      return response.data;
     } catch (error) {
       console.error('Error creating group:', error);
+      throw error;
+    }
+  },
+
+  getGroupById: async (groupId) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/groups/${groupId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching group:', error);
       throw error;
     }
   },
@@ -34,7 +37,6 @@ export const api = {
   getMyGroups: async (email) => {
     try {
       const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(email)}`);
-      console.log('My Groups Response:', response.data); // Debug log
       return response;
     } catch (error) {
       console.error('Error fetching my groups:', error);
@@ -42,42 +44,15 @@ export const api = {
     }
   },
 
-  getGroupMessages: async (groupId) => {
-    const response = await axios.get(`${BASE_URL}/groups/${groupId}/messages`);
-    return response.data;
-  },
-
-  sendMessage: async (groupId, message) => {
-    if (stompClient && stompClient.connected) {
-      await stompClient.publish({
-        destination: '/app/chat',
-        body: JSON.stringify({
-          groupId,
-          senderEmail: currentUserEmail,
-          content: message,
-          timestamp: new Date().toISOString()
-        })
-      });
-    } else {
-      throw new Error('WebSocket not connected');
-    }
-  },
-
+  // File operations (MongoDB)
   uploadFile: async (groupId, file) => {
+    const formData = new FormData();
+    formData.append('file', file);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('uploadedBy', localStorage.getItem('userEmail')); // Add uploadedBy
-
-      const response = await axios.post(`${BASE_URL}/groups/${groupId}/files`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('File upload response:', response);
+      const response = await axios.post(`${BASE_URL}/groups/${groupId}/files`, formData);
       return response.data;
     } catch (error) {
-      console.error('File upload error:', error.response?.data || error);
+      console.error('Error uploading file:', error);
       throw error;
     }
   },
@@ -88,8 +63,49 @@ export const api = {
       return response.data;
     } catch (error) {
       console.error('Error fetching files:', error);
-      return []; // Return empty array on error
+      throw error;
     }
+  },
+
+  // Supabase chat operations
+  sendMessage: async (groupId, content, senderEmail) => {
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .insert([{
+          group_id: groupId,
+          sender_email: senderEmail,
+          content: content,
+          created_at: new Date().toISOString()
+        }]);
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error sending message:', error);
+      throw error;
+    }
+  },
+
+  getMessages: async (groupId) => {
+    try {
+      const { data, error } = await supabase
+        .from('messages')
+        .select('*')
+        .eq('group_id', groupId)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+      throw error;
+    }
+  },
+
+  getGroupMessages: async (groupId) => {
+    const response = await axios.get(`${BASE_URL}/groups/${groupId}/messages`);
+    return response.data;
   },
 
   joinGroup: async (groupId, userData) => {
@@ -107,16 +123,6 @@ export const api = {
   approveJoinRequest: async (requestId) => {
     const response = await axios.post(`${BASE_URL}/groups/approve-request/${requestId}`);
     return response.data;
-  },
-
-  getGroupById: async (groupId) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/groups/${groupId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching group:', error);
-      throw error;
-    }
   },
 
   connectToChat: (groupId, onMessageReceived) => {

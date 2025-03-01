@@ -13,6 +13,10 @@ public class Message {
     private String senderEmail;
     private String content;
 
+    public Message() {
+
+    }
+
     public void setId(String id) {
         this.id = id;
     }

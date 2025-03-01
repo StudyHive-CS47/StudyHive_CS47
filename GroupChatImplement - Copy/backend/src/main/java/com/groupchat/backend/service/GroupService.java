@@ -7,6 +7,7 @@ import com.groupchat.backend.repository.JoinRequestRepository;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final JoinRequestRepository joinRequestRepository;
 
+    @Autowired
     public GroupService(GroupRepository groupRepository, JoinRequestRepository joinRequestRepository) {
         this.groupRepository = groupRepository;
         this.joinRequestRepository = joinRequestRepository;
