@@ -13,19 +13,28 @@ let stompClient = null;
 
 export const api = {
   createGroup: async (groupData) => {
-    const response = await axios.post(`${BASE_URL}/groups`, {
-      ...groupData,
-      adminEmail: groupData.adminEmail,
-      memberEmails: [groupData.adminEmail],
-      fileIds: [],
-      createdAt: Date.now()
-    });
-    return response;
+    try {
+      const response = await axios.post(`${BASE_URL}/groups`, {
+        ...groupData,
+        adminEmail: groupData.adminEmail,
+        memberEmails: [groupData.adminEmail],
+        fileIds: [],
+        createdAt: Date.now()
+      });
+      
+      // After creating group, fetch my groups to update the list
+      await api.getMyGroups(groupData.adminEmail);
+      return response;
+    } catch (error) {
+      console.error('Error creating group:', error);
+      throw error;
+    }
   },
 
   getMyGroups: async (email) => {
     try {
       const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(email)}`);
+      console.log('My Groups Response:', response.data); // Debug log
       return response;
     } catch (error) {
       console.error('Error fetching my groups:', error);
@@ -55,19 +64,32 @@ export const api = {
   },
 
   uploadFile: async (groupId, file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    const response = await axios.post(`${BASE_URL}/groups/${groupId}/files`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data;
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('uploadedBy', localStorage.getItem('userEmail')); // Add uploadedBy
+
+      const response = await axios.post(`${BASE_URL}/groups/${groupId}/files`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File upload response:', response);
+      return response.data;
+    } catch (error) {
+      console.error('File upload error:', error.response?.data || error);
+      throw error;
+    }
   },
 
   getGroupFiles: async (groupId) => {
-    const response = await axios.get(`${BASE_URL}/groups/${groupId}/files`);
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/groups/${groupId}/files`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      return []; // Return empty array on error
+    }
   },
 
   joinGroup: async (groupId, userData) => {
@@ -88,8 +110,13 @@ export const api = {
   },
 
   getGroupById: async (groupId) => {
-    const response = await axios.get(`${BASE_URL}/groups/${groupId}`);
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/groups/${groupId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching group:', error);
+      throw error;
+    }
   },
 
   connectToChat: (groupId, onMessageReceived) => {

@@ -5,6 +5,7 @@ import ExploreGroups from './components/GroupChat/ExploreGroups'
 import GroupDetail from './components/GroupChat/GroupDetail'
 import GroupList from './components/GroupChat/GroupList'
 import MyGroups from './components/Groups/MyGroups'
+import ChatRoom from './components/Chat/ChatRoom'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/explore" element={<ExploreGroups />} />
           <Route path="/group/:id" element={<GroupDetail />} />
           <Route path="/my-groups" element={<MyGroups />} />
+          <Route path="/chat/:groupId" element={<ChatRoom />} />
         </Routes>
       </div>
     </Router>

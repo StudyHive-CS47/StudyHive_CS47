@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { api } from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 const CreateGroup = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const CreateGroup = () => {
     memberEmails: [] // Initialize empty array for members
   });
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,12 +23,13 @@ const CreateGroup = () => {
       
       const groupData = {
         ...formData,
+        adminEmail: formData.adminEmail,
         memberEmails: [formData.adminEmail]
       };
       
       await api.createGroup(groupData);
       alert('Group created successfully!');
-      window.location.href = '/my-groups';
+      navigate('/my-groups');
     } catch (error) {
       console.error('Error creating group:', error);
       alert('Failed to create group');
