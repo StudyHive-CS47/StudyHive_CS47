@@ -1,72 +1,77 @@
-.header {
-  background: white;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 8px 0;
+.las_header {
+  background: white!important;
+  border-bottom: 1px solid #e0e0e0!important;
+  padding: 8px 0!important;
+  position: fixed!important;
+  top: 0!important;
+  left: 0!important;
+  right: 0!important;
+  z-index: 1000!important;
 }
 
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
+.las_header-content {
+  max-width: 1200px!important;
+  margin: 0 auto!important;
+  display: flex!important;
+  align-items: center!important;
+  justify-content: space-between!important;
+  padding: 0 16px!important;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.las_header-left {
+  display: flex!important;
+  align-items: center!important;
+  gap: 8px!important;
 }
 
-.header-logo {
-  height: 32px;
-  width: auto;
+.las_header-logo {
+  height: 32px!important;
+  width: auto!important;
 }
 
-.header-title {
-  font-size: 20px;
-  font-weight: 500;
-  color: #000;
-  margin: 0;
+.las_header-title {
+  font-size: 20px!important;
+  font-weight: 500!important;
+  color: #000!important;
+  margin: 0!important;
 }
 
-.header-nav {
-  display: flex;
-  gap: 32px;
+.las_header-nav {
+  display: flex!important;
+  gap: 32px!important;
 }
 
-.header-nav a {
-  color: #666;
-  text-decoration: none;
-  font-size: 14px;
-  white-space: nowrap;
+.las_header-nav a {
+  color: #666!important;
+  text-decoration: none!important;
+  font-size: 14px!important;
+  white-space: nowrap!important;
 }
 
-.header-nav a:hover {
-  color: #000;
+.las_header-nav a:hover {
+  color: #000!important;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.las_header-right {
+  display: flex!important;
+  align-items: center!important;
+  gap: 8px!important;
 }
 
-.search-button,
-.profile-button {
-  background: none;
-  border: none;
-  padding: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: background-color 0.2s;
+.las_search-button,
+.las_profile-button {
+  background: none!important;
+  border: none!important;
+  padding: 8px!important;
+  cursor: pointer!important;
+  display: flex!important;
+  align-items: center!important;
+  justify-content: center!important;
+  border-radius: 50%!important;
+  transition: background-color 0.2s!important;
 }
 
-.search-button:hover,
-.profile-button:hover {
-  background-color: #f5f5f5;
-} 
+.las_search-button:hover,
+.las_profile-button:hover {
+  background-color: #f5f5f5!important;
+}
