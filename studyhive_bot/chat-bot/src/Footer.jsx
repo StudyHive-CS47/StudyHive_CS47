@@ -1,17 +1,11 @@
 import React from 'react';
 import './Footer.css';
-import ChatAssistant from './components/Chatbot_new';
-// Comment out or update the logo import to the correct path
-// import logo from './assets/logo.png';
 
 function Footer() {
   return (
-    <>
-      <ChatAssistant />
-      <footer className="footer">
+    <footer className="footer">
+      <div className="footer-content">
         <div className="footer-left">
-          {/* Temporarily remove or update the logo image until you have the correct path */}
-          {/* <img src={logo} alt="StudyHive" className="footer-logo" /> */}
           <h2 className="footer-brand">StudyHive</h2>
         </div>
         <div className="footer-center">
@@ -32,8 +26,8 @@ function Footer() {
             <i className="fab fa-github"></i>
           </a>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
 

@@ -1,109 +1,299 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './Chatbot.css';
+import { API_KEY, API_URL } from '../config/api';
 
 const ChatAssistant = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hello! How can I help you today?'
+      content: "WELCOME! I'M BUZZBUDDY",
+      timestamp: new Date().toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      })
     }
   ]);
+  
+  // Remove the static chatHistory and use the dynamic one
+  const [chatHistory, setChatHistory] = useState([]);
+  const [currentChatId, setCurrentChatId] = useState(null);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
 
-  // Function to simulate AI response
-  const getAIResponse = async (userMessage) => {
-    setIsLoading(true);
+  // Add these new functions
+  const fetchChatHistory = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/chat/history');
+      const data = await response.json();
+      setChatHistory(data);
+    } catch (error) {
+      console.error('Error fetching chat history:', error);
+    }
+  };
+
+  const fetchChatMessages = async (chatId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/chat/messages/${chatId}`);
+      const data = await response.json();
+      setMessages(data);
+    } catch (error) {
+      console.error('Error fetching chat messages:', error);
+    }
+  };
+
+  const handleNewChat = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/chat/new', {
+        method: 'POST'
+      });
+      const data = await response.json();
+      setCurrentChatId(data.id);
+      setMessages([{
+        role: 'assistant',
+        content: "WELCOME! I'M BUZZBUDDY",
+        timestamp: new Date().toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: false 
+        })
+      }]);
+      await fetchChatHistory();
+    } catch (error) {
+      console.error('Error creating new chat:', error);
+    }
+  };
+
+  const formatBotResponse = (text) => {
+    // Split by sentences (considering multiple punctuation marks)
+    const sentences = text.split(/(?<=[.!?])\s+/);
     
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Default response
-    let responseText = "I'm here to help! Please let me know what you'd like to learn about.";
-    
-    setIsLoading(false);
-    return responseText;
+    // Join sentences with line breaks and proper spacing
+    return sentences
+      .map(sentence => sentence.trim())
+      .filter(sentence => sentence.length > 0)
+      .join('\n\n');
+  };
+
+  const getBotResponse = async (userMessage) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          message: userMessage,
+          chatId: currentChatId 
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Bot response:', data);
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      // Format the response before returning
+      return formatBotResponse(data.response);
+    } catch (error) {
+      console.error('Error getting bot response:', error);
+      return "I apologize, but I'm having trouble connecting right now. Please try again later.";
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input.trim() === '') return;
-    
+    if (!input.trim()) return;
+
     // Add user message
-    const userMessage = { role: 'user', content: input.trim() };
+    const userMessage = {
+      role: 'user',
+      content: input,
+      timestamp: new Date().toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      })
+    };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-    
-    // Get AI response
-    const aiResponse = await getAIResponse(input);
-    setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+
+    // Get and add bot response
+    const botResponse = await getBotResponse(input);
+    const botMessage = {
+      role: 'assistant',
+      content: botResponse,
+      timestamp: new Date().toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      })
+    };
+    setMessages(prev => [...prev, botMessage]);
   };
 
-  // Auto-scroll to bottom when messages change
+  // Add file handling function
+  const handleFileClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Handle the selected file here
+      console.log('Selected file:', file.name);
+      // You can add logic to upload or process the file
+    }
+  };
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Add useEffect to fetch chat history on component mount
+  useEffect(() => {
+    fetchChatHistory();
+  }, []);
+
+  // Add click handler for chat history items
+  const handleChatClick = async (chatId) => {
+    setCurrentChatId(chatId);
+    await fetchChatMessages(chatId);
+  };
+
   return (
-    <div className="flex flex-col w-full max-w-xl mx-auto h-96 border rounded-lg shadow-lg bg-gray-50">
-      {/* Chat header */}
-      <div className="bg-blue-600 text-white p-3 rounded-t-lg">
-        <h2 className="text-xl font-semibold">StudyHive Assistant</h2>
-      </div>
-      
-      {/* Messages container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {messages.map((message, index) => (
-          <div 
-            key={index} 
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div 
-              className={`max-w-xs md:max-w-md p-3 rounded-lg ${
-                message.role === 'user' 
-                  ? 'bg-blue-500 text-white' 
-                  : 'bg-gray-200 text-gray-800'
-              }`}
-            >
-              {message.content}
-            </div>
+    <div className="chat-container">
+      <div className="sidebar">
+        {/* New Chat Button */}
+        <button onClick={handleNewChat} className="new-chat-button">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+          </svg>
+          New Chat
+        </button>
+
+        {/* History Section */}
+        <div className="history-section">
+          <div className="history-header">
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            History
           </div>
-        ))}
-        {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-gray-200 text-gray-800 p-3 rounded-lg">
-              <div className="flex space-x-2">
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce"></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+          
+          {/* Group chats by date */}
+          {['Today', 'Previous 7 Days'].map(date => (
+            <div key={date} className="date-group">
+              <div className="date-header">{date}</div>
+              <div className="chat-list">
+                {chatHistory
+                  .filter(chat => chat.date === date)
+                  .map(chat => (
+                    <div 
+                      key={chat.id} 
+                      className={`chat-item ${chat.id === currentChatId ? 'active' : ''}`}
+                      onClick={() => handleChatClick(chat.id)}
+                    >
+                      {chat.title}
+                    </div>
+                  ))
+                }
               </div>
             </div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
+          ))}
+        </div>
       </div>
-      
-      {/* Input form */}
-      <form onSubmit={handleSubmit} className="p-3 border-t border-gray-200">
-        <div className="flex">
+
+      <div className="chat-main">
+        <div className="chat-header">
+          <div className="chat-title">BuzzBuddy</div>
+        </div>
+
+        <div className="messages-container">
+          {messages.map((msg, index) => (
+            <div key={index} className="message-wrapper">
+              {msg.file && (
+                <div className="file-preview">
+                  <span>{msg.file.name}</span>
+                  <span className="file-url">{msg.file.url}</span>
+                </div>
+              )}
+              <div className={`message ${msg.role}`}>
+                <div className="message-avatar">
+                  {msg.role === 'user' ? (
+                    <img src="/user-avatar.png" alt="User" className="avatar" />
+                  ) : (
+                    <img src="/bot-avatar.png" alt="BuzzBuddy" className="avatar" />
+                  )}
+                </div>
+                <div className="message-bubble">
+                  <div className="message-content">{msg.content}</div>
+                  <div className="message-time">{msg.timestamp}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+          {isLoading && (
+            <div className="message-wrapper">
+              <div className="message assistant">
+                <div className="message-content typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        <form onSubmit={handleSubmit} className="input-area">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your message..."
-            className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Message to BuzzBuddy..."
+            className="message-input"
           />
-          <button
-            type="submit"
-            disabled={isLoading || input.trim() === ''}
-            className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700 disabled:bg-blue-400"
+          {/* Add hidden file input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            className="hidden-file-input"
+          />
+          {/* Update attachment button to trigger file input */}
+          <button 
+            type="button" 
+            className="attach-button"
+            onClick={handleFileClick}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clipRule="evenodd" />
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
             </svg>
           </button>
-        </div>
-      </form>
+          <button 
+            type="submit" 
+            className="send-button" 
+            disabled={!input.trim()}
+          >
+            Send
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
