@@ -57,7 +57,7 @@ function Summarizer() {
     <>
       <div className="summarizer-header">
         <h1>Summarize <RotatingText 
-          texts={['your notes', 'text', 'files', 'URL']}
+          texts={['Your Notes', 'Text', 'Files', 'URL']}
           mainClassName="rotating-text-wrapper"
           staggerFrom="last"
           initial={{ y: "100%" }}
