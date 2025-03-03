@@ -1,0 +1,42 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Production
+dist
+build
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Files to display
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\.gitignore"
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\src\contexts\AuthContext.jsx"
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\src\components\Header\Header.jsx"
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\src\components\Header\Header.css"
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\src\App.jsx"
+type "C:\Users\fdora\OneDrive\Documents\IIT Documents\My projects\Group Chat\group-chat\src\App.css"
