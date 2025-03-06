@@ -5,11 +5,11 @@
   background: #ffffff; /* White background for contrast */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  text-align: left; /* Align text to the left */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start; /* Align items to the start */
+  align-items: stretch; /* Stretch items to full width */
 }
 
 h1 {
@@ -18,23 +18,23 @@ h1 {
   color: #333;
 }
 
-.user-email {
+.user-email, .user-name, .user-university, .user-level {
   font-size: 18px;
   color: #555;
-  margin-bottom: 30px;
+  margin-bottom: 10px; /* Reduced margin for better spacing */
 }
 
 .password-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch; /* Stretch to full width */
   width: 100%; /* Full width for the form */
 }
 
 .password-field {
   position: relative; /* Position relative for the button */
   width: 100%; /* Full width */
-  margin-bottom: 20px; /* Space between fields */
+  margin-bottom: 10px; /* Space between fields */
 }
 
 .password-input {
@@ -44,6 +44,7 @@ h1 {
   border-radius: 5px;
   font-size: 16px;
   transition: border-color 0.3s;
+  margin-top: 10px;
 }
 
 .password-input:focus {
@@ -51,55 +52,56 @@ h1 {
   outline: none; /* Remove default outline */
 }
 
-.change-password-button {
-  background-color: #000000;
-  color: white;
-  border: none;
+.change-password-button, .logout-button, .reset-password-button {
+  margin-top: 10px; /* Space above the button */
   padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
-  width: 60%; /* Full width for the button */
+}
+
+.change-password-button {
+  background-color: #000000; /* Black background */
+  color: white;
+  border: none;
+  width: 58%; /* Full width for the button */
+  margin-top: 10px;
+  align-self: center;
 }
 
 .change-password-button:hover {
-  background-color: #535353;
+  background-color: #535353; /* Darker on hover */
 }
 
 .logout-button {
-  background-color: #dc3545;
+  background-color: #dc3545; /* Red background */
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-  width: 23%; /* Full width for the button */
+  width: 58%; /* Full width for the button */
+  align-self: center;
 }
 
 .logout-button:hover {
-  background-color: #70030e;
+  background-color: #70030e; /* Darker red on hover */
 }
 
-.error-message {
-  color: red;
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid red;
-  border-radius: 5px;
-  background-color: #ffe6e6; /* Light red background */
+.reset-password-button {
+  background-color: #000000; /* Blue background */
+  color: white;
+  border: none;
+  width: 58%; /* Full width for the button */
+  align-self: center;
 }
 
-.success-message {
-  color: green;
+.reset-password-button:hover {
+  background-color: rgb(84, 84, 85); /* Darker blue on hover */
+}
+
+.error-message, .success-message {
   margin-top: 10px;
   padding: 10px;
-  border: 1px solid green;
   border-radius: 5px;
-  background-color: #e6ffe6; /* Light green background */
 }
 
 .password-field button {
@@ -112,4 +114,5 @@ h1 {
   color: #000000; /* Button color */
   cursor: pointer; /* Pointer cursor */
   font-size: 14px; /* Font size */
+  
 } 
