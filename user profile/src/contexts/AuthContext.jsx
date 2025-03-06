@@ -19,7 +19,6 @@ export function AuthProvider({ children }) {
       setLoading(false);
 
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-        console.log('Auth state changed:', session);
         setUser(session?.user ?? null);
         setLoading(false);
       });
@@ -55,18 +54,13 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      console.log('Login attempt with:', email);
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      
-      console.log('Login response:', data);
-      
       if (error) throw error;
       return { data };
     } catch (error) {
-      console.error('Login error in context:', error);
       throw error;
     }
   };
@@ -80,11 +74,17 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const updatePassword = async (newPassword) => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    if (error) throw error;
+  };
+
   const value = {
     user,
     signup,
     login,
     logout,
+    updatePassword,
   };
 
   return (
@@ -96,6 +96,4 @@ export function AuthProvider({ children }) {
 
 AuthProvider.propTypes = {
   children: PropTypes.node.isRequired
-};
-
-export default AuthContext; 
+}; 

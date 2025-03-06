@@ -8,9 +8,7 @@ import SignupPage from './pages/Signup/SignupPage';
 import SuccessPage from './pages/Success/SuccessPage';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
-import ProfilePage from './pages/Profile/ProfilePage';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import './App.css';
+import UserProfilePage from './pages/User Profile/UserProfilePage'; // Ensure this path is correct
 
 function App() {
   return (
@@ -25,14 +23,8 @@ function App() {
                 <Routes>
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/signup" element={<SignupPage />} />
-                  <Route 
-                    path="/profile" 
-                    element={
-                      <PrivateRoute>
-                        <ProfilePage />
-                      </PrivateRoute>
-                    } 
-                  />
+                  <Route path="/success" element={<SuccessPage />} />
+                  <Route path="/profile" element={<UserProfilePage />} />
                   <Route path="/" element={<LoginPage />} />
                 </Routes>
               </React.Suspense>

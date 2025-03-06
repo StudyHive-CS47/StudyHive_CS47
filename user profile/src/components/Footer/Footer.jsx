@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Footer.css';
 import logo from '../../assets/logo.png';
 
@@ -7,17 +6,15 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="footer-left">
-        <Link to="/">
-          <img src={logo} alt="StudyHive" className="footer-logo" />
-          <h2 className="footer-brand">StudyHive</h2>
-        </Link>
+        <img src={logo} alt="StudyHive" className="footer-logo" />
+        <h2 className="footer-brand">StudyHive</h2>
       </div>
       <div className="footer-center">
-        <Link to="/about">About</Link>
-        <Link to="/features">Features</Link>
-        <Link to="/feedback">Feedback</Link>
-        <Link to="/donate">Donate</Link>
-        <Link to="/team">Team</Link>
+        <a href="/about">About</a>
+        <a href="/features">Features</a>
+        <a href="/feedback">Feedback</a>
+        <a href="/donate">Donate</a>
+        <a href="/team">Team</a>
       </div>
       <div className="footer-right">
         <a href="https://www.facebook.com/profile.php?id=61570160061839" className="social-link">

@@ -24,24 +24,17 @@ export default function LoginPage() {
     try {
       setError('');
       setLoading(true);
-      
-      console.log('Attempting login with:', formData.email);
-      
-      const { data, error } = await login(formData.email, formData.password);
+      const { error } = await login(formData.email, formData.password);
       
       if (error) {
-        console.error('Login error:', error);
         if (error.message.includes('Email not confirmed') || error.message.includes('Invalid login credentials')) {
           setError('Please verify your email before logging in. Check your university email inbox (including spam folder) for the verification link.');
           return;
         }
         throw error;
       }
-
-      console.log('Login successful:', data);
       
       navigate('/profile');
-      
     } catch (error) {
       console.error('Login error:', error);
       if (error.message.includes('Invalid login credentials')) {

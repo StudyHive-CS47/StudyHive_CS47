@@ -1,0 +1,115 @@
+.user-profile-container {
+  padding: 40px; /* Increased padding for a spacious look */
+  max-width: 500px;
+  margin: 100px auto; /* Center the card with margin */
+  background: #ffffff; /* White background for contrast */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.user-email {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+.password-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Full width for the form */
+}
+
+.password-field {
+  position: relative; /* Position relative for the button */
+  width: 100%; /* Full width */
+  margin-bottom: 20px; /* Space between fields */
+}
+
+.password-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.password-input:focus {
+  border-color: #007bff; /* Change border color on focus */
+  outline: none; /* Remove default outline */
+}
+
+.change-password-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100%; /* Full width for the button */
+}
+
+.change-password-button:hover {
+  background-color: #0056b3;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  width: 100%; /* Full width for the button */
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid red;
+  border-radius: 5px;
+  background-color: #ffe6e6; /* Light red background */
+}
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 5px;
+  background-color: #e6ffe6; /* Light green background */
+}
+
+.password-field button {
+  position: absolute; /* Position the button inside the input field */
+  right: 10px; /* Align to the right */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  background: none; /* No background */
+  border: none; /* No border */
+  color: #007bff; /* Button color */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 14px; /* Font size */
+} 
