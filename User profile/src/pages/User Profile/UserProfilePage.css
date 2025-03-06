@@ -52,7 +52,7 @@ h1 {
 }
 
 .change-password-button {
-  background-color: #007bff;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -60,11 +60,11 @@ h1 {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
-  width: 100%; /* Full width for the button */
+  width: 60%; /* Full width for the button */
 }
 
 .change-password-button:hover {
-  background-color: #0056b3;
+  background-color: #535353;
 }
 
 .logout-button {
@@ -77,11 +77,11 @@ h1 {
   font-size: 16px;
   margin-top: 10px;
   transition: background-color 0.3s;
-  width: 100%; /* Full width for the button */
+  width: 23%; /* Full width for the button */
 }
 
 .logout-button:hover {
-  background-color: #c82333;
+  background-color: #70030e;
 }
 
 .error-message {
@@ -109,7 +109,7 @@ h1 {
   transform: translateY(-50%); /* Adjust for vertical centering */
   background: none; /* No background */
   border: none; /* No border */
-  color: #007bff; /* Button color */
+  color: #000000; /* Button color */
   cursor: pointer; /* Pointer cursor */
   font-size: 14px; /* Font size */
 } 
