@@ -9,6 +9,7 @@ import SuccessPage from './pages/Success/SuccessPage';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
 import UserProfilePage from './pages/User Profile/UserProfilePage'; // Ensure this path is correct
+import HelpPage from './pages/Help/HelpPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                   <Route path="/signup" element={<SignupPage />} />
                   <Route path="/success" element={<SuccessPage />} />
                   <Route path="/profile" element={<UserProfilePage />} />
+                  <Route path="/help" element={<HelpPage />} />
                   <Route path="/" element={<LoginPage />} />
                 </Routes>
               </React.Suspense>

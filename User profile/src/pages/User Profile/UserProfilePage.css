@@ -2,7 +2,7 @@
   padding: 40px; /* Increased padding for a spacious look */
   max-width: 500px;
   margin: 100px auto; /* Center the card with margin */
-  background: linear-gradient(to bottom right, #ebe9e9, #ffffff); /* Gradient background */
+  background: linear-gradient(to bottom right, #f0f4f8, #ffffff); /* Gradient background */
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.39);
   text-align: left; /* Align text to the left */
@@ -18,12 +18,18 @@ h1 {
   margin-bottom: 20px;
   color: #333;
   text-align: center;
+  border-bottom: 2px solid #007bff; /* Add a bottom border */
+  padding-bottom: 10px; /* Space below the title */
+}
+
+.profile-details {
+  margin-bottom: 20px; /* Space below the details */
 }
 
 .user-email, .user-name, .user-university, .user-level {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 10px; /* Reduced margin for better spacing */
+  font-size: 16px;
+  color: #555; /* Softer color for the text */
+  margin: 5px 0; /* Space between lines */
 }
 
 .password-form {
@@ -126,7 +132,17 @@ h1 {
   }
 
   .user-email, .user-name, .user-university, .user-level {
-    font-size: 16px; /* Smaller font size for mobile */
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  .profile-avatar {
+    width: 80px; /* Smaller avatar on mobile */
+    height: 80px;
+  }
+
+  .avatar-option {
+    width: 50px; /* Smaller avatars in selection */
+    height: 50px;
   }
 
   .password-input {
@@ -135,5 +151,77 @@ h1 {
 
   .change-password-button, .logout-button, .reset-password-button {
     font-size: 14px; /* Smaller button font size for mobile */
+  }
+}
+
+.avatar-container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center; /* Center the avatar */
+  margin-bottom: 20px; /* Space below the avatar */
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #007bff; /* Add a border to the profile avatar */
+  transition: transform 0.3s; /* Add a hover effect */
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.avatar-selection {
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(5, 1fr); /* 5 avatars per row */
+  gap: 10px; /* Space between avatars */
+  margin-top: 20px;
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Rounded corners for a softer look */
+  padding: 15px; /* More padding for better spacing */
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+  width: 90%; /* Adjust width to fit the content */
+  max-width: 400px; /* Set a max width for the dropdown */
+  left: 50%; /* Center the dropdown */
+  transform: translateX(-50%); /* Adjust for centering */
+  opacity: 0; /* Start hidden */
+  visibility: hidden; /* Prevent interaction when hidden */
+}
+
+.avatar-selection.show {
+  opacity: 1; /* Fully visible when shown */
+  visibility: visible; /* Allow interaction */
+}
+
+.avatar-option {
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  transition: border-color 0.3s, transform 0.3s; /* Add transition for hover effect */
+  position: relative; /* Position relative for hover effects */
+}
+
+.avatar-option.selected {
+  border-color: #007bff; /* Highlight selected avatar */
+}
+
+.avatar-option:hover {
+  border-color: #007bff; /* Highlight on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5); /* Add shadow on hover */
+}
+
+/* Add media queries for responsiveness */
+@media (max-width: 768px) {
+  .avatar-selection {
+    width: 80%; /* Make it responsive on smaller screens */
   }
 } 
