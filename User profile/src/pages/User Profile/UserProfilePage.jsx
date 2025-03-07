@@ -13,6 +13,9 @@ export default function UserProfilePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showPasswordReset, setShowPasswordReset] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,6 +44,18 @@ export default function UserProfilePage() {
     setError('');
     setSuccess('');
 
+    // Check if old password is correct
+    const { error: oldPasswordError } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: oldPassword,
+    });
+
+    if (oldPasswordError) {
+      setError('Old password is incorrect. Please try again.');
+      return;
+    }
+
+    // Validate new password
     if (newPassword !== confirmPassword) {
       setError('New passwords do not match. Please ensure both fields are identical.');
       return;
@@ -84,33 +99,42 @@ export default function UserProfilePage() {
         <form onSubmit={handlePasswordChange} className="password-form">
           <div className="password-field">
             <input
-              type="password"
+              type={showOldPassword ? "text" : "password"}
               placeholder="Old Password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               required
               className="password-input"
             />
+            <button type="button" onClick={() => setShowOldPassword(!showOldPassword)}>
+              {showOldPassword ? "Hide" : "Show"}
+            </button>
           </div>
           <div className="password-field">
             <input
-              type="password"
+              type={showNewPassword ? "text" : "password"}
               placeholder="New Password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
               className="password-input"
             />
+            <button type="button" onClick={() => setShowNewPassword(!showNewPassword)}>
+              {showNewPassword ? "Hide" : "Show"}
+            </button>
           </div>
           <div className="password-field">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm New Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="password-input"
             />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? "Hide" : "Show"}
+            </button>
           </div>
           <button type="submit" className="change-password-button">Change Password</button>
           {error && <div className="error-message">{error}</div>}
