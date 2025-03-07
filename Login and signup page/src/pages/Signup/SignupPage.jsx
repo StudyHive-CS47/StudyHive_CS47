@@ -186,22 +186,18 @@ export default function SignupPage() {
 
       if (authError) throw authError;
 
-      // Create profile - even if this fails, we still want to show the verification message
-      try {
-        await supabase
-          .from('profiles')
-          .insert({
-            id: authData.user.id,
-            email: formData.email,
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            university: formData.university,
-            academic_level: formData.academicLevel,
-            bio: ''
-          });
-      } catch (profileError) {
-        console.error('Profile creation error:', profileError);
-      }
+      // Create profile
+      await supabase
+        .from('profiles')
+        .insert({
+          id: authData.user.id,
+          email: formData.email,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          university: formData.university,
+          academic_level: formData.academicLevel,
+          bio: ''
+        });
 
       // Store email for verification message
       setVerificationEmail(formData.email);
