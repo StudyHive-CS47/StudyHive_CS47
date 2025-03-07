@@ -249,22 +249,23 @@ h1 {
   color: #333;
 }
 
-/* Add these media queries at the end of your existing LoginPage.css */
-
+/* Mobile Optimization */
 @media (max-width: 768px) {
+  .login-container {
+    padding: 8px; /* Reduce padding on mobile */
+  }
+
   .login-box {
-    flex-direction: column;
-    min-height: auto;
-    width: 95%;
+    flex-direction: column; /* Stack elements vertically */
   }
 
-  .login-right {
-    display: none;
+  .login-left, .login-right {
+    padding: 16px; /* Reduce padding on mobile */
   }
 
-  .login-left {
-    padding: 30px 20px;
-    width: 100%;
+  .login-right img {
+    width: 150px; /* Smaller logo on mobile */
+    height: 150px; /* Smaller logo on mobile */
   }
 
   .login-form input,

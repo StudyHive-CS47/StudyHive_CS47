@@ -516,6 +516,18 @@ h1 {
     font-size: 14px;
     padding: 8px 12px;
   }
+
+  .signup-form {
+    padding: 16px;
+  }
+
+  .signup-form button[type="submit"] {
+    width: 100%;
+  }
+
+  .login-link {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 480px) {

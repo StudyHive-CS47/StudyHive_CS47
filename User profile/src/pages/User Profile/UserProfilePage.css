@@ -2,20 +2,22 @@
   padding: 40px; /* Increased padding for a spacious look */
   max-width: 500px;
   margin: 100px auto; /* Center the card with margin */
-  background: #ffffff; /* White background for contrast */
+  background: linear-gradient(to bottom right, #ebe9e9, #ffffff); /* Gradient background */
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.39);
   text-align: left; /* Align text to the left */
   display: flex;
   flex-direction: column;
   justify-content: flex-start; /* Align items to the start */
-  align-items: stretch; /* Stretch items to full width */
+  position: relative; /* Ensure positioning context for absolute children */
+  z-index: 1; /* Ensure it appears above the background */
 }
 
 h1 {
   font-size: 32px;
   margin-bottom: 20px;
   color: #333;
+  text-align: center;
 }
 
 .user-email, .user-name, .user-university, .user-level {
@@ -65,9 +67,7 @@ h1 {
   background-color: #000000; /* Black background */
   color: white;
   border: none;
-  width: 58%; /* Full width for the button */
-  margin-top: 10px;
-  align-self: center;
+  width: 100%; /* Full width for the button */
 }
 
 .change-password-button:hover {
@@ -78,8 +78,7 @@ h1 {
   background-color: #dc3545; /* Red background */
   color: white;
   border: none;
-  width: 58%; /* Full width for the button */
-  align-self: center;
+  width: 100%; /* Full width for the button */
 }
 
 .logout-button:hover {
@@ -90,12 +89,11 @@ h1 {
   background-color: #000000; /* Blue background */
   color: white;
   border: none;
-  width: 58%; /* Full width for the button */
-  align-self: center;
+  width: auto; /* Full width for the button */
 }
 
 .reset-password-button:hover {
-  background-color: rgb(84, 84, 85); /* Darker blue on hover */
+  background-color: #424242; /* Darker blue on hover */
 }
 
 .error-message, .success-message {
@@ -114,5 +112,28 @@ h1 {
   color: #000000; /* Button color */
   cursor: pointer; /* Pointer cursor */
   font-size: 14px; /* Font size */
-  
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  .user-profile-container {
+    padding: 20px; /* Reduce padding on mobile */
+    margin: 20px; /* Reduce margin on mobile */
+  }
+
+  h1 {
+    font-size: 24px; /* Smaller font size for mobile */
+  }
+
+  .user-email, .user-name, .user-university, .user-level {
+    font-size: 16px; /* Smaller font size for mobile */
+  }
+
+  .password-input {
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  .change-password-button, .logout-button, .reset-password-button {
+    font-size: 14px; /* Smaller button font size for mobile */
+  }
 } 
