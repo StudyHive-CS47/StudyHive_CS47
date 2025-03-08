@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGroup } from '../../contexts/GroupContext'
 import { api } from '../../services/api'
-import { Button } from '../common/Button'
+import Button from '../common/Button'
 
 const GroupList = () => {
   const navigate = useNavigate()

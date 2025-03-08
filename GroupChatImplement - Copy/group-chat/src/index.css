@@ -1,0 +1,94 @@
+/* Add these styles to your existing CSS */
+.nav-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+/* For mobile devices */
+@media (max-width: 640px) {
+  .nav-container {
+    padding: 0.5rem;
+  }
+  
+  .nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Add to your existing CSS */
+.modal {
+  width: 450px;
+  margin-top: -40px; /* Move form up a bit */
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure footer stays at bottom */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* Update the button styles */
+.cssbuttons-io-button {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 167, 62, 1) 0%,
+    rgba(102, 247, 113, 1) 100%
+  );
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  transition: all 0.3s ease;
+}
+
+.cssbuttons-io-button svg {
+  margin-right: 6px;
+  width: 24px;
+  height: 24px;
+}
+
+.cssbuttons-io-button:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.cssbuttons-io-button:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+
+/* Add container styles for better form positioning */
+.form-container {
+  @apply bg-white rounded-2xl shadow-sm overflow-hidden;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500;
+  background: #ffffff;
+}
+
+.form-label {
+  @apply block text-sm font-medium mb-1 text-gray-700;
+}
+
+.form-group {
+  @apply mb-6;
+} 
