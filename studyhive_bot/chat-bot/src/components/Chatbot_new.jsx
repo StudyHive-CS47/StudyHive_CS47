@@ -5,7 +5,7 @@ const ChatAssistant = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "WELCOME! I'M BUZZBUDDY",
+      content: "**WELCOME! I'M BUZZBUDDY**",
       timestamp: new Date().toLocaleString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -19,8 +19,12 @@ const ChatAssistant = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isPdfMode, setIsPdfMode] = useState(false);
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState(() => {
+    const savedHistory = localStorage.getItem('chatHistory');
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
   const [selectedChat, setSelectedChat] = useState(null);
+  const [hasPdfLoaded, setHasPdfLoaded] = useState(false);
 
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -40,10 +44,10 @@ const ChatAssistant = () => {
 
   // Function to save current chat to history
   const saveToHistory = () => {
-    if (messages.length > 1) { // Only save if there are messages beyond the welcome message
+    if (messages.length > 1) {
       const newChat = {
         id: Date.now(),
-        title: messages[1].content.substring(0, 30) + "...", // Use first user message as title
+        title: messages[1].content.substring(0, 30) + "...",
         timestamp: new Date().toLocaleString('en-US', {
           year: 'numeric',
           month: '2-digit',
@@ -52,7 +56,9 @@ const ChatAssistant = () => {
           minute: '2-digit',
           hour12: false
         }),
-        messages: [...messages]
+        messages: [...messages],
+        isPdfMode: isPdfMode,
+        hasPdfLoaded: hasPdfLoaded
       };
       setChatHistory(prev => [newChat, ...prev]);
     }
@@ -63,7 +69,7 @@ const ChatAssistant = () => {
     saveToHistory();
     setMessages([{
       role: 'assistant',
-      content: "WELCOME! I'M BUZZBUDDY",
+      content: "**WELCOME! I'M BUZZBUDDY**",
       timestamp: new Date().toLocaleString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -74,23 +80,52 @@ const ChatAssistant = () => {
       })
     }]);
     setSelectedChat(null);
+    setIsPdfMode(false);
   };
 
   // Function to load a chat from history
   const loadChat = (chat) => {
     setMessages(chat.messages);
     setSelectedChat(chat.id);
+    setIsPdfMode(chat.isPdfMode || false);
+    setHasPdfLoaded(chat.hasPdfLoaded || false);
+  };
+
+  // Add a function to clear chat history
+  const clearChatHistory = () => {
+    if (window.confirm('Are you sure you want to clear all chat history? This cannot be undone.')) {
+      localStorage.removeItem('chatHistory');
+      setChatHistory([]);
+    }
+  };
+
+  // Add this new function to handle individual chat deletion
+  const deleteChat = (chatId, e) => {
+    e.stopPropagation(); // Prevent chat selection when clicking delete
+    if (window.confirm('Are you sure you want to delete this chat?')) {
+      setChatHistory(prev => prev.filter(chat => chat.id !== chatId));
+      if (selectedChat === chatId) {
+        setSelectedChat(null);
+        startNewChat();
+      }
+    }
   };
 
   const formatBotResponse = (text) => {
-    // Split by sentences (considering multiple punctuation marks)
-    const sentences = text.split(/(?<=[.!?])\s+/);
-    
-    // Join sentences with line breaks and proper spacing
-    return sentences
-      .map(sentence => sentence.trim())
-      .filter(sentence => sentence.length > 0)
-      .join('\n\n');
+    // Handle bullet points and numbered lists
+    text = text.replace(/•/g, '\n•');
+    text = text.replace(/(\d+\.\s)/g, '\n$1');
+
+    // Handle code blocks
+    text = text.replace(/```(.*?)```/gs, (match) => `\n${match}\n`);
+
+    // Add spacing after punctuation
+    text = text.replace(/([.!?])\s*/g, '$1\n\n');
+
+    // Remove extra newlines
+    text = text.replace(/\n{3,}/g, '\n\n');
+
+    return text.trim();
   };
 
   const getBotResponse = async (userMessage) => {
@@ -112,7 +147,7 @@ const ChatAssistant = () => {
       }
 
       const data = await response.json();
-      return data.response;
+      return formatBotResponse(data.response);
     } catch (error) {
       console.error('Error getting bot response:', error);
       return "I apologize, but I'm having trouble connecting right now. Please try again later.";
@@ -179,6 +214,7 @@ const ChatAssistant = () => {
       const data = await response.json();
 
       if (response.ok) {
+        setHasPdfLoaded(true);
         setIsPdfMode(true);
         const botMessage = {
           role: 'assistant',
@@ -214,6 +250,14 @@ const ChatAssistant = () => {
     }
   };
 
+  const handleModeToggle = () => {
+    if (!hasPdfLoaded && !isPdfMode) {
+      alert('Please upload a PDF file first');
+      return;
+    }
+    setIsPdfMode(!isPdfMode);
+  };
+
   // Handle file input click
   const handleFileClick = () => {
     fileInputRef.current.click();
@@ -224,6 +268,43 @@ const ChatAssistant = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Update message content rendering
+  const renderMessageContent = (content) => {
+    return content.split('\n').map((line, index) => {
+      if (line.trim().startsWith('```')) {
+        return (
+          <pre key={index} className="code-block">
+            <code>{line.replace(/```/g, '').trim()}</code>
+          </pre>
+        );
+      } else if (line.trim().startsWith('•')) {
+        return <li key={index} className="bullet-point">{formatTextWithBold(line.trim())}</li>;
+      } else if (line.trim().match(/^\d+\./)) {
+        return <li key={index} className="numbered-list">{formatTextWithBold(line.trim())}</li>;
+      } else {
+        return <p key={index} className="text-line">{formatTextWithBold(line)}</p>;
+      }
+    });
+  };
+
+  // Update the formatTextWithBold function
+  const formatTextWithBold = (text) => {
+    // Split by pairs of asterisks
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        // Remove double asterisks and wrap in bold tag
+        return <strong key={index} className="bold-text">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
+  // Add useEffect to save chatHistory to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+  }, [chatHistory]);
+
   return (
     <div className="app-container">
       {/* Sidebar */}
@@ -233,10 +314,19 @@ const ChatAssistant = () => {
             onClick={startNewChat}
             className="new-chat-button"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             <span>New chat</span>
+          </button>
+          <button
+            onClick={clearChatHistory}
+            className="clear-history-button"
+            title="Clear all chat history"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
           </button>
         </div>
 
@@ -249,12 +339,30 @@ const ChatAssistant = () => {
                 className={`history-item ${selectedChat === chat.id ? 'selected' : ''}`}
               >
                 <div className="history-item-content">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    {chat.isPdfMode ? (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    ) : (
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    )}
                   </svg>
-                  <span className="history-title">{chat.title}</span>
+                  <div className="history-text">
+                    <span className="history-title">
+                      {chat.title}
+                      {chat.isPdfMode && <span className="history-pdf-indicator">PDF</span>}
+                    </span>
+                    <span className="history-date">{chat.timestamp}</span>
+                  </div>
+                  <button
+                    className="delete-chat-button"
+                    onClick={(e) => deleteChat(chat.id, e)}
+                    title="Delete chat"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
                 </div>
-                <span className="history-date">{chat.timestamp}</span>
               </div>
             ))}
           </div>
@@ -264,7 +372,9 @@ const ChatAssistant = () => {
       {/* Main Chat Area */}
       <main className="main-content">
         <div className="chat-header">
-          <div className="chat-title">BuzzBuddy</div>
+          <div className="chat-title">
+            BuzzBuddy {isPdfMode && <span className="pdf-mode-indicator">(PDF Mode)</span>}
+          </div>
         </div>
 
         <div className="messages-container">
@@ -281,7 +391,9 @@ const ChatAssistant = () => {
                 <div className="message-timestamp">
                   {msg.timestamp}
                 </div>
-                <div className="message-content">{msg.content}</div>
+                <div className="message-content">
+                  {renderMessageContent(msg.content)}
+                </div>
               </div>
             </div>
           ))}
@@ -299,11 +411,23 @@ const ChatAssistant = () => {
 
         <div className="chat-input-container">
           <form onSubmit={handleSubmit} className="input-area">
+            <div className="mode-toggle">
+              <span className={`mode-label ${!isPdfMode ? 'active' : ''}`}>AI</span>
+              <button
+                type="button"
+                className={`toggle-switch ${isPdfMode ? 'active' : ''} ${!hasPdfLoaded ? 'disabled' : ''}`}
+                onClick={handleModeToggle}
+                title={!hasPdfLoaded ? 'Upload a PDF first' : 'Switch between General and PDF mode'}
+              >
+                <span className="toggle-slider"></span>
+              </button>
+              <span className={`mode-label ${isPdfMode ? 'active' : ''}`}>PDF</span>
+            </div>
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Message BuzzBuddy..."
+              placeholder={isPdfMode ? "Ask questions about the PDF..." : "Message BuzzBuddy..."}
               className="message-input"
             />
             <div className="input-actions">
@@ -311,7 +435,7 @@ const ChatAssistant = () => {
                 type="button" 
                 className="attach-button"
                 onClick={handleFileClick}
-                title="Attach file"
+                title="Attach PDF"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48" />
@@ -334,7 +458,7 @@ const ChatAssistant = () => {
               ref={fileInputRef}
               onChange={handleFileChange}
               className="hidden-file-input"
-              accept=".pdf,.doc,.docx,.txt"
+              accept=".pdf"
             />
           </form>
         </div>
