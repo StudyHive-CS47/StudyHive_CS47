@@ -65,7 +65,7 @@
   border-radius: 16px;
 }
 
-/* Add these styles to your existing CSS */
+/* Update the nav styles */
 .nav-icon {
   transition: all 0.2s ease-in-out;
 }
@@ -78,6 +78,7 @@
 @media (max-width: 640px) {
   .nav-container {
     padding: 0.5rem;
+    left: 0.5rem;
   }
   
   .nav-icon {
@@ -108,4 +109,78 @@
   left: 0;
   right: 0;
   z-index: 10;
+}
+
+/* Update search bar styles */
+.group {
+  @apply relative;
+}
+
+.input {
+  @apply h-12 pl-12 pr-4 w-full rounded-xl bg-gray-50 border border-gray-200
+    focus:ring-2 focus:ring-purple-200 focus:border-purple-400 text-gray-700 placeholder-gray-400;
+}
+
+.icon {
+  @apply absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;
+}
+
+.filter-btn {
+  @apply flex items-center space-x-2 px-4 py-2 w-full rounded-lg transition-colors bg-white hover:bg-gray-50;
+}
+
+.filter-btn.active {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.group-card {
+  @apply bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow;
+}
+
+.join-btn {
+  @apply px-4 py-1.5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-sm font-medium;
+}
+
+/* New horizontal filter buttons */
+.filter-btn-horizontal {
+  @apply flex items-center px-6 py-2 rounded-lg transition-colors bg-white;
+}
+
+.filter-btn-horizontal.active {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.filter-btn-horizontal:hover {
+  @apply bg-gray-100;
+}
+
+/* Updated group card for horizontal layout */
+.group-card-horizontal {
+  @apply bg-white p-4 rounded-lg shadow-sm hover:shadow transition-shadow;
+}
+
+/* New modern styles */
+.filter-tab {
+  @apply px-6 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors;
+}
+
+.filter-tab.active {
+  @apply bg-purple-100 text-purple-700 font-medium;
+}
+
+.trending-group-item {
+  @apply flex justify-between items-center p-3 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+.modern-group-card {
+  @apply bg-white p-6 rounded-2xl border border-gray-100 hover:shadow-lg transition-all;
+}
+
+.group-avatar {
+  @apply w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-semibold;
+}
+
+.modern-join-btn {
+  @apply w-full mt-4 py-2.5 bg-purple-600 text-white rounded-xl font-medium
+    hover:bg-purple-700 transition-colors text-sm flex items-center justify-center;
 } 

@@ -10,8 +10,8 @@ const NavBar = () => {
   };
 
   return (
-    <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-gray-200 rounded-full px-6 py-3 shadow-lg z-20">
-      <div className="flex space-x-12 items-center">
+    <div className="fixed left-6 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full px-3 py-6 shadow-lg z-20">
+      <div className="flex flex-col space-y-8 items-center">
         <div
           onClick={() => navigate('/explore')}
           className={`flex flex-col items-center cursor-pointer ${
