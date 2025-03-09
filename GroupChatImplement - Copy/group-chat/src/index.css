@@ -1,45 +1,23 @@
-/* Add these styles to your existing CSS */
-.nav-icon {
-  transition: all 0.2s ease-in-out;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.nav-icon:hover {
-  transform: scale(1.1);
-}
-
-/* For mobile devices */
-@media (max-width: 640px) {
-  .nav-container {
-    padding: 0.5rem;
+@layer components {
+  .form-group {
+    @apply mb-6;
   }
   
-  .nav-icon {
-    width: 1.5rem;
-    height: 1.5rem;
+  /* Move all other classes that use @apply inside this layer */
+  .form-input {
+    @apply w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium mb-1 text-gray-700;
   }
 }
 
-/* Add to your existing CSS */
-.modal {
-  width: 450px;
-  margin-top: -40px; /* Move form up a bit */
-  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
-  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Ensure footer stays at bottom */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-/* Update the button styles */
+/* Keep regular CSS rules outside @layer */
 .cssbuttons-io-button {
   display: flex;
   align-items: center;
@@ -77,18 +55,57 @@
 
 /* Add container styles for better form positioning */
 .form-container {
-  @apply bg-white rounded-2xl shadow-sm overflow-hidden;
+  @apply bg-white rounded-2xl overflow-hidden;
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 
+              0px 105px 63px rgba(0, 0, 0, 0.05), 
+              0px 47px 47px rgba(0, 0, 0, 0.09), 
+              0px 12px 26px rgba(0, 0, 0, 0.1), 
+              0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
 }
 
-.form-input {
-  @apply w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500;
-  background: #ffffff;
+/* Add these styles to your existing CSS */
+.nav-icon {
+  transition: all 0.2s ease-in-out;
 }
 
-.form-label {
-  @apply block text-sm font-medium mb-1 text-gray-700;
+.nav-icon:hover {
+  transform: scale(1.1);
 }
 
-.form-group {
-  @apply mb-6;
+/* For mobile devices */
+@media (max-width: 640px) {
+  .nav-container {
+    padding: 0.5rem;
+  }
+  
+  .nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Add to your existing CSS */
+.modal {
+  width: 1000px;
+  margin-top: -40px; /* Move form up a bit */
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 
+              0px 105px 63px rgba(0, 0, 0, 0.05), 
+              0px 47px 47px rgba(0, 0, 0, 0.09), 
+              0px 12px 26px rgba(0, 0, 0, 0.1), 
+              0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure footer stays at bottom */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 } 

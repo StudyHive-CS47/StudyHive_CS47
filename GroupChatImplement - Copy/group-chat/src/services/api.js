@@ -4,8 +4,9 @@ import { Client } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { supabase } from './supabase';
 
-const BASE_URL = 'http://localhost:8080/api';
-const WS_URL = 'http://localhost:8080/ws';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const BASE_URL = `${API_URL}/api`;
+const WS_URL = `${API_URL}/ws`;
 
 // Simulating a logged-in user - replace with actual auth
 const currentUserEmail = "user@example.com"; 
@@ -35,8 +36,11 @@ export const api = {
   },
 
   getMyGroups: async (email) => {
+    if (!email) {
+      throw new Error('Email is required');
+    }
     try {
-      const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${encodeURIComponent(email)}`);
+      const response = await axios.get(`${BASE_URL}/groups/my-groups?email=${email}`);
       return response;
     } catch (error) {
       console.error('Error fetching my groups:', error);

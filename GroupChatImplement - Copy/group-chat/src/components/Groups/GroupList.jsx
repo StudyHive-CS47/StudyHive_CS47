@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../../services/api';
 import JoinGroupModal from './JoinGroupModal';
+import { useNavigate } from 'react-router-dom';
+import { useGroup } from '../../contexts/GroupContext';
 
 const GroupList = () => {
-  const [groups, setGroups] = useState([]);
+  const navigate = useNavigate();
+  const { groups, setGroups } = useGroup();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -12,19 +15,20 @@ const GroupList = () => {
   const [joinError, setJoinError] = useState(null);
 
   useEffect(() => {
-    fetchGroups();
-  }, [searchTerm]);
+    // Get email from localStorage
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      fetchGroups(userEmail);
+    }
+  }, []);
 
-  const fetchGroups = async () => {
+  const fetchGroups = async (email) => {
     try {
-      setLoading(true);
-      const response = await api.searchGroups(searchTerm);
-      setGroups(response.data);
+      const response = await api.getMyGroups(email);
+      setGroups(response.data || []);
     } catch (error) {
-      setError('Failed to fetch groups');
       console.error('Error fetching groups:', error);
-    } finally {
-      setLoading(false);
+      setGroups([]);
     }
   };
 
