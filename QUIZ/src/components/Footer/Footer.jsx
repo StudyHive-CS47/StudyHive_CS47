@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Footer.css';
+import logo from '../../assets/logo.png';
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-left">
-        {/* Remove the img tag for now */}
+        <img src={logo} alt="StudyHive" className="footer-logo" />
         <h2 className="footer-brand">StudyHive</h2>
       </div>
       <div className="footer-center">

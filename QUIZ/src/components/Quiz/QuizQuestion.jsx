@@ -114,23 +114,29 @@ function QuizQuestion() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="container mx-auto px-4 py-8">
+        <BackButton />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        </div>
       </div>
     );
   }
 
   if (error || !quiz) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">
-        <h2 className="text-2xl font-bold text-red-600">Quiz not found</h2>
-        <p className="text-gray-600 mt-2 mb-4">{error || 'Unable to load the quiz'}</p>
-        <button
-          onClick={() => navigate('/search-quizzes')}
-          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          Back to Search
-        </button>
+      <div className="container mx-auto px-4 py-8">
+        <BackButton />
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600">Quiz not found</h2>
+          <p className="text-gray-600 mt-2 mb-4">{error || 'Unable to load the quiz'}</p>
+          <button
+            onClick={() => navigate('/search-quizzes')}
+            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Back to Search
+          </button>
+        </div>
       </div>
     );
   }
@@ -138,6 +144,7 @@ function QuizQuestion() {
   if (showResults) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <BackButton />
         <QuizResult
           questions={quiz.questions}
           userAnswers={userAnswers}
@@ -151,6 +158,7 @@ function QuizQuestion() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      <BackButton />
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-[#091057]">{quiz.title}</h1>
