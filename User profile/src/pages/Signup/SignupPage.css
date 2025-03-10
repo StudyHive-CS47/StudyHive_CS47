@@ -1,0 +1,546 @@
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-image: linear-gradient(#EBF8E1 1.1rem, #5454546d 1.2rem);
+  background-size: 100% 1.2rem;
+  position: relative;
+}
+
+/* Add overlay for the pattern */
+.signup-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(235, 248, 225, 0.7);
+  z-index: 0;
+}
+
+/* Make sure signup box appears above pattern */
+.signup-box {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 95%;
+  max-width: 1000px;
+  min-height: 700px;
+}
+
+.signup-left {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-right {
+  flex: 1;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.logo-small {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: #000;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 24px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bullet {
+  color: #000;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Style for the bullet points */
+.subtitle::before,
+.subtitle::after {
+  content: "•";
+  color: #000;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0 4px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.name-fields {
+  display: flex;
+  gap: 20px;
+}
+
+.name-fields input {
+  flex: 1;
+}
+
+/* Common input styles */
+.signup-form input,
+.signup-form select,
+.ui.selection.dropdown {
+  height: 48px !important;
+  padding: 0 16px !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  background-color: #f8f9fa !important;
+  width: 100% !important;
+}
+
+/* Input focus states */
+.signup-form input:focus,
+.signup-form select:focus,
+.ui.selection.dropdown:focus,
+.ui.selection.dropdown.active {
+  border-color: #000 !important;
+  background-color: #fff !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+  outline: none;
+}
+
+/* Update the password field styles */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 0 48px 0 16px !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  transition: all 0.2s ease;
+  background-color: #f8f9fa !important;
+}
+
+.password-field input:focus {
+  border-color: #000 !important;
+  background-color: #fff !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+  outline: none;
+}
+
+/* Update the toggle password button position */
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  z-index: 1;
+}
+
+/* Password strength indicator positioning */
+.password-strength {
+  margin-top: 8px;
+  padding: 0 4px;
+  width: 100%;
+}
+
+.strength-bar {
+  height: 4px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/* Dropdown customization */
+.university-dropdown {
+  width: 100% !important;
+}
+
+.ui.selection.dropdown .menu {
+  border-radius: 8px !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  margin-top: 8px !important;
+}
+
+.ui.selection.dropdown .menu > .item {
+  padding: 12px 16px !important;
+  font-size: 15px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+}
+
+.ui.selection.dropdown .menu > .item:last-child {
+  border-bottom: none !important;
+}
+
+/* Submit button */
+.signup-form button[type="submit"] {
+  height: 48px;
+  margin-top: 8px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.signup-form button[type="submit"]:hover {
+  background-color: #222;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.signup-form button[type="submit"]:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  padding: 16px 0;
+  margin-top: auto;
+  font-size: 14px;
+  color: #666;
+}
+
+.login-link a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Update error message style */
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.success-message h3 {
+  margin: 0 0 10px 0;
+  color: #1b5e20;
+}
+
+.success-message p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Logo glow effect */
+.glowing-logo {
+  width: 180px;
+  height: 180px;
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+  transition: filter 0.3s ease;
+}
+
+.glowing-logo:hover {
+  filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.8));
+}
+
+.select-search-container {
+  position: relative;
+  width: 100%;
+}
+
+.searchable-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.searchable-select:focus {
+  outline: none;
+  border-color: #000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.searchable-select option {
+  padding: 12px;
+}
+
+/* For Firefox */
+.searchable-select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+}
+
+/* For IE/Edge */
+.searchable-select::-ms-expand {
+  display: none;
+}
+
+/* Semantic UI Dropdown customization */
+.university-dropdown {
+  width: 100% !important;
+  margin-bottom: 16px !important;
+}
+
+.ui.selection.dropdown {
+  border: 1px solid #ddd !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  min-height: unset !important;
+  font-size: 16px !important;
+}
+
+.ui.selection.dropdown:focus,
+.ui.selection.dropdown.active {
+  border-color: #000 !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ui.selection.dropdown .menu {
+  border-radius: 6px !important;
+  border: 1px solid #ddd !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.ui.selection.dropdown .menu > .item {
+  padding: 12px !important;
+  font-size: 16px !important;
+}
+
+.ui.search.dropdown > input.search {
+  padding: 12px !important;
+  font-size: 16px !important;
+}
+
+.ui.dropdown .menu .selected.item, 
+.ui.dropdown.selected {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.ui.dropdown .menu > .item:hover {
+  background: rgba(0, 0, 0, 0.03) !important;
+}
+
+.verification-message {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  animation: slideIn 0.5s ease-out;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.verification-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.verification-message h3 {
+  color: #2e7d32;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.email-highlight {
+  background-color: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 16px;
+  color: #333;
+  margin: 15px 0;
+  word-break: break-all;
+}
+
+.verification-steps {
+  text-align: left;
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.verification-steps p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.note {
+  color: #d32f2f;
+  font-weight: 500;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add these media queries at the end of your existing SignupPage.css */
+
+@media (max-width: 768px) {
+  .signup-box {
+    flex-direction: column;
+    min-height: auto;
+    width: 95%;
+  }
+
+  .signup-right {
+    display: none;
+  }
+
+  .signup-left {
+    padding: 30px 20px;
+    width: 100%;
+  }
+
+  .name-fields {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .signup-form input,
+  .signup-form button,
+  .ui.selection.dropdown {
+    height: 45px !important;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .verification-message {
+    padding: 20px;
+  }
+
+  .verification-steps {
+    padding: 15px;
+  }
+
+  .verification-steps p {
+    font-size: 13px;
+  }
+
+  .email-highlight {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .signup-form {
+    padding: 16px;
+  }
+
+  .signup-form button[type="submit"] {
+    width: 100%;
+  }
+
+  .login-link {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-box {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .signup-left {
+    padding: 20px 15px;
+  }
+
+  .password-strength {
+    font-size: 12px;
+  }
+} 
