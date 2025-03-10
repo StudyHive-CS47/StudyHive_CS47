@@ -1,0 +1,17 @@
+.rotating-text {
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.rotating-text-content {
+  display: flex;
+  align-items: center;
+}
+
+.rotating-text-word {
+  display: inline-flex;
+}
+
+.rotating-text-char {
+  display: inline-block;
+} 
