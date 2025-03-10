@@ -1,0 +1,275 @@
+.qna-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+  }
+  
+  .qna-main {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+    padding: 0 16px;
+    flex: 1;
+  }
+  
+  /* Sidebar Styles */
+  .qna-sidebar {
+    width: 400px;
+    flex-shrink: 0;
+  }
+  
+  .popular-questions {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .popular-questions h3 {
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .arrow-icon {
+    color: #666;
+    font-size: 25px;
+  }
+  
+  .question-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+  }
+  
+  .question-item:last-child {
+    border-bottom: none;
+  }
+  
+  .question-icon {
+    width: 46px;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-size: 30px;
+  }
+  
+  .question-info {
+    flex: 1;
+  }
+  
+  .question-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+    color: #333;
+  }
+  
+  .question-members {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+  }
+  
+  /* Content Area Styles */
+  .qna-content {
+    flex: 1;
+  }
+  
+  .post-creation {
+    background-color: white;
+    border-radius: 8px;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .post-input {
+    flex: 1;
+    position: relative;
+  }
+  
+  .post-input input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .post-input input:focus {
+    outline: none;
+    border-color: #ccc;
+  }
+  
+  .post-actions {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+  }
+  
+  .post-action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+  }
+  
+  /* Posts Container Styles */
+  .posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .post-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-header {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .post-category {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .category-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  
+  .post-category h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #333;
+  }
+  
+  .post-author {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .author-name {
+    font-weight: 500;
+    margin-right: 8px;
+  }
+  
+  .post-time {
+    color: #999;
+  }
+  
+  .post-content {
+    padding: 16px;
+  }
+  
+  .post-content p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 16px 0;
+    color: #333;
+  }
+  
+  .view-more {
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .post-image {
+    margin-bottom: 16px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .post-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .post-stats {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  .post-actions-bar {
+    display: flex;
+    border-top: 1px solid #f0f0f0;
+    padding: 8px 16px;
+  }
+  
+  .post-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    flex: 1;
+  }
+  
+  .post-action:hover {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+  }
+  
+  .share-action {
+    margin-left: auto;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .qna-main {
+      flex-direction: column;
+    }
+  
+    .qna-sidebar {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+  
+  

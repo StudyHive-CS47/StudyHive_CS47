@@ -46,17 +46,17 @@
   .footer-right {
     display: flex;
     gap: 20px;
-    justify-content: center; /* Centers the icons horizontally */
+    justify-content: center; 
     align-items: center;
   }
   
   .social-link {
-    font-size: 24px; /* Controls the icon size */
-    color: #333; /* Controls icon color */
-    text-decoration: none; /* Remove underline from links */
+    font-size: 24px; 
+    color: #333; 
+    text-decoration: none; 
   }
   
   .social-link:hover {
-    color: #007bff; /* Changes color on hover */
+    color: #007bff; 
   }
   

@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  height: 300%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@ html, body {
     display: flex;
     flex-direction: row;
     align-items: right; 
-    padding: 20px;
+    padding: 50px;
   }
   .main-content {
     flex-grow: 1;
