@@ -216,4 +216,25 @@
 
 .member-avatar {
   @apply w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm border-2 border-white;
+}
+
+/* Add to your existing CSS */
+.message-bubble {
+  @apply max-w-[70%] rounded-lg p-3 shadow-sm;
+}
+
+.message-bubble-sent {
+  @apply bg-blue-500 text-white rounded-br-none ml-auto;
+}
+
+.message-bubble-received {
+  @apply bg-white text-gray-700 rounded-bl-none;
+}
+
+.chat-input {
+  @apply w-full px-4 py-2 border rounded-full focus:outline-none focus:border-blue-500;
+}
+
+.send-button {
+  @apply p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors;
 } 

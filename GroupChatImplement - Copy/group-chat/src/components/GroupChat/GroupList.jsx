@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGroup } from '../../contexts/GroupContext'
 import { api } from '../../services/api'
-import Button from '../common/Button'
 import SearchBar from '../common/SearchBar'
 
 const GroupList = ({ onGroupSelect }) => {
   const navigate = useNavigate()
   const { groups, setGroups } = useGroup()
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
@@ -16,30 +17,60 @@ const GroupList = ({ onGroupSelect }) => {
 
   const fetchGroups = async () => {
     try {
-      const response = await api.getMyGroups()
-      setGroups(response.data || [])
+      setLoading(true)
+      const userEmail = localStorage.getItem('userEmail')
+      if (!userEmail) {
+        setError('No user email found. Please log in again.')
+        return
+      }
+      
+      const response = await api.getMyGroups(userEmail)
+      console.log('Fetched groups:', response)
+      
+      // Ensure response.data exists and is an array
+      const groupsData = response?.data || []
+      
+      // Filter to include both member and admin groups
+      const myGroups = groupsData.filter(group => 
+        group?.memberEmails?.includes(userEmail) || group?.adminEmail === userEmail
+      )
+      
+      setGroups(myGroups)
     } catch (error) {
       console.error('Error fetching groups:', error)
-      setGroups([])
+      setError('Failed to fetch groups')
+    } finally {
+      setLoading(false)
     }
   }
 
   const handleSearch = (term) => {
     setSearchTerm(term)
-    // Implement search logic here
+    // Filter groups locally based on search term
+    if (term.trim()) {
+      const filtered = groups.filter(group => 
+        group.name.toLowerCase().includes(term.toLowerCase()) ||
+        group.university.toLowerCase().includes(term.toLowerCase())
+      )
+      setGroups(filtered)
+    } else {
+      fetchGroups() // Reset to all groups when search is cleared
+    }
   }
 
   const getGroupAvatar = (name) => {
-    return name.charAt(0).toUpperCase()
+    return name ? name.charAt(0).toUpperCase() : '?'
   }
 
-  const renderMemberAvatars = (members) => {
+  const renderMemberAvatars = (members = []) => {
+    // Ensure members is an array and filter out null/undefined values
+    const validMembers = members.filter(member => member)
     const maxDisplay = 3
-    const remaining = members.length - maxDisplay
+    const remaining = Math.max(0, validMembers.length - maxDisplay)
 
     return (
       <div className="flex -space-x-2">
-        {members.slice(0, maxDisplay).map((member, idx) => (
+        {validMembers.slice(0, maxDisplay).map((member, idx) => (
           <div key={idx} className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm border-2 border-white">
             {member.charAt(0).toUpperCase()}
           </div>
@@ -53,6 +84,14 @@ const GroupList = ({ onGroupSelect }) => {
     )
   }
 
+  if (loading) {
+    return <div className="p-4 text-center">Loading groups...</div>
+  }
+
+  if (error) {
+    return <div className="p-4 text-center text-red-500">{error}</div>
+  }
+
   return (
     <div className="p-4">
       <div className="mb-6">
@@ -60,26 +99,38 @@ const GroupList = ({ onGroupSelect }) => {
         <SearchBar onSearch={handleSearch} />
       </div>
 
-      <div className="space-y-4">
-        {groups.map((group) => (
-          <div 
-            key={group.id}
-            onClick={() => onGroupSelect(group)}
-            className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-semibold">
-                {getGroupAvatar(group.name)}
+      {groups.length === 0 ? (
+        <div className="text-center text-gray-500 mt-8">
+          No groups found. Join or create a group to get started!
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {groups.map((group) => (
+            <div 
+              key={group.id}
+              onClick={() => onGroupSelect(group)}
+              className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-semibold">
+                  {getGroupAvatar(group.name)}
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-semibold">{group.name}</h3>
+                  <p className="text-sm text-gray-600">{group.university}</p>
+                  <p className="text-xs text-gray-500">
+                    {group.adminEmail === localStorage.getItem('userEmail') ? 
+                      <span className="text-green-600">Admin</span> : 
+                      <span className="text-blue-600">Member</span>
+                    }
+                  </p>
+                </div>
+                {renderMemberAvatars(group.memberEmails || [])}
               </div>
-              <div className="flex-1">
-                <h3 className="font-semibold">{group.name}</h3>
-                <p className="text-sm text-gray-600">{group.university}</p>
-              </div>
-              {renderMemberAvatars(group.memberEmails || [])}
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
