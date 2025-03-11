@@ -46,7 +46,7 @@
 }
 
 .cssbuttons-io-button:hover {
-  box-shadow: 0 0.5em 1.5em -0.5em #A1E3F9;
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
 }
 
 .cssbuttons-io-button:active {
@@ -134,7 +134,7 @@
 }
 
 .group-card {
-  @apply bg-white p-6 rounded-xl border border-gray-100 hover:shadow-lg transition-all;
+  @apply bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer;
 }
 
 .join-btn {
@@ -201,4 +201,19 @@
 .join-group-btn {
   @apply w-full mt-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium
     hover:bg-blue-700 transition-colors text-sm flex items-center justify-center;
+}
+
+/* Add to your existing CSS */
+@media (max-width: 768px) {
+  .chat-active .group-list {
+    display: none;
+  }
+  
+  .back-to-groups {
+    @apply fixed top-4 left-4 z-50 md:hidden;
+  }
+}
+
+.member-avatar {
+  @apply w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm border-2 border-white;
 } 
