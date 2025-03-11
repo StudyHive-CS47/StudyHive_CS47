@@ -8,7 +8,7 @@ import SignupPage from './pages/Signup/SignupPage';
 import SuccessPage from './pages/Success/SuccessPage';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
-import UserProfilePage from './pages/User Profile/UserProfilePage'; // Ensure this path is correct
+import UserProfilePage from './pages/UserProfile/UserProfilePage';
 import HelpPage from './pages/Help/HelpPage';
 
 function App() {

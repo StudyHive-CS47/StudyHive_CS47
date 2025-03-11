@@ -6,7 +6,10 @@
   align-items: center;
   background: white;
   border-top: 1px solid #e0e0e0;
-  margin-top: 136px;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .footer-left {
