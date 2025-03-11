@@ -134,7 +134,7 @@
 }
 
 .group-card {
-  @apply bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer;
+  @apply bg-white rounded-lg p-6 border border-blue-100 hover:border-blue-200 transition-all duration-200 hover:shadow-md;
 }
 
 .join-btn {
@@ -237,4 +237,25 @@
 
 .send-button {
   @apply p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors;
+}
+
+/* Add to your existing CSS */
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: linear-gradient(to right, #1e40af 1px, transparent 1px),
+      linear-gradient(to bottom, #1e40af 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
+.form-card {
+  @apply bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-blue-100;
+}
+
+.section-title {
+  @apply text-2xl font-bold text-blue-900 mb-6;
+}
+
+.page-container {
+  @apply bg-gradient-to-br from-blue-50 via-white to-blue-50;
 } 
