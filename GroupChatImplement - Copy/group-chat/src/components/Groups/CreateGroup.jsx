@@ -76,74 +76,72 @@ const CreateGroup = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="form-card p-8">
-        <h1 className="section-title">Create New Group</h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="text-sm font-medium text-blue-900 mb-1 block">Group Name</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-              required
-            />
-          </div>
+    <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm p-6">
+      <h1 className="text-2xl font-bold mb-6">Create New Group</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="text-sm font-medium mb-1 block">Group Name</label>
+          <input
+            type="text"
+            value={formData.name}
+            onChange={(e) => setFormData({...formData, name: e.target.value})}
+            className="form-input"
+            required
+          />
+        </div>
 
-          <div>
-            <label className="text-sm font-medium text-blue-900 mb-1 block">University</label>
-            <select
-              value={formData.university}
-              onChange={(e) => setFormData({...formData, university: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-              required
-            >
-              <option value="">Select University</option>
-              {universities.map((uni) => (
-                <option key={uni} value={uni}>{uni}</option>
-              ))}
-            </select>
-          </div>
+        <div>
+          <label className="text-sm font-medium mb-1 block">University</label>
+          <select
+            value={formData.university}
+            onChange={(e) => setFormData({...formData, university: e.target.value})}
+            className="form-input"
+            required
+          >
+            <option value="">Select University</option>
+            {universities.map((uni) => (
+              <option key={uni} value={uni}>{uni}</option>
+            ))}
+          </select>
+        </div>
 
-          <div>
-            <label className="text-sm font-medium text-blue-900 mb-1 block">Degree</label>
-            <input
-              type="text"
-              value={formData.degree}
-              onChange={(e) => setFormData({...formData, degree: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-              required
-            />
-          </div>
+        <div>
+          <label className="text-sm font-medium mb-1 block">Degree</label>
+          <input
+            type="text"
+            value={formData.degree}
+            onChange={(e) => setFormData({...formData, degree: e.target.value})}
+            className="form-input"
+            required
+          />
+        </div>
 
-          <div>
-            <label className="text-sm font-medium text-blue-900 mb-1 block">Module</label>
-            <input
-              type="text"
-              value={formData.module}
-              onChange={(e) => setFormData({...formData, module: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-              required
-            />
-          </div>
+        <div>
+          <label className="text-sm font-medium mb-1 block">Module</label>
+          <input
+            type="text"
+            value={formData.module}
+            onChange={(e) => setFormData({...formData, module: e.target.value})}
+            className="form-input"
+            required
+          />
+        </div>
 
-          <div>
-            <label className="text-sm font-medium text-blue-900 mb-1 block">Description</label>
-            <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({...formData, description: e.target.value})}
-              className="w-full px-4 py-2 rounded-lg border border-blue-100 focus:border-blue-300 focus:ring-2 focus:ring-blue-100 outline-none transition-all"
-              rows="4"
-              required
-            />
-          </div>
+        <div>
+          <label className="text-sm font-medium mb-1 block">Description</label>
+          <textarea
+            value={formData.description}
+            onChange={(e) => setFormData({...formData, description: e.target.value})}
+            className="form-input"
+            rows="4"
+            required
+          />
+        </div>
 
-          <div className="mt-6">
-            <Button type="submit">Create Group</Button>
-          </div>
-        </form>
-      </div>
+        <div className="mt-6">
+          <Button type="submit">Create Group</Button>
+        </div>
+      </form>
     </div>
   );
 };
