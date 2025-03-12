@@ -93,44 +93,46 @@ const GroupList = ({ onGroupSelect }) => {
   }
 
   return (
-    <div className="p-4">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-4">My Groups</h1>
+    <div className="h-full flex flex-col">
+      <div className="p-4 border-b">
+        <h1 className="text-xl font-bold mb-4">My Groups</h1>
         <SearchBar onSearch={handleSearch} />
       </div>
 
-      {groups.length === 0 ? (
-        <div className="text-center text-gray-500 mt-8">
-          No groups found. Join or create a group to get started!
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {groups.map((group) => (
-            <div 
-              key={group.id}
-              onClick={() => onGroupSelect(group)}
-              className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-semibold">
-                  {getGroupAvatar(group.name)}
+      <div className="flex-1 overflow-y-auto p-4">
+        {groups.length === 0 ? (
+          <div className="text-center text-gray-500 mt-8">
+            No groups found. Join or create a group to get started!
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {groups.map((group) => (
+              <div 
+                key={group.id}
+                onClick={() => onGroupSelect(group)}
+                className="bg-white rounded-lg p-4 border hover:border-blue-500 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-semibold shrink-0">
+                    {getGroupAvatar(group.name)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold truncate">{group.name}</h3>
+                    <p className="text-sm text-gray-600 truncate">{group.university}</p>
+                    <p className="text-xs text-gray-500">
+                      {group.adminEmail === localStorage.getItem('userEmail') ? 
+                        <span className="text-green-600">Admin</span> : 
+                        <span className="text-blue-600">Member</span>
+                      }
+                    </p>
+                  </div>
+                  {renderMemberAvatars(group.memberEmails || [])}
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold">{group.name}</h3>
-                  <p className="text-sm text-gray-600">{group.university}</p>
-                  <p className="text-xs text-gray-500">
-                    {group.adminEmail === localStorage.getItem('userEmail') ? 
-                      <span className="text-green-600">Admin</span> : 
-                      <span className="text-blue-600">Member</span>
-                    }
-                  </p>
-                </div>
-                {renderMemberAvatars(group.memberEmails || [])}
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

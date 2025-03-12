@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GroupList from './GroupList';
 import ChatRoom from '../Chat/ChatRoom';
 
@@ -34,14 +34,14 @@ const GroupLayout = () => {
   }
 
   return (
-    <div className="flex h-[calc(100vh-8rem)] mt-16">
+    <div className="flex bg-white rounded-lg shadow-sm overflow-hidden" style={{ height: 'calc(100vh - 8rem)' }}>
       {/* Left Panel - Group List */}
-      <div className="w-full md:w-1/3 border-r border-gray-200 bg-white overflow-y-auto">
+      <div className="w-full md:w-[380px] border-r">
         <GroupList onGroupSelect={handleGroupSelect} />
       </div>
       
       {/* Right Panel - Chat Area */}
-      <div className="hidden md:flex w-2/3 bg-gray-50 flex-col">
+      <div className="hidden md:flex flex-1 bg-gray-50 flex-col">
         {selectedGroup ? (
           <ChatRoom 
             groupId={selectedGroup.id} 
