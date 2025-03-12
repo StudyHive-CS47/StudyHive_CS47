@@ -1,0 +1,240 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form-group {
+    @apply mb-6;
+  }
+  
+  /* Move all other classes that use @apply inside this layer */
+  .form-input {
+    @apply w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:border-green-500;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium mb-1 text-gray-700;
+  }
+}
+
+/* Keep regular CSS rules outside @layer */
+.cssbuttons-io-button {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 167, 62, 1) 0%,
+    rgba(102, 247, 113, 1) 100%
+  );
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  transition: all 0.3s ease;
+}
+
+.cssbuttons-io-button svg {
+  margin-right: 6px;
+  width: 24px;
+  height: 24px;
+}
+
+.cssbuttons-io-button:hover {
+  box-shadow: 0 0.5em 1.5em -0.5em #14a73e98;
+}
+
+.cssbuttons-io-button:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+
+/* Add container styles for better form positioning */
+.form-container {
+  @apply bg-white rounded-2xl overflow-hidden;
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 
+              0px 105px 63px rgba(0, 0, 0, 0.05), 
+              0px 47px 47px rgba(0, 0, 0, 0.09), 
+              0px 12px 26px rgba(0, 0, 0, 0.1), 
+              0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+/* Update the nav styles */
+.nav-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+/* For mobile devices */
+@media (max-width: 640px) {
+  .nav-container {
+    padding: 0.5rem;
+    left: 0.5rem;
+  }
+  
+  .nav-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+/* Add to your existing CSS */
+.modal {
+  width: 1000px;
+  margin-top: -40px; /* Move form up a bit */
+  background: linear-gradient(180deg, #DCF9E0 0%, #FFFFFF 30.21%);
+  box-shadow: 0px 187px 75px rgba(0, 0, 0, 0.01), 
+              0px 105px 63px rgba(0, 0, 0, 0.05), 
+              0px 47px 47px rgba(0, 0, 0, 0.09), 
+              0px 12px 26px rgba(0, 0, 0, 0.1), 
+              0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure footer stays at bottom */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* Update search bar styles */
+.group {
+  @apply relative w-full;
+}
+
+.input {
+  @apply h-11 pl-10 pr-4 w-full rounded-lg bg-gray-50 border border-gray-200
+    focus:ring-2 focus:ring-blue-100 focus:border-blue-300 text-gray-700 placeholder-gray-400;
+}
+
+.icon {
+  @apply absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;
+}
+
+.filter-btn {
+  @apply flex items-center space-x-2 px-4 py-2 w-full rounded-lg transition-colors bg-white hover:bg-gray-50;
+}
+
+.filter-btn.active {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.group-card {
+  @apply bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer;
+}
+
+.join-btn {
+  @apply px-4 py-1.5 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors text-sm font-medium;
+}
+
+/* New horizontal filter buttons */
+.filter-btn-horizontal {
+  @apply flex items-center px-6 py-2 rounded-lg transition-colors bg-white;
+}
+
+.filter-btn-horizontal.active {
+  @apply bg-blue-100 text-blue-600;
+}
+
+.filter-btn-horizontal:hover {
+  @apply bg-gray-100;
+}
+
+/* Updated group card for horizontal layout */
+.group-card-horizontal {
+  @apply bg-white p-4 rounded-lg shadow-sm hover:shadow transition-shadow;
+}
+
+/* New modern styles */
+.filter-tab {
+  @apply px-6 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors;
+}
+
+.filter-tab.active {
+  @apply bg-purple-100 text-purple-700 font-medium;
+}
+
+.trending-group-item {
+  @apply flex justify-between items-center p-3 rounded-lg hover:bg-gray-50 transition-colors;
+}
+
+.modern-group-card {
+  @apply bg-white p-6 rounded-2xl border border-gray-100 hover:shadow-lg transition-all;
+}
+
+.group-avatar {
+  @apply w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-semibold;
+}
+
+.modern-join-btn {
+  @apply w-full mt-4 py-2.5 bg-purple-600 text-white rounded-xl font-medium
+    hover:bg-purple-700 transition-colors text-sm flex items-center justify-center;
+}
+
+/* New styles */
+.category-btn {
+  @apply w-full text-left px-4 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors;
+}
+
+.category-btn.active {
+  @apply bg-blue-50 text-blue-600 font-medium;
+}
+
+.trending-item {
+  @apply flex justify-between items-center py-2 px-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer;
+}
+
+.join-group-btn {
+  @apply w-full mt-4 py-2.5 bg-blue-600 text-white rounded-lg font-medium
+    hover:bg-blue-700 transition-colors text-sm flex items-center justify-center;
+}
+
+/* Add to your existing CSS */
+@media (max-width: 768px) {
+  .chat-active .group-list {
+    display: none;
+  }
+  
+  .back-to-groups {
+    @apply fixed top-4 left-4 z-50 md:hidden;
+  }
+}
+
+.member-avatar {
+  @apply w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-sm border-2 border-white;
+}
+
+/* Add to your existing CSS */
+.message-bubble {
+  @apply max-w-[70%] rounded-lg p-3 shadow-sm;
+}
+
+.message-bubble-sent {
+  @apply bg-blue-500 text-white rounded-br-none ml-auto;
+}
+
+.message-bubble-received {
+  @apply bg-white text-gray-700 rounded-bl-none;
+}
+
+.chat-input {
+  @apply w-full px-4 py-2 border rounded-full focus:outline-none focus:border-blue-500;
+}
+
+.send-button {
+  @apply p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors;
+} 
