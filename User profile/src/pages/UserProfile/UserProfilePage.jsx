@@ -16,6 +16,40 @@ const avatars = [
   '/src/assets/avatars/avatar10.png',
 ];
 
+const checkPasswordStrength = (password) => {
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[a-z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+  return strength;
+};
+
+const getPasswordStrengthText = (strength) => {
+  switch (strength) {
+    case 0: return "Very Weak";
+    case 1: return "Weak";
+    case 2: return "Fair";
+    case 3: return "Good";
+    case 4: return "Strong";
+    case 5: return "Very Strong";
+    default: return "";
+  }
+};
+
+const getPasswordStrengthColor = (strength) => {
+  switch (strength) {
+    case 0: return "#ff4444";
+    case 1: return "#ffbb33";
+    case 2: return "#ffbb33";
+    case 3: return "#00C851";
+    case 4: return "#007E33";
+    case 5: return "#007E33";
+    default: return "#eee";
+  }
+};
+
 export default function UserProfilePage() {
   const { user, logout, updatePassword } = useAuth();
   const [profile, setProfile] = useState(null);
@@ -73,30 +107,69 @@ export default function UserProfilePage() {
     setSuccess('');
 
     if (newPassword !== confirmPassword) {
-      setError('New passwords do not match.');
+      setError('New passwords do not match');
+      return;
+    }
+
+    const passwordStrength = checkPasswordStrength(newPassword);
+    if (passwordStrength < 3) {
+      setError('Password is too weak. Please include uppercase, lowercase, numbers, and special characters.');
       return;
     }
 
     try {
-      await updatePassword(newPassword);
-      setSuccess('Password updated successfully!');
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: oldPassword
+      });
+
+      if (signInError) {
+        setError('Current password is incorrect');
+        return;
+      }
+
+      const { error: updateError } = await supabase.auth.updateUser({ 
+        password: newPassword 
+      });
+
+      if (updateError) throw updateError;
+
       setOldPassword('');
       setNewPassword('');
       setConfirmPassword('');
       setShowPasswordReset(false);
+      setSuccess('Password updated successfully!');
+
     } catch (error) {
-      setError('Failed to update password.');
-      console.error('Password change error:', error);
+      console.error('Password update error:', error);
+      setError('Failed to update password. Please try again.');
     }
   };
 
   return (
     <div className="min-h-[calc(100vh-120px)] py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 via-white to-blue-400/20"></div>
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(59,130,246,0.1)_0px,rgba(59,130,246,0.1)_40px,transparent_40px,transparent_80px)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(100%_100%_at_top_center,white,transparent)]"></div>
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(59,130,246,0.05)_0px,rgba(59,130,246,0.05)_1px,transparent_1px,transparent_40px)] bg-[size:100%_40px]"></div>
+      {/* Base color */}
+      <div className="absolute inset-0 bg-blue-50"></div>
+      
+      {/* Graph paper pattern */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: `
+          linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
+        `,
+        backgroundSize: '20px 20px',
+        backgroundPosition: 'center center'
+      }}></div>
+      
+      {/* Subtle highlight */}
+      <div className="absolute inset-0" style={{
+        background: `
+          radial-gradient(circle at 50% 50%, 
+            rgba(255, 255, 255, 0.8) 0%, 
+            rgba(255, 255, 255, 0.3) 50%, 
+            transparent 100%)
+        `
+      }}></div>
 
       <div className="max-w-4xl mx-auto">
         {/* Profile Card */}
@@ -134,10 +207,44 @@ export default function UserProfilePage() {
               </button>
             </div>
 
-            {/* User Info */}
-            <div className="space-y-1 mb-8">
-              <h2 className="text-3xl font-bold text-gray-900">{profile?.full_name || 'Loading...'}</h2>
-              <p className="text-lg text-gray-600">{user?.email}</p>
+            {/* User Info Section */}
+            <div className="space-y-6 mb-8">
+              <h2 className="text-3xl font-bold text-gray-900">
+                {profile?.first_name} {profile?.last_name}
+              </h2>
+              
+              {/* User Details Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 rounded-xl p-6">
+                {/* Email */}
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-500">Email</p>
+                  <p className="text-base text-gray-900">{user?.email}</p>
+                </div>
+                
+                {/* University */}
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-500">University</p>
+                  <p className="text-base text-gray-900">{profile?.university}</p>
+                </div>
+                
+                {/* Academic Level */}
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-500">Academic Level</p>
+                  <p className="text-base text-gray-900">{profile?.academic_level}</p>
+                </div>
+                
+                {/* Join Date */}
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-gray-500">Joined</p>
+                  <p className="text-base text-gray-900">
+                    {profile?.created_at ? new Date(profile.created_at).toLocaleDateString('en-GB', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric'
+                    }) : ''}
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Avatar Selection Modal */}
@@ -160,8 +267,7 @@ export default function UserProfilePage() {
 
             {/* Password Reset Form */}
             {showPasswordReset && (
-              <div className="bg-white rounded-2xl shadow-2xl p-6 mb-8 border border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Change Password</h3>
+              <div className="mb-8 p-6 bg-white rounded-xl shadow-sm">
                 <form onSubmit={handlePasswordChange} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
@@ -170,6 +276,7 @@ export default function UserProfilePage() {
                       value={oldPassword}
                       onChange={(e) => setOldPassword(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      required
                     />
                   </div>
                   <div>
@@ -179,7 +286,31 @@ export default function UserProfilePage() {
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      required
                     />
+                    {/* Password Strength Indicator */}
+                    {newPassword && (
+                      <div className="mt-2">
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm">Strength:</div>
+                          <div 
+                            className="text-sm font-medium"
+                            style={{ color: getPasswordStrengthColor(checkPasswordStrength(newPassword)) }}
+                          >
+                            {getPasswordStrengthText(checkPasswordStrength(newPassword))}
+                          </div>
+                        </div>
+                        <div className="h-1 w-full bg-gray-200 rounded-full mt-1">
+                          <div
+                            className="h-1 rounded-full transition-all duration-300"
+                            style={{
+                              width: `${(checkPasswordStrength(newPassword) / 5) * 100}%`,
+                              backgroundColor: getPasswordStrengthColor(checkPasswordStrength(newPassword))
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
@@ -188,6 +319,7 @@ export default function UserProfilePage() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                      required
                     />
                   </div>
                   <button
