@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Set up OpenAI client with GitHub configuration
-GITHUB_TOKEN = "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"
+GITHUB_TOKEN = "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"
 client = OpenAI(
     base_url="https://models.inference.ai.azure.com",
     api_key=GITHUB_TOKEN,

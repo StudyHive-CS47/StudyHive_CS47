@@ -131,6 +131,8 @@ const ChatAssistant = () => {
   const getBotResponse = async (userMessage) => {
     try {
       setIsLoading(true);
+      console.log('Sending message to backend:', userMessage);
+      
       const response = await fetch('http://localhost:5000/api/chat', {
         method: 'POST',
         headers: {
@@ -142,15 +144,27 @@ const ChatAssistant = () => {
         })
       });
 
+      console.log('Received response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        console.error('Error response from backend:', errorData);
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Received data from backend:', data);
+      
+      if (!data.response) {
+        console.error('Invalid response format:', data);
+        throw new Error('Invalid response format from backend');
+      }
+
       return formatBotResponse(data.response);
     } catch (error) {
-      console.error('Error getting bot response:', error);
-      return "I apologize, but I'm having trouble connecting right now. Please try again later.";
+      console.error('Error in getBotResponse:', error);
+      // Return a more user-friendly error message
+      return `I apologize, but I encountered an error: ${error.message}. Please try again or contact support if the issue persists.`;
     } finally {
       setIsLoading(false);
     }
