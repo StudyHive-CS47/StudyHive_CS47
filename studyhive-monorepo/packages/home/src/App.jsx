@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Header from './Header';
+import Header from '@shared/components/Header'
 import Footer from './Footer';
 import image1 from './assets/image1.jpg';
 import image2 from './assets/image2.jpg';
