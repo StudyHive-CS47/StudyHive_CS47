@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './components/Header/Header';
+import Header from '@shared/components/Header';
 import Summarizer from './components/Summarizer';
-import Footer from './components/Footer/Footer';
+import Footer from '@shared/components/Footer';
 import './styles/styles.css';
 
 function App() {

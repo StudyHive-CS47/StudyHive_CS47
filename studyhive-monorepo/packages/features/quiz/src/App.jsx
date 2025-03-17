@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Footer from './components/Footer/Footer';
+import Footer from '@shared/components/Footer';
 import QuizHome from './components/Quiz/QuizHome';
 import CreateQuiz from './components/Quiz/CreateQuiz';
 import QuizQuestion from './components/Quiz/QuizQuestion';

@@ -4,7 +4,7 @@ import ChatWindow from './ChatWindow';
 import MembersList from './MembersList';
 import { useGroup } from '../../contexts/GroupContext';
 import { supabase } from '../../config/supabase';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '@shared/contexts/AuthContext';
 
 const GroupChat = () => {
   const { groupId } = useParams();

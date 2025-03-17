@@ -1,16 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import QnA from "./pages/QnA";
+import Header from "@shared/components/Header/Header";
+import Footer from "@shared/components/Footer/Footer";
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/qna" element={<QnA />} />
-        {/* Add routes for your other pages */}
-        <Route path="/" element={<QnA />} /> {/* Default to QnA for this example */}
-      </Routes>
-    </Router>
-  )
+    <Routes>
+      <Route path="/" element={<QnA />} />
+      <Route path="/qna" element={<QnA />} />
+    </Routes>
+  );
 }
+
 export default App;
 

@@ -4,6 +4,7 @@ import { AuthProvider } from '@shared/contexts/AuthContext';
 import Header from '@shared/components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { LoginPage, SignupPage } from './pages';
+import QnA from '@features/qna/src/pages/QnA';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
 import { routes } from '@shared/routes';
@@ -21,6 +22,7 @@ function App() {
               <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
+                <Route path="/qna/*" element={<QnA />} />
                 <Route path="/" element={<Navigate to="/login" replace />} />
               </Routes>
             </React.Suspense>

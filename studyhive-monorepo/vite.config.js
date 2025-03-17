@@ -22,7 +22,8 @@ export default defineConfig({
       '@summarizer': path.resolve(__dirname, './packages/features/summarizer/src'),
       '@quiz': path.resolve(__dirname, './packages/features/quiz/src'),
       '@chat_bot': path.resolve(__dirname, './packages/features/chat_bot/src'),
-      '@shared': path.resolve(__dirname, './packages/shared/src')
+      '@shared': path.resolve(__dirname, './packages/shared/src'),
+      '@features': path.resolve(__dirname, './packages/features'),
     },
     extensions: ['.js', '.jsx', '.json']
   }

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./QnA.css";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 function QnA() {
   const [questions, setQuestions] = useState([]);
@@ -129,8 +127,6 @@ function QnA() {
 
   return (
     <div className="qna-container">
-      <Header />
-
       <div className="qna-hero">
         <div className="qna-hero-content">
           <h1>Ask & Answer</h1>
@@ -375,8 +371,6 @@ function QnA() {
           </div>
         </main>
       </div>
-
-      <Footer />
     </div>
   );
 }
