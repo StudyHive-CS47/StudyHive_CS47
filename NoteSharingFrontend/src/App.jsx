@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; // Remove BrowserRouter import
+import { Routes, Route } from 'react-router-dom'; 
 import Header from '../src/components/common/Header/Header.jsx';
 import Footer from './components/common/Footer';
 import Tabs from './components/common/Tabs';
