@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '@shared/contexts/AuthContext';
+import { routes } from '@shared/routes';
 import './LoginPage.css';
 import logo2 from '../../assets/logo2.png';
 import logo from '../../assets/logo.png';
@@ -20,28 +21,14 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     try {
       setError('');
       setLoading(true);
-      const { error } = await login(formData.email, formData.password);
-      
-      if (error) {
-        if (error.message.includes('Email not confirmed') || error.message.includes('Invalid login credentials')) {
-          setError('Please verify your email before logging in. Check your university email inbox (including spam folder) for the verification link.');
-          return;
-        }
-        throw error;
-      }
-      
-      navigate('/success');
+      await login(formData.email, formData.password);
+      navigate(routes.protected.home);
     } catch (error) {
       console.error('Login error:', error);
-      if (error.message.includes('Invalid login credentials')) {
-        setError('Failed to sign in. Please check your credentials or confirm your account via email first.');
-      } else {
-        setError('Failed to sign in. Please try again.');
-      }
+      setError('Failed to sign in. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -98,12 +85,12 @@ export default function LoginPage() {
             </div>
             
             <button type="submit" disabled={loading}>
-              {loading ? 'Logging in...' : 'Log In'}
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
           
           <div className="signup-link">
-            Don&apos;t have an account? <a href="/signup">Sign Up</a>
+            Don&apos;t have an account? <Link to={routes.public.signup}>Sign Up</Link>
           </div>
         </div>
         

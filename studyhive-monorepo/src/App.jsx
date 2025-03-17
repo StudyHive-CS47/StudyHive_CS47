@@ -4,11 +4,9 @@ import { useAuth } from '@shared/contexts/AuthContext';
 import { routes } from '@shared/routes';
 import Header from '@shared/components/Header/Header';
 
-// Import login and signup pages directly
+// Import auth pages directly instead of the whole auth App
 const LoginPage = React.lazy(() => import('@auth/pages/Login/LoginPage'));
 const SignupPage = React.lazy(() => import('@auth/pages/Signup/SignupPage'));
-
-// Update lazy imports to match the alias paths
 const Landing = React.lazy(() => import('@landing/App.jsx'));
 const Home = React.lazy(() => import('@home/App.jsx'));
 const NoteSharing = React.lazy(() => import('@notesharing/App.jsx'));
@@ -34,8 +32,14 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path={routes.public.landing} element={<Landing />} />
-          <Route path={routes.public.login} element={<LoginPage />} />
-          <Route path={routes.public.signup} element={<SignupPage />} />
+          <Route 
+            path={routes.public.login} 
+            element={user ? <Navigate to={routes.protected.home} /> : <LoginPage />} 
+          />
+          <Route 
+            path={routes.public.signup} 
+            element={user ? <Navigate to={routes.protected.home} /> : <SignupPage />} 
+          />
 
           {/* Protected Routes */}
           <Route
