@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Footer from '@shared/components/Footer';
+import { Routes, Route } from 'react-router-dom';
 import QuizHome from './components/Quiz/QuizHome';
 import CreateQuiz from './components/Quiz/CreateQuiz';
 import QuizQuestion from './components/Quiz/QuizQuestion';
@@ -9,21 +8,17 @@ import QuizHistory from './components/Quiz/QuizHistory';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Navigate to="/quizzes" replace />} />
-            <Route path="/quizzes" element={<QuizHome />} />
-            <Route path="/create-quiz" element={<CreateQuiz />} />
-            <Route path="/quiz/:code" element={<QuizQuestion />} />
-            <Route path="/search-quizzes" element={<SearchQuiz />} />
-            <Route path="/quiz-history" element={<QuizHistory />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<QuizHome />} />
+          <Route path="/create" element={<CreateQuiz />} />
+          <Route path="/question/:code" element={<QuizQuestion />} />
+          <Route path="/search" element={<SearchQuiz />} />
+          <Route path="/history" element={<QuizHistory />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
