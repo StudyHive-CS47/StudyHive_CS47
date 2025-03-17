@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import QuizHome from './components/Quiz/QuizHome';
 import CreateQuiz from './components/Quiz/CreateQuiz';
@@ -12,7 +11,6 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Header />
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Navigate to="/quizzes" replace />} />

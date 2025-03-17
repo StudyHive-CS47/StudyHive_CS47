@@ -3,15 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { routes } from '../../routes';
 import './Header.css';
-import logo from '@auth/assets/logo.png';
+import logo from '../assets/logo.png';
 
 function Header() {
-  const { signOut } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await signOut();
-    navigate(routes.public.login);
+    try {
+      await logout();
+      navigate(routes.public.login);
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (

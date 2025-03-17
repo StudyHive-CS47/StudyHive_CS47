@@ -2,19 +2,21 @@ import React, { Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '@shared/contexts/AuthContext';
 import { routes } from '@shared/routes';
-import Header from '@shared/components/Header';
+import Header from '@shared/components/Header/Header';
 
-// Lazy load components with correct paths
-const Landing = React.lazy(() => import('@landing/src/App'));
-const Login = React.lazy(() => import('@auth/src/pages/Login/LoginPage'));
-const Signup = React.lazy(() => import('@auth/src/pages/Signup/SignupPage'));
-const Home = React.lazy(() => import('@home/src/App'));
-const NoteSharing = React.lazy(() => import('@features/notesharing/src/App'));
-const QnA = React.lazy(() => import('@features/qna/src/App'));
-const GroupChat = React.lazy(() => import('@features/groupchat/src/App'));
-const Summarizer = React.lazy(() => import('@features/summarizer/src/App'));
-const Quiz = React.lazy(() => import('@features/quiz/src/App'));
-const ChatBot = React.lazy(() => import('@features/chat_bot/src/App'));
+// Import login and signup pages directly
+const LoginPage = React.lazy(() => import('@auth/pages/Login/LoginPage'));
+const SignupPage = React.lazy(() => import('@auth/pages/Signup/SignupPage'));
+
+// Update lazy imports to match the alias paths
+const Landing = React.lazy(() => import('@landing/App.jsx'));
+const Home = React.lazy(() => import('@home/App.jsx'));
+const NoteSharing = React.lazy(() => import('@notesharing/App.jsx'));
+const QnA = React.lazy(() => import('@qna/App.jsx'));
+const GroupChat = React.lazy(() => import('@groupchat/App.jsx'));
+const Summarizer = React.lazy(() => import('@summarizer/App.jsx'));
+const Quiz = React.lazy(() => import('@quiz/App.jsx'));
+const ChatBot = React.lazy(() => import('@chat_bot/App.jsx'));
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -32,8 +34,8 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path={routes.public.landing} element={<Landing />} />
-          <Route path={routes.public.login} element={<Login />} />
-          <Route path={routes.public.signup} element={<Signup />} />
+          <Route path={routes.public.login} element={<LoginPage />} />
+          <Route path={routes.public.signup} element={<SignupPage />} />
 
           {/* Protected Routes */}
           <Route

@@ -1,9 +1,14 @@
+import React from 'react';
+import Header from '@shared/components/Header';
 import ChatBot from './components/ChatBot'
 
 function App() {
   return (
     <div className="min-h-screen bg-gray-100">
-      <ChatBot />
+      <Header />
+      <main>
+        <ChatBot />
+      </main>
     </div>
   )
 }
