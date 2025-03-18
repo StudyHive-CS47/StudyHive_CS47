@@ -170,6 +170,9 @@
 
 .image-upload {
   position: relative;
+  display: flex; /* Use Flexbox for layout */
+  align-items: center; /* Vertically align items */
+  gap: 10px; /* Add spacing between elements */
 }
 
 .image-upload-label {
@@ -201,6 +204,7 @@
 }
 
 .post-question-button {
+  font-size: 20px;
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #4a7bff 0%, #63a4ff 100%);
   color: white;
@@ -218,6 +222,7 @@
 }
 
 .submit-answer-button {
+  font-size: 18px;
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
   color: white;
@@ -416,6 +421,19 @@
 
 .answer-form {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-form textarea {
+  padding: 1rem;
+  border: 2px solid #e1e5ea;
+  border-radius: 8px;
+  font-size: 0.89rem;
+  resize: none;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: all 0.3s;
 }
 
 .answers-count {
@@ -519,4 +537,19 @@
 
 .popular-question-item {
   animation: fadeIn 0.3s ease-out;
+}
+
+.remove-image-button {
+  background-color: #ff4d4d; /* Red background */
+  color: white; /* White text */
+  border: none;
+  padding: 2px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+.remove-image-button:hover {
+  background-color: #cc0000; /* Darker red on hover */
 }
