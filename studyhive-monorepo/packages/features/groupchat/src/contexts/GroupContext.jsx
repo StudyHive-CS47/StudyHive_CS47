@@ -4,6 +4,14 @@ import { useAuth } from '@shared/contexts/AuthContext'
 
 const GroupContext = createContext()
 
+export function useGroup() {
+  const context = useContext(GroupContext)
+  if (!context) {
+    throw new Error('useGroup must be used within a GroupProvider')
+  }
+  return context
+}
+
 export function GroupProvider({ children }) {
   const [groups, setGroups] = useState([])
   const [currentGroup, setCurrentGroup] = useState(null)
@@ -90,7 +98,9 @@ export function GroupProvider({ children }) {
 
   const value = {
     groups,
+    setGroups,
     currentGroup,
+    setCurrentGroup,
     loading,
     error,
     createGroup,
@@ -103,8 +113,4 @@ export function GroupProvider({ children }) {
       {children}
     </GroupContext.Provider>
   )
-}
-
-export function useGroup() {
-  return useContext(GroupContext)
 }

@@ -1,7 +1,7 @@
 // src/components/GroupChat/ChatWindow.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { useAuth } from '@shared/contexts/AuthContext';
 import { supabase } from '../../config/supabase';
+import { useAuth } from '@shared/contexts/AuthContext';
 
 const ChatWindow = ({ groupId }) => {
   const [messages, setMessages] = useState([]);

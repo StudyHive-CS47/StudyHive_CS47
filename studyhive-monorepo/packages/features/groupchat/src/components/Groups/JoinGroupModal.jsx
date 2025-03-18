@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '@';
+import { useAuth } from '@shared/contexts/AuthContext';
 import { supabase } from '../../config/supabase';
 
 const JoinGroupModal = ({ group, onClose, onSuccess }) => {

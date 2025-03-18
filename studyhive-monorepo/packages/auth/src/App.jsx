@@ -7,6 +7,9 @@ import { LoginPage, SignupPage } from './pages';
 import QnA from '@features/qna/src/pages/QnA';
 import Quiz from '@features/quiz/src/App';
 import ChatBot from '@features/chat_bot/src/App';
+import NoteSharing from '@features/notesharing/src/App';
+import Summarizer from '@features/summarizer/src/App';
+import GroupChat from '@features/groupchat/src/App';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
 import { routes } from '@shared/routes';
@@ -27,6 +30,9 @@ function App() {
                 <Route path="/qna/*" element={<QnA />} />
                 <Route path="/quiz/*" element={<Quiz />} />
                 <Route path="/chatbot/*" element={<ChatBot />} />
+                <Route path="/notes/*" element={<NoteSharing />} />
+                <Route path="/summarizer/*" element={<Summarizer />} />
+                <Route path="/chat/*" element={<GroupChat />} />
                 <Route path="/" element={<Navigate to="/login" replace />} />
               </Routes>
             </React.Suspense>

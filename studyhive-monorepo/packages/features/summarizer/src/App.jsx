@@ -1,17 +1,16 @@
 import React from 'react';
-import Header from '@shared/components/Header';
+import { Routes, Route } from 'react-router-dom';
 import Summarizer from './components/Summarizer';
-import Footer from '@shared/components/Footer';
 import './styles/styles.css';
 
 function App() {
   return (
-    <div className="app">
-      <Header />
+    <div className="min-h-screen">
       <main>
-        <Summarizer />
+        <Routes>
+          <Route path="/" element={<Summarizer />} />
+        </Routes>
       </main>
-      <Footer />
     </div>
   );
 }

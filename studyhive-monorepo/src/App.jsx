@@ -67,7 +67,7 @@ function App() {
             }
           />
           <Route
-            path={routes.protected.groupchat}
+            path={routes.protected.groupchat + "/*"}
             element={
               <ProtectedRoute>
                 <GroupChat />
