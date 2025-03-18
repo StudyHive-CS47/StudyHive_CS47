@@ -6,6 +6,7 @@ import Footer from './components/Footer/Footer';
 import { LoginPage, SignupPage } from './pages';
 import QnA from '@features/qna/src/pages/QnA';
 import Quiz from '@features/quiz/src/App';
+import ChatBot from '@features/chat_bot/src/App';
 import ConnectionStatus from './components/ConnectionStatus/ConnectionStatus';
 import ErrorBoundary from './components/ErrorBoundary';
 import { routes } from '@shared/routes';
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/qna/*" element={<QnA />} />
                 <Route path="/quiz/*" element={<Quiz />} />
+                <Route path="/chatbot/*" element={<ChatBot />} />
                 <Route path="/" element={<Navigate to="/login" replace />} />
               </Routes>
             </React.Suspense>

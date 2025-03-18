@@ -4,8 +4,8 @@ import { AzureKeyCredential } from "@azure/core-auth";
 import mammoth from 'mammoth';
 import botAvatar from '../assets/bot-avatar.png';
 import userAvatar from '../assets/user-avatar.png';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from '@shared/components/Footer/Footer';
+import Header from '@shared/components/Header/Header';
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([
