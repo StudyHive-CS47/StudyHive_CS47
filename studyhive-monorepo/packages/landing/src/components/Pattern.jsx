@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Pattern = ({ className }) => {
+const Pattern = ({ className = '' }) => {
   return (
     <div className={`fixed inset-0 z-0 pointer-events-none ${className}`}>
       <div className="absolute inset-0"
@@ -59,10 +59,6 @@ const Pattern = ({ className }) => {
 
 Pattern.propTypes = {
   className: PropTypes.string
-};
-
-Pattern.defaultProps = {
-  className: ''
 };
 
 export default Pattern; 
