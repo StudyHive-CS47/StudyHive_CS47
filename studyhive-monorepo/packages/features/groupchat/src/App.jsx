@@ -1,29 +1,28 @@
 import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { GroupProvider } from './contexts/GroupContext'
-import CreateGroup from './components/Groups/CreateGroup'
-import ExploreGroups from './components/Groups/ExploreGroups'
+import { Routes, Route } from 'react-router-dom'
 import MyGroups from './components/Groups/MyGroups'
-import GroupChat from './components/GroupChat/GroupChat'
-import PageLayout from './components/common/PageLayout'
+import ExploreGroups from './components/Groups/ExploreGroups'
+import CreateGroup from './components/Groups/CreateGroup'
+import { GroupProvider } from './contexts/GroupContext'
+import Footer from '@shared/components/Footer/Footer'
 import './App.css'
 
-function App() {
+const App = () => {
   return (
     <GroupProvider>
-      <div className="min-h-screen bg-gray-50">
-        <PageLayout>
+      <div className="flex flex-col min-h-screen w-full bg-[#EEF4FE] overflow-x-hidden">
+        <div className="flex-1 w-full max-w-[1400px] mx-auto p-4 mt-4">
           <Routes>
-            <Route path="/" element={<Navigate to="my-groups" />} />
-            <Route path="my-groups" element={<MyGroups />} />
-            <Route path="explore" element={<ExploreGroups />} />
-            <Route path="create" element={<CreateGroup />} />
-            <Route path="chat/:groupId" element={<GroupChat />} />
+            <Route path="/" element={<MyGroups />} />
+            <Route path="/my-groups" element={<MyGroups />} />
+            <Route path="/explore" element={<ExploreGroups />} />
+            <Route path="/create" element={<CreateGroup />} />
           </Routes>
-        </PageLayout>
+        </div>
+        <Footer />
       </div>
     </GroupProvider>
   );
-}
+};
 
 export default App;

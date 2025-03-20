@@ -5,7 +5,6 @@ import mammoth from 'mammoth';
 import botAvatar from '../assets/bot-avatar.png';
 import userAvatar from '../assets/user-avatar.png';
 import Footer from '@shared/components/Footer/Footer';
-import Header from '@shared/components/Header/Header';
 
 const ChatBot = () => {
   const [messages, setMessages] = useState([
@@ -480,8 +479,7 @@ const ChatBot = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
-      <Header />
+    <div className="flex flex-col min-h-screen bg-[#EEF4FE]">
       <div className="flex flex-1 gap-4 p-4 max-w-[1400px] mx-auto w-full">
         {/* Sidebar */}
         <div className="w-72 bg-white border-r border-gray-200 flex flex-col rounded-lg shadow-lg">

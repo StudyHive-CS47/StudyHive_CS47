@@ -4,7 +4,7 @@ import { useAuth } from '@shared/contexts/AuthContext'
 
 const GroupContext = createContext()
 
-export function useGroup() {
+export const useGroup = () => {
   const context = useContext(GroupContext)
   if (!context) {
     throw new Error('useGroup must be used within a GroupProvider')
@@ -12,7 +12,7 @@ export function useGroup() {
   return context
 }
 
-export function GroupProvider({ children }) {
+export const GroupProvider = ({ children }) => {
   const [groups, setGroups] = useState([])
   const [currentGroup, setCurrentGroup] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -53,42 +53,44 @@ export function GroupProvider({ children }) {
     }
   }
 
-  const createGroup = async (groupData) => {
+  const createGroup = async ({ name, university, degree, module, description }) => {
     try {
-      setError(null)
-      // Create group
-      const { data: group, error: groupError } = await supabase
+      const { data, error } = await supabase
         .from('groups')
-        .insert([{
-          name: groupData.name,
-          university: groupData.university,
-          degree: groupData.degree,
-          module: groupData.module,
-          description: groupData.description,
-          admin_id: user.id
-        }])
+        .insert([
+          {
+            name,
+            university,
+            degree,
+            module,
+            description,
+            admin_id: user.id,
+          },
+        ])
         .select()
         .single()
 
-      if (groupError) throw groupError
+      if (error) throw error
 
-      // Add creator as a member
+      // Automatically add the creator as a member
       const { error: memberError } = await supabase
         .from('group_members')
-        .insert([{
-          group_id: group.id,
-          user_id: user.id
-        }])
+        .insert([
+          {
+            group_id: data.id,
+            user_id: user.id,
+          },
+        ])
 
       if (memberError) throw memberError
 
       // Refresh groups list
       await fetchGroups()
-      return group
-    } catch (err) {
-      console.error('Error creating group:', err)
-      setError(err.message)
-      throw err
+      return data
+    } catch (error) {
+      console.error('Error creating group:', error)
+      setError(error.message)
+      throw error
     }
   }
 
@@ -114,3 +116,5 @@ export function GroupProvider({ children }) {
     </GroupContext.Provider>
   )
 }
+
+export default GroupContext

@@ -54,7 +54,7 @@ function Summarizer() {
   };
 
   return (
-    <>
+    <div className="summarizer-container">
       <div className="summarizer-header">
         <h1>Summarize <RotatingText 
           texts={['Your Notes', 'Text', 'Files', 'URL']}
@@ -102,7 +102,7 @@ function Summarizer() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    font-family: Inter, system-ui, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+  }
+  
+  body {
+    @apply bg-gray-50;
+  }
+
+  #root {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors;
+  }
+  .btn-secondary {
+    @apply px-4 py-2 bg-white text-primary-600 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors;
+  }
+  .nav-link {
+    @apply text-gray-600 hover:text-primary-600 transition-colors;
+  }
+  
+  .nav-link-active {
+    @apply text-blue-600 font-medium;
+  }
+} 

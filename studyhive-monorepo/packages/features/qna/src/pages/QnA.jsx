@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./QnA.css";
 import { supabase } from "../pages/client";
+import Footer from '@shared/components/Footer/Footer';
 
 function QnA() {
   const [questions, setQuestions] = useState([]);
@@ -241,50 +242,17 @@ function QnA() {
   }, [questions]);
 
   return (
-    <div className="qna-container">
-      <div className="qna-hero">
+    <div className="flex flex-col min-h-screen bg-[#EEF4FE]">
+      <div className="qna-hero w-full">
         <div className="qna-hero-content">
           <h1>Ask & Answer</h1>
           <p>Share your knowledge, learn from others</p>
         </div>
       </div>
+
       <div className="qna-content">
-        {/* Sidebar with Popular Questions */}
-        <aside className="qna-sidebar">
-          <div className="sidebar-content">
-            <h3>Popular Questions</h3>
-            {popularQuestions.length === 0 ? (
-              <p className="no-popular">No popular questions yet</p>
-            ) : (
-              <ul className="popular-questions-list">
-                {popularQuestions.map((question) => (
-                  <li
-                    key={question.id}
-                    className="popular-question-item"
-                    onClick={() => {
-                      setExpandedQuestionId(question.id);
-                      document.getElementById(`question-${question.id}`).scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      });
-                    }}
-                  >
-                    <div className="popular-question-content">
-                      <p>{question.text.length > 60 ? question.text.substring(0, 60) + "..." : question.text}</p>
-                      <div className="popular-question-stats">
-                        <span>❤️ {question.likes}</span>
-                        <span>💬 {question.answers.length}</span>
-                        <span>👀 {question.views}</span>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </aside>
-        <main className="qna-main">
-          {/* Question Input Form */}
+        {/* Main Content */}
+        <div className="qna-main">
           <div className="post-creation">
             <h3>Ask Your Question</h3>
             <form onSubmit={handleAddQuestion} className="post-input">
@@ -292,35 +260,35 @@ function QnA() {
                 value={newQuestion}
                 onChange={(e) => setNewQuestion(e.target.value)}
                 placeholder="What would you like to ask..."
-                required
-                rows="3"
+                rows="4"
               />
               <div className="form-actions">
                 <div className="image-upload">
-                  <label htmlFor="questionImage" className="image-upload-label">
-                    <span className="upload-icon">📷</span>
-                    <span>{newQuestionImage ? "Change Image" : "Add Image"}</span>
+                  <label className="image-upload-label">
+                    <span className="upload-icon">📎</span>
+                    Add Image
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setNewQuestionImage(e.target.files[0])}
+                      className="file-input"
+                    />
                   </label>
                   {newQuestionImage && (
-                    <button
-                      type="button"
-                      className="remove-image-button"
-                      onClick={() => setNewQuestionImage(null)}
-                    >
-                      Remove
-                    </button>
+                    <div className="image-preview">
+                      <img
+                        src={URL.createObjectURL(newQuestionImage)}
+                        alt="Question preview"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setNewQuestionImage(null)}
+                        className="remove-image-button"
+                      >
+                        ×
+                      </button>
+                    </div>
                   )}
-                  <input
-                    id="questionImage"
-                    type="file"
-                    onChange={(e) => {
-                      if (e.target.files[0]) {
-                        setNewQuestionImage(e.target.files[0]);
-                      }
-                    }}
-                    accept="image/*"
-                    className="file-input"
-                  />
                 </div>
                 <button type="submit" className="post-question-button">
                   Post Question
@@ -328,7 +296,8 @@ function QnA() {
               </div>
             </form>
           </div>
-          {/* Display Questions */}
+
+          {/* Questions List */}
           <div className="posts-container">
             {questions.length === 0 ? (
               <div className="no-questions">
@@ -487,7 +456,7 @@ function QnA() {
                               <div className="answer-actions">
                                 <button
                                   className="like-button"
-                                  onClick={() => handleLikeAnswer(question.id, answer.id)}
+                                  onClick={() => handleLikeAnswer(answer.id)}
                                 >
                                   <span className="heart-icon">❤️</span>
                                   <span className="like-count">{answer.likes}</span>
@@ -505,8 +474,44 @@ function QnA() {
               ))
             )}
           </div>
-        </main>
+        </div>
+
+        {/* Sidebar */}
+        <div className="qna-sidebar">
+          <div className="sidebar-content">
+            <h3>Popular Questions</h3>
+            {popularQuestions.length === 0 ? (
+              <div className="no-popular">No popular questions yet</div>
+            ) : (
+              <ul className="popular-questions-list">
+                {popularQuestions.map((question) => (
+                  <li
+                    key={question.id}
+                    className="popular-question-item"
+                    onClick={() => {
+                      setExpandedQuestionId(question.id);
+                      document.getElementById(`question-${question.id}`).scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                    }}
+                  >
+                    <div className="popular-question-content">
+                      <p>{question.text.length > 60 ? question.text.substring(0, 60) + "..." : question.text}</p>
+                      <div className="popular-question-stats">
+                        <span>❤️ {question.likes}</span>
+                        <span>💬 {question.answers.length}</span>
+                        <span>👀 {question.views}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

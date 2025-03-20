@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import Footer from '../../shared/src/components/Footer/Footer';
 import './App.css';
-import Header from '@shared/components/Header'
-import Footer from './Footer';
 import image1 from './assets/image1.jpg';
 import image2 from './assets/image2.jpg';
 import image3 from './assets/image3.jpg';
@@ -24,190 +25,395 @@ import featureChatbot from './assets/feature3.png';
 import featureQA from './assets/feature4.png';
 import featureGroupChat from './assets/feature5.png';
 import featureQuiz from './assets/feature6.png';
-import linkedinIcon from './assets/linkedin-icon.png'; // Import LinkedIn icon
+import linkedinIcon from './assets/linkedin-icon.png';
+import senuri from './assets/senuri.jpg';
+
+// Styled Feature Card Component
+const StyledFeatureCard = styled.div`
+  .card {
+    position: relative;
+    width: 100%;
+    min-height: 260px;
+    border-radius: 16px;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+
+      &::before {
+        background: rgba(0, 0, 0, 0.45);
+      }
+
+      .content {
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.75rem;
+  }
+
+  .blob {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: ${props => props.blobColor};
+    opacity: 0.15;
+    filter: blur(20px);
+    animation: blob-float 8s infinite ease-in-out;
+  }
+
+  @keyframes blob-float {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
+`;
+
+const TestimonialCard = styled.div`
+  .card {
+    background-color: rgba(243, 244, 246, 1);
+    padding: 2rem;
+    max-width: 420px;
+    border-radius: 10px;
+    box-shadow: 0 20px 30px -20px rgba(5, 5, 5, 0.24);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 35px -20px rgba(5, 5, 5, 0.28);
+    }
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    grid-gap: 1rem;
+    gap: 1rem;
+  }
+
+  .header .image {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 9999px;
+    object-fit: cover;
+    background-image: url(${props => props.reviewerImage});
+    background-size: cover;
+    background-position: center;
+  }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    grid-gap: 0.125rem;
+    gap: 0.125rem;
+    color: rgba(34, 197, 94, 1);
+  }
+
+  .stars svg {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  .name {
+    margin-top: 0.25rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    color: rgba(55, 65, 81, 1);
+  }
+
+  .role {
+    font-size: 0.875rem;
+    color: #3B82F6;
+  }
+
+  .message {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    margin-top: 1rem;
+    color: rgba(107, 114, 128, 1);
+    line-height: 1.6;
+  }
+`;
+
+// Feature Card Component
+function FeatureCard({ icon, title, description, blobColor }) {
+    return (
+        <StyledFeatureCard blobColor={blobColor}>
+            <div className="card" style={{ backgroundImage: `url(${icon})` }}>
+                <div className="blob" />
+                <div className="content">
+                    <h3 className="text-xl font-semibold text-white mb-3 w-full">{title}</h3>
+                    <p className="text-gray-200 text-base leading-relaxed w-full">{description}</p>
+                </div>
+            </div>
+        </StyledFeatureCard>
+    );
+}
 
 function App() {
     return (
-        <div className="App">
-            <Header />
-            <main className="content">
-                <section className="middle-section">
-                    {/* Introduction and Features Section */}
-                    <div className="intro-features-container">
-                        <div className="intro-text">
-                            <h2 className="section-heading large-heading">Welcome to </h2>
-                            <h2 className="section-heading large-heading2">StudyHive!</h2>
-                            <h2 className="section-heading large-heading3">Connect, collaborate, conquer</h2>
-                            <p>
-                                Welcome to Study Hive – your go-to space for easy, organized, and stress-free studying!
-                                We’re here to make learning simple and enjoyable. With Study Hive, you can share notes,
-                                track
-                                deadlines effortlessly, and connect with classmates who are on the same journey as you.
-                                Need help staying on top of everything? We’ve got tools to keep you organized and
-                                motivated, so
-                                you can focus on what really matters – learning and growing. Whether it’s acing your
-                                exams,
-                                finishing assignments, or just staying ahead, we’re here to support you every step of
-                                the way.
-                                Let’s make studying something you actually look forward to!
-                            </p>
-                        </div>
-                        <div className="features-section">
-                        <div className="features-grid">
-                                <div className="feature-item">
-                                    <img src={featureNoteSharing} alt="Note Sharing" className="feature-icon" />
-                                    Note Sharing
-                                </div>
-                                <div className="feature-item">
-                                    <img src={featureNoteSummarize} alt="Note Summarize" className="feature-icon" />
-                                    Note Summarize
-                                </div>
-                                <div className="feature-item">
-                                    <img src={featureChatbot} alt="Chatbot" className="feature-icon" />
-                                    Chatbot
-                                </div>
-                                <div className="feature-item">
-                                    <img src={featureQA} alt="Q & A" className="feature-icon" />
-                                    Q & A
-                                </div>
-                                <div className="feature-item">
-                                    <img src={featureGroupChat} alt="Group Chat" className="feature-icon" />
-                                    Group Chat
-                                </div>
-                                <div className="feature-item">
-                                    <img src={featureQuiz} alt="Quiz" className="feature-icon" />
-                                    Quizzer
-                                </div>
-                            </div>
-                            <div className="features-button-container">
-                                <button className="feature-button">Explore All Features</button>
-                            </div>
-                        </div>
+        <div className="min-h-screen w-full">
+            {/* Hero Section */}
+            <section className="w-full bg-transparent py-24">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-4xl mx-auto">
+                        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
+                            Welcome to <span className="text-blue-600 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400">
+                                StudyHive</span>
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                            Connect, collaborate, and conquer your academic goals with StudyHive's comprehensive learning platform.
+                        </p>
                     </div>
+                        </div>
+            </section>
 
-                    {/* Image Gallery Section */}
-                    <div className="curved-box">
-                        <div className="box-image-container">
-                            <img src={image1} alt="Imag 1" className="box-image" />
-                        </div>
-                        <div className="box-image-container">
-                            <img src={image2} alt="Imag 2" className="box-image" />
-                        </div>
-                        <div className="box-image-container">
-                            <img src={image3} alt="Imag 3" className="box-image" />
-                        </div>
-                        <div className="box-image-container">
-                            <img src={image4} alt="Imag 4" className="box-image" />
-                        </div>
+            {/* Features Section */}
+            <section className="w-full py-20 bg-gradient-to-b from-white/50 to-white/30 backdrop-blur-lg">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-4xl font-bold text-center text-gray-900 mb-12">Our Features</h2>
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+                        <FeatureCard 
+                            icon={featureNoteSharing} 
+                            title="Note Sharing" 
+                            description="Share and access study materials easily"
+                            blobColor="#4F46E5" // Indigo
+                        />
+                        <FeatureCard 
+                            icon={featureNoteSummarize} 
+                            title="Note Summarize" 
+                            description="Get AI-powered note summaries"
+                            blobColor="#EC4899" // Pink
+                        />
+                        <FeatureCard 
+                            icon={featureChatbot} 
+                            title="ChatBot" 
+                            description="24/7 study assistance"
+                            blobColor="#10B981" // Emerald
+                        />
+                        <FeatureCard 
+                            icon={featureQA} 
+                            title="Q & A" 
+                            description="Get answers to your questions"
+                            blobColor="#F59E0B" // Amber
+                        />
+                        <FeatureCard 
+                            icon={featureGroupChat} 
+                            title="Group Chat" 
+                            description="Collaborate with peers"
+                            blobColor="#6366F1" // Purple
+                        />
+                        <FeatureCard 
+                            icon={featureQuiz} 
+                            title="Quizzer" 
+                            description="Test your knowledge"
+                            blobColor="#EF4444" // Red
+                        />
                     </div>
+                </div>
+            </section>
 
                     {/* Mission Section */}
-                    <section className="mission-section">
-                        <div className="mission-content">
-                            <h2 className="section-heading">Our Mission</h2>
-                            <p>
+            <section className="w-full py-20 bg-transparent">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="lg:flex lg:items-center lg:gap-12 max-w-6xl mx-auto">
+                        <div className="lg:w-1/2">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
+                            <p className="text-lg text-gray-600 leading-relaxed">
                                 At StudyHive, our mission is to revolutionize the way students learn,
                                 collaborate, and achieve academic success. We strive to provide an
                                 intuitive and engaging platform that simplifies studying, encourages
                                 knowledge sharing, and fosters a strong sense of academic community.
-                                By integrating cutting-edge technology, AI-powered learning tools,
-                                and interactive collaboration features, we aim to make education more
-                                accessible, efficient, and enjoyable for students across Sri Lanka
-                                and beyond. Our commitment is to empower every student with the
-                                resources and support they need to excel in their academic journey
-                                and beyond.
                             </p>
                         </div>
-                        <img src={mission} alt="Imag 4" className="mission" />
-                    </section>
-
-                    {/* Second Image Gallery Section */}
-                    <div className="curved-box">
-                        <div className="box-image-container">
-                            <img src={image5} alt="Imag 1" className="box-image" />
+                        <div className="mt-8 lg:mt-0 lg:w-1/2">
+                            <div className="relative rounded-xl overflow-hidden shadow-lg">
+                                <img 
+                                    src={mission} 
+                                    alt="Our Mission" 
+                                    className="w-full h-auto transform transition-transform duration-500 hover:scale-103 object-cover"
+                                    style={{ maxHeight: '400px' }}
+                                />
                         </div>
-                        <div className="box-image-container">
-                            <img src={image6} alt="Imag 2" className="box-image" />
-                        </div>
-                        <div className="box-image-container">
-                            <img src={image7} alt="Imag 3" className="box-image" />
-                        </div>
-                        <div className="box-image-container">
-                            <img src={image8} alt="Imag 4" className="box-image" />
                         </div>
                     </div>
-
-                    {/* Testimonial Section */}
-                    <section className="testimonial-section">
-                        <h2 className="section-heading">Voices of the Hive</h2>
-                        <div className="testimonial-container">
-                            <div className="testimonial-box">
-                                <div className="box-container">
-                                    <h3 className="box-heading">"Study Hive is an exceptional platform for students! Its features like advanced keyword search, automated note summaries, and personalized resource suggestions make studying so much easier. The chatbot is incredibly helpful, and the integration with LMS keeps everything organized. This app has transformed the way I approach my studies. Highly recommended!"</h3>
-                                    <p className="box-text">Senuri Hansamini</p>
-                                </div>
-                            </div>
-                            <img src={testimonial} alt="Image 4" className="testimonial-image" />
                         </div>
                     </section>
 
                     {/* Team Section */}
-                    <section className="team-section">
-                        <h2 className="section-heading">Who We Are – The Team Behind StudyHive</h2>
-                        <div className="team-grid">
-                            <div className="team-member">
-                                <img src={member1} alt="Imag 1" className="team-photo" />
-                                <p className="team-name">Yasara Madana</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/yasara-madana-93263b269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
+            <section className="w-full py-20 bg-gradient-to-b from-white/30 to-white/50 backdrop-blur-lg">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-4xl font-bold text-center text-gray-900 mb-3">Meet Our Team</h2>
+                    <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+                        Dedicated professionals working together to create the best learning experience for you.
+                    </p>
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+                        <TeamMember 
+                            image={member1} 
+                            name="Yasara Madana" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/yasara-madana-93263b269"
+                        />
+                        <TeamMember 
+                            image={member2} 
+                            name="Rashmina Fernando" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/rashminafernando"
+                        />
+                        <TeamMember 
+                            image={member3} 
+                            name="Miuni Weerasinghe" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/miuni-weerasinghe-1b922b270"
+                        />
+                        <TeamMember 
+                            image={member4} 
+                            name="Thisakya Pathirathne" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/thisakya-pathirathne-a61720273"
+                        />
+                        <TeamMember 
+                            image={member5} 
+                            name="Thevindu Jayakody" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/thevindu-jayakody-828311334"
+                        />
+                        <TeamMember 
+                            image={member6} 
+                            name="Nirasha Thilakarathne" 
+                            role="Fullstack Developer"
+                            linkedin="https://www.linkedin.com/in/nirasha-thilakarathna-8753a2296"
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Testimonial Section */}
+            <section className="w-full py-20 bg-gradient-to-b from-white/50 to-white/30 backdrop-blur-lg">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">Voices of the Hive</h2>
+                    <p className="text-lg text-gray-600 text-center mb-12 max-w-2xl mx-auto">
+                        Hear what our community has to say about their experience with StudyHive.
+                    </p>
+                    <div className="lg:flex lg:items-center lg:gap-12 max-w-6xl mx-auto">
+                        <div className="lg:w-1/2">
+                            <TestimonialCard reviewerImage={senuri}>
+                                <div className="card">
+                                    <div className="header">
+                                        <div className="image" />
+                                        <div>
+                                            <div className="stars">
+                                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                                <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
                             </div>
-                            <div className="team-member">
-                                <img src={member2} alt="Imag 2" className="team-photo" />
-                                <p className="team-name">Rashmina Fernando</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/rashminafernando" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
+                                            <p className="name">Senuri Hansamini</p>
+                                            <p className="role">Student</p>
                             </div>
-                            <div className="team-member">
-                                <img src={member3} alt="Imag 3" className="team-photo" />
-                                <p className="team-name">Miuni Weerasinghe</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/miuni-weerasinghe-1b922b270?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
                             </div>
-                            <div className="team-member">
-                                <img src={member4} alt="Imag 4" className="team-photo" />
-                                <p className="team-name">Thisakya Pathirathne</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/thisakya-pathirathne-a61720273" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
+                                    <p className="message">
+                                        "Study Hive is an exceptional platform for students! Its features like advanced keyword search,
+                                        automated note summaries, and personalized resource suggestions make studying so much easier.
+                                        The chatbot is incredibly helpful, and the integration with LMS keeps everything organized.
+                                        This app has transformed the way I approach my studies. Highly recommended!"
+                                    </p>
                             </div>
-                            <div className="team-member">
-                                <img src={member5} alt="Imag 5" className="team-photo" />
-                                <p className="team-name">Thevindu Jayakody</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/thevindu-jayakody-828311334?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
+                            </TestimonialCard>
                             </div>
-                            <div className="team-member">
-                                <img src={member6} alt="Imag 6" className="team-photo" />
-                                <p className="team-name">Nirasha Thilakarathne</p>
-                                <p className="team-position">Fullstack Developer</p>
-                                <a href="https://www.linkedin.com/in/nirasha-thilakarathna-8753a2296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
-                                    <img src={linkedinIcon} alt="LinkedIn" className="linkedin-icon" />
-                                </a>
+                        <div className="mt-8 lg:mt-0 lg:w-1/2">
+                            <div className="relative rounded-xl overflow-hidden shadow-lg flex justify-center items-center">
+                                <img 
+                                    src={testimonial} 
+                                    alt="Testimonial" 
+                                    className="w-full h-auto transform transition-transform duration-500 hover:scale-103 object-cover"
+                                    style={{ maxHeight: '350px' }}
+                                />
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </section>
-                </section>
-            </main>
+
             <Footer />
+        </div>
+    );
+}
+
+// Team Member Component
+function TeamMember({ image, name, role, linkedin }) {
+    return (
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 transform transition-all duration-300 hover:scale-102 hover:shadow-lg flex flex-col items-center justify-center text-center">
+            <div className="relative mb-4 flex justify-center">
+                <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-blue-50">
+                    <img src={image} alt={name} className="w-full h-full object-cover" />
+                </div>
+            </div>
+            <div className="flex flex-col items-center">
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">{name}</h3>
+                <p className="text-blue-600 text-sm font-medium mb-4">{role}</p>
+                <a 
+                    href={linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-8 h-8 bg-blue-50 rounded-full hover:bg-blue-100 transition-colors duration-300"
+                >
+                    <img src={linkedinIcon} alt="LinkedIn" className="w-4 h-4" />
+                </a>
+            </div>
         </div>
     );
 }

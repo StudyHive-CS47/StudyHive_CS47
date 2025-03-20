@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGroup } from '../../contexts/GroupContext';
+import NavBar from '../Navigation/NavBar';
 
 const universities = [
   "Aquinas College of Higher Studies (ACHS)",
@@ -73,7 +74,7 @@ const CreateGroup = () => {
 
     try {
       await createGroup(formData);
-      navigate('/my-groups');
+      navigate('/chat/my-groups');
     } catch (err) {
       setError('Failed to create group. Please try again.');
       console.error('Error creating group:', err);
@@ -91,83 +92,130 @@ const CreateGroup = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Create New Group</h1>
-      
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
-          {error}
-        </div>
-      )}
+    <div className="relative min-h-screen bg-[#F0F2F5]">
+      {/* Navigation Bar */}
+      <NavBar />
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Group Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+      {/* Main Content */}
+      <div className="flex bg-white rounded-lg shadow-lg overflow-hidden ml-24 mx-auto max-w-[1400px]" 
+           style={{ height: 'calc(100vh - 180px)', margin: '90px 24px 90px 48px' }}>
+        <div className="flex-1 flex flex-col">
+          {/* Header */}
+          <div className="p-6 border-b border-gray-200">
+            <h1 className="text-2xl font-bold text-gray-800">Create New Group</h1>
+            <p className="mt-2 text-gray-600">Create a study group to collaborate with your peers</p>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">University</label>
-          <input
-            type="text"
-            name="university"
-            value={formData.university}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+          {/* Form */}
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="max-w-2xl mx-auto">
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-red-700">{error}</p>
+                  </div>
+                </div>
+              )}
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Degree</label>
-          <input
-            type="text"
-            name="degree"
-            value={formData.degree}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Group Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    placeholder="Enter group name"
+                  />
+                </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Module</label>
-          <input
-            type="text"
-            name="module"
-            value={formData.module}
-            onChange={handleChange}
-            required
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">University</label>
+                  <select
+                    name="university"
+                    value={formData.university}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                  >
+                    <option value="">Select a university</option>
+                    {universities.map((uni) => (
+                      <option key={uni} value={uni}>{uni}</option>
+                    ))}
+                  </select>
+                </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          />
-        </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Degree Program</label>
+                  <input
+                    type="text"
+                    name="degree"
+                    value={formData.degree}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    placeholder="Enter degree program"
+                  />
+                </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-        >
-          {loading ? 'Creating...' : 'Create Group'}
-        </button>
-      </form>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Module</label>
+                  <input
+                    type="text"
+                    name="module"
+                    value={formData.module}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    placeholder="Enter module name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-none"
+                    placeholder="Describe your group's purpose and goals..."
+                  />
+                </div>
+
+                <div className="flex items-center justify-end space-x-4">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/chat/my-groups')}
+                    className="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? (
+                      <div className="flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Creating...
+                      </div>
+                    ) : (
+                      'Create Group'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

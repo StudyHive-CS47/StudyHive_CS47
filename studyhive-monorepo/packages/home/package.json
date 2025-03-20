@@ -11,15 +11,16 @@
     "lucide-react": "^0.474.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "styled-components": "^6.1.8",
     "studyhive-frontend-home2": "file:",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-  "dev": "vite",
-  "start": "vite",
-  "build": "vite build",
-  "test": "react-scripts test"
-},
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "test": "react-scripts test"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

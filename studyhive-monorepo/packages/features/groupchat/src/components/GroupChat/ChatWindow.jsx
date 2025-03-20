@@ -5,7 +5,6 @@ import { useAuth } from '@shared/contexts/AuthContext';
 
 const ChatWindow = ({ groupId }) => {
   const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
@@ -53,11 +52,10 @@ const ChatWindow = ({ groupId }) => {
 
       if (messagesError) throw messagesError;
 
-      // Get user emails in a separate query
       if (messages?.length) {
         const userIds = [...new Set(messages.map(m => m.user_id))];
         const { data: users } = await supabase
-          .from('profiles') // or use auth.users directly
+          .from('profiles')
           .select('id, email')
           .in('id', userIds);
 
@@ -83,83 +81,76 @@ const ChatWindow = ({ groupId }) => {
     }
   };
 
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
-
-    try {
-      const { error } = await supabase
-        .from('messages')
-        .insert([{
-          content: newMessage.trim(),
-          group_id: groupId,
-          user_id: user.id
-        }]);
-
-      if (error) throw error;
-      setNewMessage('');
-    } catch (err) {
-      console.error('Error sending message:', err);
-      setError('Failed to send message');
-    }
+  const formatTime = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-12rem)]">
-      {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col h-full bg-[#EEE5DE] bg-opacity-50">
+      <div 
+        className="flex-1 overflow-y-auto p-4 space-y-2"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+          backgroundAttachment: 'fixed'
+        }}
+      >
         {loading ? (
-          <div className="text-center">Loading messages...</div>
+          <div className="flex justify-center items-center h-full">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          </div>
         ) : error ? (
-          <div className="text-center text-red-500">{error}</div>
+          <div className="flex justify-center items-center h-full">
+            <div className="bg-red-100 text-red-500 px-4 py-2 rounded-lg">
+              {error}
+            </div>
+          </div>
         ) : messages.length === 0 ? (
-          <div className="text-center text-gray-500">No messages yet</div>
+          <div className="flex justify-center items-center h-full">
+            <div className="text-center text-gray-500">
+              <p className="mb-2">No messages yet</p>
+              <p className="text-sm">Be the first to send a message!</p>
+            </div>
+          </div>
         ) : (
-          messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${message.user_id === user.id ? 'justify-end' : 'justify-start'}`}
-            >
+          messages.map((message, index) => {
+            const isCurrentUser = message.user_id === user.id;
+            const showSender = index === 0 || 
+              messages[index - 1].user_id !== message.user_id;
+
+            return (
               <div
-                className={`max-w-[70%] rounded-lg p-3 ${
-                  message.user_id === user.id
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100'
-                }`}
+                key={message.id}
+                className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
               >
-                <div className="text-xs mb-1">
-                  {message.sender?.email || 'Unknown User'}
-                </div>
-                <div>{message.content}</div>
-                <div className="text-xs mt-1 opacity-70">
-                  {new Date(message.created_at).toLocaleTimeString()}
+                <div
+                  className={`relative max-w-[65%] rounded-lg px-3 py-2 shadow-sm
+                    ${isCurrentUser 
+                      ? 'bg-[#DCF8C6] mr-2' 
+                      : 'bg-white ml-2'
+                    }
+                    ${showSender ? 'mt-4' : 'mt-1'}
+                  `}
+                >
+                  {showSender && !isCurrentUser && (
+                    <div className="absolute -top-5 left-0 text-xs font-medium text-blue-600">
+                      {message.sender?.email.split('@')[0]}
+                    </div>
+                  )}
+                  <div className="text-gray-800 break-words">{message.content}</div>
+                  <div className="text-[0.65rem] text-gray-500 text-right mt-1">
+                    {formatTime(message.created_at)}
+                    {isCurrentUser && (
+                      <span className="ml-1 text-blue-500">✓✓</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
+            );
+          })
         )}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Message Input */}
-      <form onSubmit={handleSendMessage} className="p-4 bg-white border-t">
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message..."
-            className="flex-1 rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:border-blue-500"
-          />
-          <button
-            type="submit"
-            disabled={!newMessage.trim()}
-            className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
-          >
-            Send
-          </button>
-        </div>
-      </form>
     </div>
   );
 };

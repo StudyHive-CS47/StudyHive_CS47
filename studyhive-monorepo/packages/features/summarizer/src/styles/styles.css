@@ -1,47 +1,55 @@
-body {
+/* Reset and base styles */
+html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
+body {
+  background-color: #EEF4FE;
+}
+
+/* Remove the body::before as we don't need it */
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-  z-index: -10;
+  display: none;
 }
 
 .app {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem 0 1.5rem;
-  overflow: hidden;
+  padding: 2rem 1.5rem;
   position: relative;
-  background: transparent;
 }
 
-main {
-  flex: 1;
+/* Main content area */
+.summarizer-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  padding: 0 1rem;
-  margin: 0;
-  height: calc(100vh - 160px);
-  padding-top: 50px;
+  width: 100%;
+  padding: 2rem 1rem;
 }
 
-.header {
+.summarizer-header {
   text-align: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.summarizer-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .summarizer {
@@ -52,12 +60,15 @@ main {
   display: flex;
   gap: 1.5rem;
   width: 100%;
-  max-width: 1000px;
-  height: auto;
+  max-width: 1200px;
+  margin: 0 auto;
   min-height: 475px;
-  max-height: calc(100vh - 320px);
-  margin-top: 0.5rem;
   backdrop-filter: blur(10px);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 .input-section {
@@ -576,22 +587,6 @@ main {
 
 body {
   overflow: hidden;
-}
-
-.summarizer-header {
-  text-align: center;
-  margin-bottom: 1rem;
-  color: #333;
-  margin-top: -10px;
-}
-
-.summarizer-header h1 {
-  font-size: 2.2rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
 }
 
 .rotating-text-wrapper {
