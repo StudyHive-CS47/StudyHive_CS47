@@ -1,7 +1,10 @@
 import React from 'react';
 import { Routes, Route } from "react-router-dom"; // Remove BrowserRouter
-import BrowsePage from "./pages/BrowsePage";
 import Tabs from "./components/common/Tabs";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './index.css';
 
 function App() {
   return (
@@ -11,7 +14,6 @@ function App() {
           <Route path="/" element={
             <>
               <Tabs />
-              <BrowsePage />
             </>
           } />
         </Routes>

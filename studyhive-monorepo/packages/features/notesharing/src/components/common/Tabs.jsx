@@ -12,6 +12,7 @@ const Tabs = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState({
         universityName: '',
         moduleCode: '',
@@ -74,6 +75,10 @@ const Tabs = () => {
         fetchFiles();
     };
 
+    const toggleFilters = () => {
+        setShowFilters(!showFilters);
+    };
+
     return (
         <div className="container py-4">
             <h1 className="mb-4">StudyHive Note Sharing System</h1>
@@ -96,50 +101,56 @@ const Tabs = () => {
                             <input type="text" className="form-control" placeholder="Search files..." value={searchQuery} onChange={handleSearchChange} />
                         </div>
                         <div className="col-md-6 text-end">
-                            <button className="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                            <button
+                                className="btn btn-outline-primary"
+                                type="button"
+                                onClick={toggleFilters}
+                            >
                                 <i className="bi bi-funnel"></i> Advanced Filters
                             </button>
                         </div>
                     </div>
 
-                    <div className="collapse mb-4" id="filterCollapse">
-                        <div className="card card-body">
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <label htmlFor="universityFilter">University:</label>
-                                    <select className="form-select" name="universityName" value={filters.universityName} onChange={handleFilterChange}>
-                                        <option value="">All</option>
-                                        <option value="University A">University A</option>
-                                        <option value="University B">University B</option>
-                                    </select>
+                    {showFilters && (
+                        <div className="mb-4">
+                            <div className="card card-body">
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <label htmlFor="universityFilter">University:</label>
+                                        <select className="form-select" name="universityName" value={filters.universityName} onChange={handleFilterChange}>
+                                            <option value="">All</option>
+                                            <option value="University A">University A</option>
+                                            <option value="University B">University B</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <label htmlFor="moduleFilter">Module:</label>
+                                        <select className="form-select" name="moduleCode" value={filters.moduleCode} onChange={handleFilterChange}>
+                                            <option value="">All</option>
+                                            <option value="CS101">CS101</option>
+                                            <option value="CS102">CS102</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <label htmlFor="levelFilter">Level:</label>
+                                        <select className="form-select" name="moduleLevel" value={filters.moduleLevel} onChange={handleFilterChange}>
+                                            <option value="">All</option>
+                                            <option value="Level 4">Level 4</option>
+                                            <option value="Level 5">Level 5</option>
+                                        </select>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <label htmlFor="uploaderFilter">Uploader:</label>
+                                        <input type="text" className="form-control" name="uploaderName" value={filters.uploaderName} onChange={handleFilterChange} />
+                                    </div>
                                 </div>
-                                <div className="col-md-3">
-                                    <label htmlFor="moduleFilter">Module:</label>
-                                    <select className="form-select" name="moduleCode" value={filters.moduleCode} onChange={handleFilterChange}>
-                                        <option value="">All</option>
-                                        <option value="CS101">CS101</option>
-                                        <option value="CS102">CS102</option>
-                                    </select>
+                                <div className="text-end mt-3">
+                                    <button className="btn btn-primary me-2" onClick={applyFilters}>Apply</button>
+                                    <button className="btn btn-outline-secondary" onClick={handleClear}>Reset</button>
                                 </div>
-                                <div className="col-md-3">
-                                    <label htmlFor="levelFilter">Level:</label>
-                                    <select className="form-select" name="moduleLevel" value={filters.moduleLevel} onChange={handleFilterChange}>
-                                        <option value="">All</option>
-                                        <option value="Level 4">Level 4</option>
-                                        <option value="Level 5">Level 5</option>
-                                    </select>
-                                </div>
-                                <div className="col-md-3">
-                                    <label htmlFor="uploaderFilter">Uploader:</label>
-                                    <input type="text" className="form-control" name="uploaderName" value={filters.uploaderName} onChange={handleFilterChange} />
-                                </div>
-                            </div>
-                            <div className="text-end mt-3">
-                                <button className="btn btn-primary" onClick={applyFilters}>Apply</button>
-                                <button className="btn btn-outline-secondary" onClick={handleClear}>Reset</button>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     <div className="row">
                         <div className="col-md-6">
