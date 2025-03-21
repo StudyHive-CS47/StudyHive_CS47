@@ -11,11 +11,11 @@ function App() {
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow">
         <Routes>
-          <Route path="/" element={<QuizHome />} />
-          <Route path="/create" element={<CreateQuiz />} />
-          <Route path="/question/:code" element={<QuizQuestion />} />
-          <Route path="/search" element={<SearchQuiz />} />
-          <Route path="/history" element={<QuizHistory />} />
+          <Route path="" element={<QuizHome />} />
+          <Route path="create" element={<CreateQuiz />} />
+          <Route path="question/:code" element={<QuizQuestion />} />
+          <Route path="search" element={<SearchQuiz />} />
+          <Route path="history" element={<QuizHistory />} />
         </Routes>
       </main>
     </div>

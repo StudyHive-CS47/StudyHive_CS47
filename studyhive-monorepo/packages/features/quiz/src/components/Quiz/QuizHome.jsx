@@ -12,7 +12,7 @@ function QuizHome() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <Link 
-            to="/create-quiz" 
+            to="/quiz/create" 
             className="bg-white p-12 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-2 hover:shadow-2xl group"
           >
             <div className="flex flex-col items-center text-center">
@@ -27,7 +27,7 @@ function QuizHome() {
           </Link>
 
           <Link 
-            to="/search-quizzes" 
+            to="/quiz/search" 
             className="bg-white p-12 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-2 hover:shadow-2xl group"
           >
             <div className="flex flex-col items-center text-center">

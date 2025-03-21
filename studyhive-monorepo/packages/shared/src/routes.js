@@ -12,6 +12,7 @@ export const routes = {
     summarizer: '/summarizer',
     quiz: '/quiz',
     chatbot: '/chatbot',
-    profile: '/profile'
+    profile: '/profile',
+    help: '/help'
   }
 }; 

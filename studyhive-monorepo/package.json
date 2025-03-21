@@ -12,6 +12,7 @@
   "dependencies": {
     "@azure-rest/ai-inference": "^1.0.0-beta.5",
     "@azure/core-auth": "^1.9.0",
+    "@emailjs/browser": "^4.3.3",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",

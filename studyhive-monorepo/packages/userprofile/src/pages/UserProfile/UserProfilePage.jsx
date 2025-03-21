@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from 'contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from 'config/supabase';
 
 // Import avatar images
@@ -349,8 +349,8 @@ export default function UserProfilePage() {
             <div className="pt-6 border-t border-gray-200 space-y-4">
               {/* Help Link */}
               <div className="text-center">
-                <a
-                  href="/help"
+                <Link
+                  to="/help"
                   className="inline-flex items-center justify-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors"
                 >
                   <svg 
@@ -367,7 +367,7 @@ export default function UserProfilePage() {
                     />
                   </svg>
                   <span className="text-sm font-medium">Need help? Contact our support assistant</span>
-                </a>
+                </Link>
               </div>
 
               {/* Logout Button */}

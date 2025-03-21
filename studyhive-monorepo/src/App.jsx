@@ -15,6 +15,7 @@ const Summarizer = React.lazy(() => import('@summarizer/App'));
 const Quiz = React.lazy(() => import('@quiz/App'));
 const ChatBot = React.lazy(() => import('@chat_bot/App'));
 const UserProfile = React.lazy(() => import('@userprofile/App'));
+const Help = React.lazy(() => import('@userprofile/pages/Help/HelpPage'));
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -104,6 +105,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/help"
+              element={
+                <ProtectedRoute>
+                  <Help />
                 </ProtectedRoute>
               }
             />

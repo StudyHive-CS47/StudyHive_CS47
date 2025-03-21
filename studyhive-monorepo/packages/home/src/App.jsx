@@ -92,7 +92,7 @@ const StyledFeatureCard = styled.div`
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background-color: ${props => props.blobColor};
+    background-color: ${props => props.$blobColor || '#000000'};
     opacity: 0.15;
     filter: blur(20px);
     animation: blob-float 8s infinite ease-in-out;
@@ -136,7 +136,7 @@ const TestimonialCard = styled.div`
     width: 4rem;
     border-radius: 9999px;
     object-fit: cover;
-    background-image: url(${props => props.reviewerImage});
+    background-image: url(${props => props.$reviewerImage || 'none'});
     background-size: cover;
     background-position: center;
   }
@@ -180,7 +180,7 @@ const TestimonialCard = styled.div`
 // Feature Card Component
 function FeatureCard({ icon, title, description, blobColor }) {
     return (
-        <StyledFeatureCard blobColor={blobColor}>
+        <StyledFeatureCard $blobColor={blobColor}>
             <div className="card" style={{ backgroundImage: `url(${icon})` }}>
                 <div className="blob" />
                 <div className="content">
@@ -339,7 +339,7 @@ function App() {
                     </p>
                     <div className="lg:flex lg:items-center lg:gap-12 max-w-6xl mx-auto">
                         <div className="lg:w-1/2">
-                            <TestimonialCard reviewerImage={senuri}>
+                            <TestimonialCard $reviewerImage={senuri}>
                                 <div className="card">
                                     <div className="header">
                                         <div className="image" />
