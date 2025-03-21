@@ -68,13 +68,13 @@ const ExploreGroups = () => {
   );
 
   return (
-    <div className="relative min-h-screen bg-[#F0F2F5]">
+    <div className="relative min-h-screen bg-[#EEF4FE]">
       {/* Navigation Bar */}
       <NavBar />
 
       {/* Main Content */}
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden ml-24 mx-auto max-w-[1400px]" 
-           style={{ height: 'calc(100vh - 180px)', margin: '90px 24px 90px 48px' }}>
+           style={{ height: 'calc(120vh - 180px)', margin: '2px 24px 90px 48px' }}>
         <div className="flex-1 flex flex-col">
           {/* Header */}
           <div className="p-6 border-b border-gray-200">

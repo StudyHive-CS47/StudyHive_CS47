@@ -14,6 +14,7 @@ const GroupChat = React.lazy(() => import('@groupchat/App'));
 const Summarizer = React.lazy(() => import('@summarizer/App'));
 const Quiz = React.lazy(() => import('@quiz/App'));
 const ChatBot = React.lazy(() => import('@chat_bot/App'));
+const UserProfile = React.lazy(() => import('@userprofile/App'));
 
 function ProtectedRoute({ children }) {
   const { user } = useAuth();
@@ -95,6 +96,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <ChatBot />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={routes.protected.profile}
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
                 </ProtectedRoute>
               }
             />

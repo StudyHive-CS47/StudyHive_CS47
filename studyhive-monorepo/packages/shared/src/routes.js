@@ -11,6 +11,7 @@ export const routes = {
     groupchat: '/chat',
     summarizer: '/summarizer',
     quiz: '/quiz',
-    chatbot: '/chatbot'
+    chatbot: '/chatbot',
+    profile: '/profile'
   }
 }; 

@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from 'contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../config/supabase';
+import { supabase } from 'config/supabase';
+
+// Import avatar images
+import avatar1 from '../../assets/avatars/avatar1.png';
+import avatar2 from '../../assets/avatars/avatar2.png';
+import avatar3 from '../../assets/avatars/avatar3.png';
+import avatar4 from '../../assets/avatars/avatar4.png';
+import avatar5 from '../../assets/avatars/avatar5.png';
+import avatar6 from '../../assets/avatars/avatar6.png';
+import avatar7 from '../../assets/avatars/avatar7.png';
+import avatar8 from '../../assets/avatars/avatar8.png';
+import avatar9 from '../../assets/avatars/avatar9.png';
+import avatar10 from '../../assets/avatars/avatar10.png';
 
 const avatars = [
-  '/src/assets/avatars/avatar1.png',
-  '/src/assets/avatars/avatar2.png',
-  '/src/assets/avatars/avatar3.png',
-  '/src/assets/avatars/avatar4.png',
-  '/src/assets/avatars/avatar5.png',
-  '/src/assets/avatars/avatar6.png',
-  '/src/assets/avatars/avatar7.png',
-  '/src/assets/avatars/avatar8.png',
-  '/src/assets/avatars/avatar9.png',
-  '/src/assets/avatars/avatar10.png',
+  avatar1,
+  avatar2,
+  avatar3,
+  avatar4,
+  avatar5,
+  avatar6,
+  avatar7,
+  avatar8,
+  avatar9,
+  avatar10
 ];
 
 const checkPasswordStrength = (password) => {
@@ -76,7 +88,10 @@ export default function UserProfilePage() {
         console.error('Profile fetch error:', error);
       } else {
         setProfile(data);
-        setSelectedAvatar(data.avatar || '/assets/avatars/default-avatar.png');
+        // Find the matching avatar from our local avatars array
+        const avatarPath = data.avatar;
+        const matchingAvatar = avatars.find(a => a.includes(avatarPath?.split('/').pop() || ''));
+        setSelectedAvatar(matchingAvatar || avatar1);
       }
     };
 
@@ -86,10 +101,13 @@ export default function UserProfilePage() {
   }, [user]);
 
   const handleAvatarChange = async (avatar) => {
+    // Extract the filename from the path
+    const filename = avatar.split('/').pop();
     setSelectedAvatar(avatar);
+    
     const { error } = await supabase
       .from('profiles')
-      .update({ avatar })
+      .update({ avatar: `/src/assets/avatars/${filename}` })
       .eq('id', user.id);
 
     if (error) {
@@ -147,33 +165,10 @@ export default function UserProfilePage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-120px)] py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Base color */}
-      <div className="absolute inset-0 bg-blue-50"></div>
-      
-      {/* Graph paper pattern */}
-      <div className="absolute inset-0" style={{
-        backgroundImage: `
-          linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px)
-        `,
-        backgroundSize: '20px 20px',
-        backgroundPosition: 'center center'
-      }}></div>
-      
-      {/* Subtle highlight */}
-      <div className="absolute inset-0" style={{
-        background: `
-          radial-gradient(circle at 50% 50%, 
-            rgba(255, 255, 255, 0.8) 0%, 
-            rgba(255, 255, 255, 0.3) 50%, 
-            transparent 100%)
-        `
-      }}></div>
-
+    <div className="min-h-[calc(100vh-120px)] py-12 px-4 sm:px-6 lg:px-8 bg-[#EEF2FF]">
       <div className="max-w-4xl mx-auto">
         {/* Profile Card */}
-        <div className="bg-white rounded-3xl shadow-xl overflow-hidden relative z-10">
+        <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
           {/* Cover Image */}
           <div className="h-48 bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 relative">
             <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/30 to-transparent"></div>
@@ -185,9 +180,9 @@ export default function UserProfilePage() {
             <div className="relative -mt-24 mb-8 flex justify-between items-end">
               <div className="relative">
                 <img
-                  src={selectedAvatar || '/assets/avatars/default-avatar.png'}
+                  src={selectedAvatar}
                   alt="Profile"
-                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg cursor-pointer hover:opacity-90 transition-opacity"
+                  className="w-32 h-32 rounded-full border-4 border-white shadow-lg cursor-pointer hover:opacity-90 transition-opacity object-cover"
                   onClick={() => setShowAvatarSelection(!showAvatarSelection)}
                 />
                 <button 
@@ -257,7 +252,7 @@ export default function UserProfilePage() {
                       key={index}
                       src={avatar}
                       alt={`Avatar ${index + 1}`}
-                      className="w-20 h-20 rounded-full cursor-pointer hover:ring-4 hover:ring-indigo-500/50 transition-all transform hover:scale-105"
+                      className={`w-20 h-20 rounded-full cursor-pointer hover:ring-4 hover:ring-indigo-500/50 transition-all transform hover:scale-105 object-cover ${selectedAvatar === avatar ? 'ring-4 ring-indigo-500' : ''}`}
                       onClick={() => handleAvatarChange(avatar)}
                     />
                   ))}
@@ -350,8 +345,32 @@ export default function UserProfilePage() {
               </div>
             )}
 
-            {/* Logout Button */}
-            <div className="pt-6 border-t border-gray-200">
+            {/* Help and Logout Section */}
+            <div className="pt-6 border-t border-gray-200 space-y-4">
+              {/* Help Link */}
+              <div className="text-center">
+                <a
+                  href="/help"
+                  className="inline-flex items-center justify-center space-x-2 text-blue-600 hover:text-blue-700 transition-colors"
+                >
+                  <svg 
+                    className="w-5 h-5" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
+                  </svg>
+                  <span className="text-sm font-medium">Need help? Contact our support assistant</span>
+                </a>
+              </div>
+
+              {/* Logout Button */}
               <button
                 onClick={async () => {
                   try {

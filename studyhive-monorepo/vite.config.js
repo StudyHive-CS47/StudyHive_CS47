@@ -33,6 +33,9 @@ export default defineConfig({
       '@summarizer': path.resolve(__dirname, './packages/features/summarizer/src'),
       '@quiz': path.resolve(__dirname, './packages/features/quiz/src'),
       '@chat_bot': path.resolve(__dirname, './packages/features/chat_bot/src'),
+      '@userprofile': path.resolve(__dirname, './packages/userprofile/src'),
+      'contexts': path.resolve(__dirname, './packages/shared/src/contexts'),
+      'config': path.resolve(__dirname, './packages/shared/src/config')
     },
     extensions: ['.js', '.jsx', '.json']
   }

@@ -83,7 +83,7 @@ const MyGroups = () => {
 
       {/* Main Content */}
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden ml-24 mx-auto max-w-[1400px]" 
-           style={{ height: 'calc(110vh - 180px)', margin: '2px 24px 90px 48px' }}>
+           style={{ height: 'calc(120vh - 180px)', margin: '2px 24px 90px 48px' }}>
         {/* Left Sidebar - Groups List */}
         <div className="w-[350px] flex flex-col border-r border-gray-200">
           <div className="p-4 border-b border-gray-200">
