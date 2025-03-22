@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TermsModal from '../../components/common/TermsModal.jsx';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
 import api from '../../services/api';
@@ -10,6 +10,69 @@ const UploadForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+    // List of universities in Sri Lanka
+    const universities = [
+        "Aquinas College of Higher Studies (ACHS)",
+        "Benedict XVI Catholic Institute of Higher Education (BCI)",
+        "Bhiksu University of Sri Lanka (BUSL)",
+        "Buddhist and Pali University of Sri Lanka (BPU)",
+        "Business Management School (BMS)",
+        "Colombo International Nautical and Engineering College (CINEC)",
+        "Eastern University, Sri Lanka (EUSL)",
+        "Esoft Metro Campus (ESOFT)",
+        "Gampaha Wickramarachchi University of Indigenous Medicine (GWUIM)",
+        "General Sir John Kotelawala Defence University (KDU)",
+        "Horizon Campus (HC)",
+        "Informatics Institute of Technology (IIT)",
+        "Institute of Chartered Accountants of Sri Lanka (CA Sri Lanka)",
+        "Institute of Chemistry Ceylon (IChemC)",
+        "Institute of Surveying and Mapping (ISM)",
+        "Institute of Technological Studies (ITS)",
+        "International College of Business and Technology (ICBT)",
+        "International Institute of Health Science (IIHS)",
+        "KAATSU International University (KIU)",
+        "National Institute of Business Management (NIBM)",
+        "National Institute of Social Development (NISD)",
+        "National School of Business Management (NSBM)",
+        "Ocean University of Sri Lanka (OCSL)",
+        "Open University of Sri Lanka (OUSL)",
+        "Rajarata University of Sri Lanka (RUSL)",
+        "Royal Institute Colombo (RIC)",
+        "Sabaragamuwa University of Sri Lanka (SUSL)",
+        "Saegis Campus (SAEGIS)",
+        "SANASA Campus (SANASA)",
+        "South Asian Institute of Technology and Medicine (SAITM)",
+        "South Eastern University of Sri Lanka (SEUSL)",
+        "Sri Lanka Institute of Development Administration (SLIDA)",
+        "Sri Lanka Institute of Information Technology (SLIIT)",
+        "Sri Lanka Institute of Nanotechnology (SLINTEC)",
+        "Sri Lanka International Buddhist Academy (SIBA)",
+        "Sri Lanka Technological Campus (SLTC)",
+        "University of Colombo (UOC)",
+        "University of Jaffna (UOJ)",
+        "University of Kelaniya (UOK)",
+        "University of Moratuwa (UOM)",
+        "University of Peradeniya (UOP)",
+        "University of Ruhuna (UOR)",
+        "University of Sri Jayewardenepura (USJ)",
+        "University of the Visual and Performing Arts (UVPA)",
+        "University of Vavuniya (UOV)",
+        "University of Vocational Technology (UNIVOTEC)",
+        "Uva Wellassa University (UWU)"
+    ];
+
+    // Auto-close success popup after 3 seconds
+    useEffect(() => {
+        let timer;
+        if (showSuccessPopup) {
+            timer = setTimeout(() => {
+                setShowSuccessPopup(false);
+            }, 3000);
+        }
+        return () => clearTimeout(timer);
+    }, [showSuccessPopup]);
 
     // Handle file selection
     const handleFileChange = (event) => {
@@ -87,6 +150,7 @@ const UploadForm = () => {
             if (response) {
                 console.log("Success response:", response);
                 setSuccessMessage('File uploaded successfully!');
+                setShowSuccessPopup(true); // Show the popup
 
                 // Reset form
                 setSelectedFile(null);
@@ -123,6 +187,19 @@ const UploadForm = () => {
                     </div>
                 )}
 
+                {/* Success Popup */}
+                {showSuccessPopup && (
+                    <div className="position-fixed top-50 start-50 translate-middle p-4 bg-success text-white rounded shadow-lg" style={{ zIndex: 1050 }}>
+                        <div className="d-flex align-items-center">
+                            <i className="bi bi-check-circle-fill fs-1 me-3"></i>
+                            <div>
+                                <h4 className="mb-0">Success!</h4>
+                                <p className="mb-0">Note uploaded successfully</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
                 <form id="uploadForm" onSubmit={handleSubmit}>
                     {/* Uploader Name and University */}
                     <div className="row mb-3">
@@ -141,16 +218,18 @@ const UploadForm = () => {
                             <label htmlFor="universityName" className="form-label">
                                 University*
                             </label>
-                            <input
-                                type="text"
-                                className="form-control"
+                            <select
+                                className="form-select"
                                 id="universityName"
-                                list="universities"
                                 required
-                            />
-                            <datalist id="universities">
-                                {/* Universities will be populated dynamically */}
-                            </datalist>
+                            >
+                                <option value="">Select University...</option>
+                                {universities.map((university, index) => (
+                                    <option key={index} value={university}>
+                                        {university}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                     </div>
 
@@ -177,9 +256,13 @@ const UploadForm = () => {
                             </label>
                             <select className="form-select" id="moduleLevel" required>
                                 <option value="">Select Level...</option>
-                                <option value="Level 4">Level 4</option>
-                                <option value="Level 5">Level 5</option>
-                                <option value="Level 6">Level 6</option>
+                                <option value="Foundation">Foundation</option>
+                                <option value="1st Year / Level 4">1st Year / Level 4</option>
+                                <option value="2nd Year / Level 5">2nd Year / Level 5</option>
+                                <option value="3rd Year / Level 6">3rd Year / Level 6</option>
+                                <option value="4th Year / Level 7">4th Year / Level 7</option>
+                                <option value="Masters">Masters</option>
+                                <option value="PhD">PhD</option>
                             </select>
                         </div>
                     </div>
