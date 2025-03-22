@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/supabase';
 import BackButton from '../common/BackButton';
 import SuccessPopup from '../common/SuccessPopup';
+import Footer from '@shared/components/Footer/Footer';
 
 function CreateQuiz() {
   const navigate = useNavigate();
@@ -185,8 +186,8 @@ function CreateQuiz() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+      <div className="container mx-auto px-4 max-w-4xl py-8 flex-grow">
         <div className="max-w-4xl mx-auto">
           <BackButton />
           <div className="text-center mb-12">
@@ -388,12 +389,13 @@ function CreateQuiz() {
               code={createdQuizCode}
               onClose={() => {
                 setShowSuccessPopup(false);
-                navigate('/');
+                navigate('..');
               }}
             />
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

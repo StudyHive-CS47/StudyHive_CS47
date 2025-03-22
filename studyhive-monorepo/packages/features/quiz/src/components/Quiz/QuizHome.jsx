@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Footer from '@shared/components/Footer/Footer';
 
 function QuizHome() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+      <div className="container mx-auto px-4 py-12 flex-grow">
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-[#091057] mb-4">Interactive Quiz</h1>
           <p className="text-xl text-gray-600">Create, share, and test your knowledge</p>
@@ -12,7 +13,7 @@ function QuizHome() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <Link 
-            to="/quiz/create" 
+            to="create" 
             className="bg-white p-12 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-2 hover:shadow-2xl group"
           >
             <div className="flex flex-col items-center text-center">
@@ -27,7 +28,7 @@ function QuizHome() {
           </Link>
 
           <Link 
-            to="/quiz/search" 
+            to="search" 
             className="bg-white p-12 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-2 hover:shadow-2xl group"
           >
             <div className="flex flex-col items-center text-center">
@@ -76,6 +77,7 @@ function QuizHome() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

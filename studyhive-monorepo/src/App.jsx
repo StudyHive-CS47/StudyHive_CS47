@@ -85,7 +85,7 @@ function App() {
               }
             />
             <Route
-              path={routes.protected.quiz}
+              path={`${routes.protected.quiz}/*`}
               element={
                 <ProtectedRoute>
                   <Quiz />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../utils/supabase';
 import BackButton from '../common/BackButton';
+import Footer from '@shared/components/Footer/Footer';
 
 function SearchQuiz() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -76,8 +77,8 @@ function SearchQuiz() {
   }, [searchTerm, searchType]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col">
+      <div className="container mx-auto px-4 py-12 flex-grow">
         <div className="max-w-7xl mx-auto">
           <BackButton />
           <div className="text-center mb-12">
@@ -178,7 +179,7 @@ function SearchQuiz() {
                     )}
                   </div>
                   <Link
-                    to={`/quiz/${quiz.code}`}
+                    to={`../${quiz.code}`}
                     className="block w-full text-center bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold transform hover:-translate-y-1 shadow-md hover:shadow-lg"
                   >
                     Take Quiz
@@ -199,6 +200,7 @@ function SearchQuiz() {
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

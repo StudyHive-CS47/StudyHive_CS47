@@ -66,7 +66,7 @@ function QuizResult({ questions, userAnswers, onRetry }) {
 
       <div className="flex gap-4 justify-center">
         <button
-          onClick={() => navigate('/search-quizzes')}
+          onClick={() => navigate('..')}
           className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
         >
           Back to Home
