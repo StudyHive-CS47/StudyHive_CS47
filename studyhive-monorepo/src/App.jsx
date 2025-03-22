@@ -77,7 +77,7 @@ function App() {
               }
             />
             <Route
-              path={routes.protected.summarizer}
+              path={`${routes.protected.summarizer}/*`}
               element={
                 <ProtectedRoute>
                   <Summarizer />

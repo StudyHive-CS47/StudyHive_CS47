@@ -9,7 +9,7 @@ function App() {
     <div className="flex flex-col min-h-screen w-full bg-[#EEF4FE] overflow-x-hidden">
       <div className="flex-1 w-full">
         <Routes>
-          <Route path="/" element={<Summarizer />} />
+          <Route index element={<Summarizer />} />
         </Routes>
       </div>
       <Footer />

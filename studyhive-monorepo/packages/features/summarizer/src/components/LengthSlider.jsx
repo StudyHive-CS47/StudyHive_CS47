@@ -1,19 +1,37 @@
 import React from 'react';
+import './LengthSlider.css';
 
 function LengthSlider({ value, onChange }) {
   return (
     <div className="length-slider">
-      <label>Summary Length: {value}%</label>
-      <form className="slider-form" style={{ '--min': 0, '--max': 100, '--val': value }}>
+      <label className="slider-label">
+        {value === 100 ? 'Mode: Paraphrase' : `Summary Length: ${value}%`}
+      </label>
+      <div className="slider-container">
         <input
           type="range"
-          min="0"
+          min="25"
           max="100"
+          step="25"
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
-          aria-label="Summary length"
+          className="slider-input"
         />
-      </form>
+        <div className="slider-marks">
+          <div className="mark" style={{ left: '0%' }}>
+            <span className="mark-label">25%</span>
+          </div>
+          <div className="mark" style={{ left: '33.33%' }}>
+            <span className="mark-label">50%</span>
+          </div>
+          <div className="mark" style={{ left: '66.66%' }}>
+            <span className="mark-label">75%</span>
+          </div>
+          <div className="mark" style={{ left: '100%' }}>
+            <span className="mark-label">Paraphrase</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

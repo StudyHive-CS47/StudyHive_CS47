@@ -165,9 +165,14 @@ const ChatBot = () => {
     try {
       setIsLoading(true);
       
+      // Validate Azure configuration
+      if (!import.meta.env.VITE_AZURE_ENDPOINT || !import.meta.env.VITE_AZURE_API_KEY) {
+        throw new Error('Azure configuration is missing. Please check your environment variables.');
+      }
+      
       const client = ModelClient(
-        "https://models.inference.ai.azure.com",
-        new AzureKeyCredential(import.meta.env.VITE_GITHUB_TOKEN)
+        "https://fdor-m8jpnvg2-swedencentral.cognitiveservices.azure.com",
+        new AzureKeyCredential("3T2OKOJLHqdKCtyi24O5EW7DG2rkv72zqgKJ6COZAJtKawMUxcXYJQQJ99BCACfhMk5XJ3w3AAAAACOGWtg7")
       );
 
       let systemPrompt = "";
@@ -175,14 +180,13 @@ const ChatBot = () => {
         systemPrompt = `You are an AI assistant helping with questions about a PDF document. Here's the content of the PDF '${pdfName}':\n\n${pdfContent}\n\nPlease answer questions based on this content.`;
       }
 
-      const response = await client.path("/chat/completions").post({
+      const response = await client.path("/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01-preview").post({
         body: {
           messages: [
             { role: "system", content: systemPrompt },
             ...messages.map(m => ({ role: m.role, content: m.content })),
             { role: "user", content: userMessage }
           ],
-          model: "gpt-4o",
           temperature: 1,
           max_tokens: 4096,
           top_p: 1
