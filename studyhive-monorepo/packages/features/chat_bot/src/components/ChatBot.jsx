@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import ModelClient, { isUnexpected } from "@azure-rest/ai-inference";
-import { AzureKeyCredential } from "@azure/core-auth";
+import axios from 'axios';
 import mammoth from 'mammoth';
 import botAvatar from '../assets/bot-avatar.png';
 import userAvatar from '../assets/user-avatar.png';
@@ -160,46 +159,53 @@ const ChatBot = () => {
     return text.trim();
   };
 
-  // Modified getBotResponse to include PDF context when in PDF mode
+  // Modified getBotResponse to use OpenRouter API
   const getBotResponse = async (userMessage) => {
     try {
       setIsLoading(true);
       
-      // Validate Azure configuration
-      if (!import.meta.env.VITE_AZURE_ENDPOINT || !import.meta.env.VITE_AZURE_API_KEY) {
-        throw new Error('Azure configuration is missing. Please check your environment variables.');
-      }
-      
-      const client = ModelClient(
-        "https://fdor-m8jpnvg2-swedencentral.cognitiveservices.azure.com",
-        new AzureKeyCredential("3T2OKOJLHqdKCtyi24O5EW7DG2rkv72zqgKJ6COZAJtKawMUxcXYJQQJ99BCACfhMk5XJ3w3AAAAACOGWtg7")
-      );
+      const OPENROUTER_API_KEY = "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";
+      const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
       let systemPrompt = "";
       if (isPdfMode && pdfContent) {
         systemPrompt = `You are an AI assistant helping with questions about a PDF document. Here's the content of the PDF '${pdfName}':\n\n${pdfContent}\n\nPlease answer questions based on this content.`;
+      } else {
+        systemPrompt = "You are BuzzBuddy, a helpful and knowledgeable AI assistant focused on helping students with their studies. You provide clear, accurate, and engaging responses while maintaining a friendly and supportive tone.";
       }
 
-      const response = await client.path("/openai/deployments/gpt-4o/chat/completions?api-version=2025-01-01-preview").post({
-        body: {
+      const response = await axios.post(
+        API_URL,
+        {
+          model: "mistralai/mistral-7b-instruct",
           messages: [
             { role: "system", content: systemPrompt },
-            ...messages.map(m => ({ role: m.role, content: m.content })),
+            ...messages.slice(1).map(m => ({ role: m.role, content: m.content })),
             { role: "user", content: userMessage }
           ],
-          temperature: 1,
-          max_tokens: 4096,
-          top_p: 1
+          temperature: 0.7,
+          max_tokens: 2000
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+            'HTTP-Referer': 'https://github.com/fdo-rashmina/StudyHive_Frontend',
+            'X-Title': 'StudyHive BuzzBuddy',
+            'Content-Type': 'application/json'
+          }
         }
-      });
+      );
 
-      if (isUnexpected(response)) {
-        throw response.body.error;
+      if (!response.data || !response.data.choices || !response.data.choices[0]) {
+        throw new Error('Invalid response format from API');
       }
 
-      return response.body.choices[0].message.content;
+      return response.data.choices[0].message.content;
     } catch (error) {
       console.error('Error in getBotResponse:', error);
+      if (error.response?.data?.error?.message) {
+        return `I apologize, but I encountered an error: ${error.response.data.error.message}. Please try again or contact support if the issue persists.`;
+      }
       return `I apologize, but I encountered an error: ${error.message}. Please try again or contact support if the issue persists.`;
     } finally {
       setIsLoading(false);
