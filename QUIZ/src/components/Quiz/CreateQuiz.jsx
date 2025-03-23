@@ -225,7 +225,7 @@ function CreateQuiz() {
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                       className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
-                      placeholder="Enter quiz subject (OOP, DATABASE, ROBOTICS, WEB DEVELOPMENT)"
+                      placeholder="Enter quiz subject"
                     />
                   </div>
                 </div>

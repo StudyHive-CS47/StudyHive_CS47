@@ -109,7 +109,7 @@ function SearchQuiz() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder={searchType === 'subject' ? 
-                      "Enter subject (OOP, DATABASE, ROBOTICS, WEB DEVELOPMENT)" : 
+                      "Search by subject" : 
                       `Search by ${searchType}...`}
                     className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
                   />
