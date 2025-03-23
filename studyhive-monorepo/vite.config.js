@@ -38,5 +38,11 @@ export default defineConfig({
       'config': path.resolve(__dirname, './packages/shared/src/config')
     },
     extensions: ['.js', '.jsx', '.json']
+  },
+  base: '/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+    emptyOutDir: true
   }
 }); 
