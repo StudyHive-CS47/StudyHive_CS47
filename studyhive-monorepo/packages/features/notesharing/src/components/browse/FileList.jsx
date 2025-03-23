@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../../services/api';
-
+import './FileList.css';
 
 // Helper function to format file size
 const formatFileSize = (bytes) => {
@@ -9,9 +9,6 @@ const formatFileSize = (bytes) => {
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
 };
-
-
-
 
 const FileList = ({ files = [], onSelectFile, loading, error }) => {
     // Function to handle file download
@@ -31,9 +28,6 @@ const FileList = ({ files = [], onSelectFile, loading, error }) => {
         }
     };
 
-
-
-
     // Function to handle preview click
     const handlePreview = (file) => {
         // Call the onSelectFile callback to update the selected file in the parent component
@@ -48,10 +42,10 @@ const FileList = ({ files = [], onSelectFile, loading, error }) => {
                 <h5 className="mb-0">Available Notes</h5>
                 <span className="badge bg-primary">{files?.length || 0}</span>
             </div>
-            <div className="card-body p-0">
+            <div className="card-body">
                 {/* Error Message */}
                 {error && (
-                    <div className="alert alert-danger" role="alert">
+                    <div className="alert alert-danger m-3" role="alert">
                         {error}
                     </div>
                 )}
@@ -64,12 +58,12 @@ const FileList = ({ files = [], onSelectFile, loading, error }) => {
                         </div>
                     </div>
                 ) : (
-                    <div className="file-container">
+                    <div className="file-list">
                         {files?.length > 0 ? (
                             files.map((file) => (
                                 <div 
                                     key={file.id} 
-                                    className="file-item p-3 cursor-pointer"
+                                    className="file-item p-3"
                                     onClick={() => onSelectFile(file)}
                                 >
                                     <div className="d-flex align-items-start gap-3">

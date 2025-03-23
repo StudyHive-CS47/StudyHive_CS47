@@ -1,0 +1,53 @@
+graph TD
+    Landing[Landing Page] --> Login[Login]
+    Landing --> Signup[Signup]
+    
+    Login --> Dashboard[Dashboard/Home]
+    Signup --> Dashboard
+    
+    Dashboard --> Notes[Note Sharing]
+    Dashboard --> QnA[Q&A Platform]
+    Dashboard --> Chat[Group Chat]
+    Dashboard --> Bot[AI Chatbot]
+    Dashboard --> Quiz[Quiz System]
+    Dashboard --> Sum[Summarizer]
+    Dashboard --> Profile[User Profile]
+    
+    Notes --> BrowseNotes[Browse Notes]
+    Notes --> UploadNotes[Upload Notes]
+    Notes --> MyNotes[My Notes]
+    
+    BrowseNotes --> Preview[File Preview]
+    BrowseNotes --> Download[Download]
+    BrowseNotes --> Share[Share]
+    BrowseNotes --> Rate[Rate]
+    BrowseNotes --> Report[Report]
+    
+    QnA --> AskQuestion[Ask Question]
+    QnA --> BrowseQuestions[Browse Questions]
+    QnA --> MyQuestions[My Questions]
+    QnA --> Search[Search Q&A]
+    
+    Chat --> MyGroups[My Groups]
+    Chat --> ExploreGroups[Explore Groups]
+    Chat --> CreateGroup[Create Group]
+    
+    Quiz --> CreateQuiz[Create Quiz]
+    Quiz --> TakeQuiz[Take Quiz]
+    Quiz --> QuizHistory[Quiz History]
+    Quiz --> SearchQuiz[Search Quiz]
+    
+    Sum --> UploadDoc[Upload Document]
+    Sum --> ViewSummary[View Summary]
+    
+    Profile --> EditProfile[Edit Profile]
+    Profile --> ActivityHistory[Activity History]
+    Profile --> Settings[Settings]
+    
+    classDef primary fill:#4051B5,stroke:#1A237E,color:white
+    classDef secondary fill:#E3E8FD,stroke:#4051B5,color:#1A237E
+    classDef feature fill:#fff,stroke:#4051B5,color:#1A237E
+    
+    class Landing,Login,Signup,Dashboard primary
+    class Notes,QnA,Chat,Bot,Quiz,Sum,Profile secondary
+    class BrowseNotes,UploadNotes,MyNotes,Preview,Download,Share,Rate,Report,AskQuestion,BrowseQuestions,MyQuestions,Search,MyGroups,ExploreGroups,CreateGroup,CreateQuiz,TakeQuiz,QuizHistory,SearchQuiz,UploadDoc,ViewSummary,EditProfile,ActivityHistory,Settings feature 

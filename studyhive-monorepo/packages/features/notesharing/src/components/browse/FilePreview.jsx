@@ -3,6 +3,7 @@ import RatingModal from '../common/RatingModal.jsx';
 import ReportModal from '../common/ReportModal.jsx';
 import ShareModal from '../common/ShareModal.jsx';
 import api from '../../services/api';
+import './FilePreview.css';
 
 const FilePreview = ({ selectedFile }) => {
     const [file, setFile] = useState(null);
@@ -52,15 +53,15 @@ const FilePreview = ({ selectedFile }) => {
                 {file && (
                     <div className="d-flex gap-2">
                         <button 
-                            className="btn btn-sm btn-primary" 
+                            className="btn btn-primary" 
                             onClick={downloadFile}
                             disabled={loading}
                         >
                             <i className="bi bi-download me-1"></i>
-                            {loading ? 'Downloading...' : 'Download'}
+                            Download
                         </button>
                         <button 
-                            className="btn btn-sm btn-outline-primary"
+                            className="btn btn-outline-primary"
                             onClick={() => setShowShareModal(true)}
                         >
                             <i className="bi bi-share me-1"></i>
@@ -79,87 +80,92 @@ const FilePreview = ({ selectedFile }) => {
                 
                 {file ? (
                     <>
-                        <div className="bg-light rounded p-3 mb-4">
-                            <div className="row g-3">
-                                <div className="col-md-6">
-                                    <div className="d-flex align-items-center">
-                                        <i className="bi bi-person-circle fs-4 text-primary me-2"></i>
+                        <div className="file-details">
+                            <div className="row g-4">
+                                <div className="col-6">
+                                    <div className="detail-item d-flex align-items-center">
+                                        <i className="bi bi-person-circle text-primary"></i>
                                         <div>
-                                            <small className="text-secondary">Uploader</small>
-                                            <div className="fw-medium">{file.uploaderName}</div>
+                                            <small className="text-muted d-block">Uploader</small>
+                                            <span className="fw-medium">{file.uploaderName}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="d-flex align-items-center">
-                                        <i className="bi bi-building fs-4 text-primary me-2"></i>
+                                <div className="col-6">
+                                    <div className="detail-item d-flex align-items-center">
+                                        <i className="bi bi-building text-primary"></i>
                                         <div>
-                                            <small className="text-secondary">University</small>
-                                            <div className="fw-medium">{file.universityName}</div>
+                                            <small className="text-muted d-block">University</small>
+                                            <span className="fw-medium">{file.universityName}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="d-flex align-items-center">
-                                        <i className="bi bi-book fs-4 text-primary me-2"></i>
+                                <div className="col-6">
+                                    <div className="detail-item d-flex align-items-center">
+                                        <i className="bi bi-book text-primary"></i>
                                         <div>
-                                            <small className="text-secondary">Module Code</small>
-                                            <div className="fw-medium">{file.moduleCode}</div>
+                                            <small className="text-muted d-block">Module Code</small>
+                                            <span className="fw-medium">{file.moduleCode}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="d-flex align-items-center">
-                                        <i className="bi bi-layers fs-4 text-primary me-2"></i>
+                                <div className="col-6">
+                                    <div className="detail-item d-flex align-items-center">
+                                        <i className="bi bi-layers text-primary"></i>
                                         <div>
-                                            <small className="text-secondary">Level</small>
-                                            <div className="fw-medium">{file.moduleLevel}</div>
+                                            <small className="text-muted d-block">Level</small>
+                                            <span className="fw-medium">{file.moduleLevel}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="preview-container mb-4">
+                        <div className="description-section">
+                            <div className="d-flex align-items-start">
+                                <i className="bi bi-file-text me-3"></i>
+                                <div>
+                                    <small className="text-muted d-block mb-2">Description</small>
+                                    <p className="mb-0">{file.fileDescription || 'No description provided'}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="preview-container">
                             {previewUrl ? (
                                 <iframe
                                     src={previewUrl}
-                                    className="w-100 h-100 rounded"
-                                    style={{ minHeight: "400px" }}
-                                    frameBorder="0"
                                     title={`Preview of ${file.filename}`}
                                 ></iframe>
                             ) : (
-                                <div className="text-center py-5">
-                                    <i className="bi bi-file-earmark-x fs-1 text-secondary"></i>
-                                    <p className="text-secondary mt-3">Preview not available</p>
+                                <div className="empty-state">
+                                    <i className="bi bi-file-earmark-x"></i>
+                                    <p>Preview not available</p>
                                 </div>
                             )}
                         </div>
 
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                                <button 
-                                    className="btn btn-outline-success me-2"
-                                    onClick={() => setShowRatingModal(true)}
-                                >
-                                    <i className="bi bi-star-fill me-1"></i>
-                                    Rate
-                                </button>
-                            </div>
+                        <div className="action-buttons">
+                            <button 
+                                className="btn btn-outline-success"
+                                onClick={() => setShowRatingModal(true)}
+                            >
+                                <i className="bi bi-star me-1"></i>
+                                Rate
+                            </button>
                             <button 
                                 className="btn btn-outline-danger"
                                 onClick={() => setShowReportModal(true)}
                             >
-                                <i className="bi bi-flag-fill me-1"></i>
+                                <i className="bi bi-flag me-1"></i>
                                 Report
                             </button>
                         </div>
                     </>
                 ) : (
-                    <div className="text-center py-5">
-                        <i className="bi bi-file-earmark fs-1 text-secondary"></i>
-                        <p className="text-secondary mt-3">Select a file to preview</p>
+                    <div className="empty-state">
+                        <i className="bi bi-file-earmark"></i>
+                        <p>Select a file to preview</p>
                     </div>
                 )}
             </div>

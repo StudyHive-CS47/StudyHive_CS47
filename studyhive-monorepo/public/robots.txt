@@ -1,0 +1,30 @@
+# https://studyhive.solutions/robots.txt
+User-agent: *
+Allow: /
+
+# Allow all bots to access these directories
+Allow: /notes/
+Allow: /qna/
+Allow: /chat/
+Allow: /chatbot/
+Allow: /summarizer/
+Allow: /quiz/
+Allow: /help/
+Allow: /assets/
+Allow: /images/
+Allow: /sitemap.xml
+
+# Disallow access to sensitive directories
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://studyhive.solutions/sitemap.xml 
