@@ -1,6 +1,6 @@
 .header {
-  background: white;
-  border-bottom: 1px solid #e0e0e0;
+  background: rgb(222, 226, 236);
+  border-bottom: 1px solid #3e3760;
   padding: 8px 0;
   position: sticky;
   top: 0;
@@ -48,11 +48,11 @@
 }
 
 .header-nav a:hover {
-  color: #000;
+  color: #b5dbdbc5;
 }
 
 .header-nav a.active {
-  color: #000;
+  color: #b2b8f4;
   font-weight: 500;
 }
 
@@ -77,5 +77,5 @@
 
 .search-button:hover,
 .profile-button:hover {
-  background-color: #f5f5f5;
+  background-color: #ddd2f4;
 } 
