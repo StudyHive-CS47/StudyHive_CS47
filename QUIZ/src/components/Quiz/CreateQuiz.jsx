@@ -1,3 +1,13 @@
+/**
+ * CreateQuiz Component
+ * 
+ * A comprehensive quiz creation interface that allows users to:
+ * - Create quizzes with multiple-choice questions
+ * - Set quiz metadata (subject, creator name)
+ * - Configure timer settings
+ * - Add up to 20 questions with 4 options each
+ * - Validate inputs and prevent duplicate answers
+ */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/supabase';
@@ -6,25 +16,35 @@ import SuccessPopup from '../common/SuccessPopup';
 
 function CreateQuiz() {
   const navigate = useNavigate();
+  
+  // Quiz metadata state
   const [creatorName, setCreatorName] = useState('');
   const [subject, setSubject] = useState('');
   const [hasTimer, setHasTimer] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(30);
+  
+  // Questions state with initial empty question
   const [questions, setQuestions] = useState([{
     question: '',
     options: ['', '', '', ''],
     correct_answer: null,
     order: 0
   }]);
+  
+  // UI state
   const [currentStep, setCurrentStep] = useState(0);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [createdQuizCode, setCreatedQuizCode] = useState('');
 
-  // Add this new state for option errors
+  // Validation state for option inputs
   const [optionErrors, setOptionErrors] = useState(
     questions.map(() => Array(4).fill(''))
   );
 
+  /**
+   * Adds a new question to the quiz
+   * Limited to maximum of 20 questions
+   */
   const addQuestion = () => {
     if (questions.length < 20) {
       setQuestions([...questions, {
@@ -37,6 +57,12 @@ function CreateQuiz() {
     }
   };
 
+  /**
+   * Updates a question's field with new value
+   * @param {number} index - Question index to update
+   * @param {string} field - Field to update (question/option/correct_answer)
+   * @param {any} value - New value for the field
+   */
   const updateQuestion = (index, field, value) => {
     const newQuestions = [...questions];
     if (field === 'option') {
@@ -53,6 +79,12 @@ function CreateQuiz() {
     setQuestions(newQuestions);
   };
 
+  /**
+   * Validates that all answers in a question are unique
+   * @param {Object} question - Question object to validate
+   * @param {number} questionIndex - Index of the question
+   * @returns {string|null} Error message if validation fails, null otherwise
+   */
   const validateUniqueAnswers = (question, questionIndex) => {
     const answers = new Set();
     let duplicates = [];
@@ -73,6 +105,13 @@ function CreateQuiz() {
     return null;
   };
 
+  /**
+   * Validates that an option is unique within its question
+   * @param {number} questionIndex - Index of the question
+   * @param {number} optionIndex - Index of the option being validated
+   * @param {string} value - Option value to validate
+   * @returns {string} Error message if validation fails, empty string otherwise
+   */
   const validateOptionInput = (questionIndex, optionIndex, value) => {
     const question = questions[questionIndex];
     const otherOptions = question.options
@@ -85,6 +124,10 @@ function CreateQuiz() {
     return '';
   };
 
+  /**
+   * Handles quiz submission
+   * Validates all inputs and creates quiz in database
+   */
   const handleSubmit = async () => {
     // Validate basic fields
     if (!subject.trim()) {
@@ -100,6 +143,7 @@ function CreateQuiz() {
     let hasError = false;
     let errorMessage = '';
 
+    // Check each question for validity
     for (let i = 0; i < questions.length; i++) {
       const q = questions[i];
       
@@ -134,8 +178,8 @@ function CreateQuiz() {
       }
     }
 
+    // Display error if validation fails
     if (hasError) {
-      // Create and show custom error popup
       const errorPopup = document.createElement('div');
       errorPopup.innerHTML = `
         <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -160,7 +204,7 @@ function CreateQuiz() {
       return;
     }
 
-    // If all validations pass, proceed with quiz creation
+    // Submit quiz to database
     try {
       const { data, error } = await supabase
         .from('quizzes')
@@ -176,6 +220,7 @@ function CreateQuiz() {
 
       if (error) throw error;
 
+      // Show success message with quiz code
       setCreatedQuizCode(data.code);
       setShowSuccessPopup(true);
     } catch (error) {
@@ -189,14 +234,18 @@ function CreateQuiz() {
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="max-w-4xl mx-auto">
           <BackButton />
+          {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-[#091057] mb-4">Create New Quiz</h1>
             <p className="text-xl text-gray-600">Design your perfect quiz and share it with others</p>
           </div>
 
           {currentStep === 0 ? (
+            // Step 1: Quiz Settings
             <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100">
+              {/* Quiz metadata form fields */}
               <div className="space-y-8">
+                {/* Creator Name Input */}
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">👨‍🏫</span>
@@ -214,6 +263,7 @@ function CreateQuiz() {
                   </div>
                 </div>
 
+                {/* Subject Input */}
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">📚</span>
@@ -230,6 +280,7 @@ function CreateQuiz() {
                   </div>
                 </div>
 
+                {/* Timer Settings */}
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">⏳</span>
@@ -261,6 +312,7 @@ function CreateQuiz() {
                 </div>
               </div>
 
+              {/* Next Step Button */}
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={() => {
@@ -277,7 +329,9 @@ function CreateQuiz() {
               </div>
             </div>
           ) : (
+            // Step 2: Questions Form
             <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100">
+              {/* Questions Header */}
               <div className="mb-8 text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">✨</span>
@@ -286,8 +340,10 @@ function CreateQuiz() {
                 <p className="text-gray-600">Create up to 20 multiple choice questions</p>
               </div>
 
+              {/* Questions List */}
               {questions.map((q, index) => (
                 <div key={index} className="mb-8 p-6 bg-blue-50 rounded-xl border-2 border-blue-100">
+                  {/* Question Header */}
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-xl font-bold text-[#091057]">Question {index + 1}</h3>
                     {questions.length > 1 && (
@@ -304,6 +360,7 @@ function CreateQuiz() {
                     )}
                   </div>
 
+                  {/* Question Input */}
                   <input
                     type="text"
                     value={q.question}
@@ -313,6 +370,7 @@ function CreateQuiz() {
                     required
                   />
 
+                  {/* Options */}
                   <div className="space-y-3">
                     <p className="text-[#091057] font-semibold mb-2">Select the correct answer:</p>
                     {q.options.map((option, optIndex) => (
@@ -355,6 +413,7 @@ function CreateQuiz() {
                 </div>
               ))}
 
+              {/* Form Actions */}
               <div className="flex justify-between mt-8">
                 <div className="space-x-4">
                   <button
@@ -381,6 +440,7 @@ function CreateQuiz() {
             </div>
           )}
 
+          {/* Success Popup */}
           {showSuccessPopup && (
             <SuccessPopup
               message="Quiz created successfully! Share this code with others:"
