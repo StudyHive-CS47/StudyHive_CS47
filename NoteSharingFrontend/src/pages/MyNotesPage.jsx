@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
+
 const MyNotesPage = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [notes, setNotes] = useState([]);
 
+    
     // Simulate login/logout
     const handleLogin = () => {
         setIsLoggedIn(true);
