@@ -6,6 +6,7 @@ import BackButton from '../common/BackButton';
 function SearchQuiz() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('subject'); // 'subject', 'code', or 'creator'
+  const [selectedSubject, setSelectedSubject] = useState('');
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -103,13 +104,27 @@ function SearchQuiz() {
                     <option value="code">Search by Code</option>
                     <option value="creator">Search by Creator</option>
                   </select>
-                  <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder={`Search by ${searchType}...`}
-                    className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
-                  />
+                  {searchType === 'subject' ? (
+                    <select
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors bg-white"
+                    >
+                      <option value="">All Subjects</option>
+                      <option value="OOP">Object-Oriented Programming (OOP)</option>
+                      <option value="DATABASE">Database Management</option>
+                      <option value="ROBOTICS">Robotics</option>
+                      <option value="WEB DEVELOPMENT">Web Development</option>
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder={`Search by ${searchType}...`}
+                      className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
+                    />
+                  )}
                 </div>
               </div>
             </div>

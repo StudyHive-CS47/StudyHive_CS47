@@ -7,7 +7,7 @@ import SuccessPopup from '../common/SuccessPopup';
 function CreateQuiz() {
   const navigate = useNavigate();
   const [creatorName, setCreatorName] = useState('');
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState('OOP');
   const [hasTimer, setHasTimer] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(30);
   const [questions, setQuestions] = useState([{
@@ -220,13 +220,16 @@ function CreateQuiz() {
                   </div>
                   <div className="flex-grow">
                     <label className="block text-[#091057] font-semibold mb-2 text-lg">Quiz Subject</label>
-                    <input
-                      type="text"
+                    <select
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
-                      placeholder="Enter quiz subject (e.g. Mathematics, Physics, History)"
-                    />
+                      className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors bg-white"
+                    >
+                      <option value="OOP">Object-Oriented Programming (OOP)</option>
+                      <option value="DATABASE">Database Management</option>
+                      <option value="ROBOTICS">Robotics</option>
+                      <option value="WEB DEVELOPMENT">Web Development</option>
+                    </select>
                   </div>
                 </div>
 
