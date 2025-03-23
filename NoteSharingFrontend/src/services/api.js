@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+
 const API_BASE_URL = 'http://localhost:8080';
 
 // Create axios instance with default config
@@ -12,6 +14,7 @@ const apiClient = axios.create({
 });
 
 
+
 // Add request interceptor to handle errors globally
 apiClient.interceptors.request.use(
     config => {
@@ -22,6 +25,8 @@ apiClient.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+
+
 
 // Add response interceptor to handle errors globally
 apiClient.interceptors.response.use(
@@ -52,6 +57,8 @@ const api = {
 
 
 
+
+    
     // Download a file by ID
     downloadFile: async (fileId) => {
         try {
@@ -91,6 +98,7 @@ const api = {
         }
     },
 
+
     // Search files by university
     searchFilesByUniversity: async (universityName) => {
         try {
@@ -104,6 +112,8 @@ const api = {
         }
     },
 
+
+    
     // Search files by module
     searchFilesByModule: async (moduleCode) => {
         try {
@@ -117,6 +127,8 @@ const api = {
         }
     },
 
+
+    
     // Search files by level
     searchFilesByLevel: async (moduleLevel) => {
         try {
@@ -130,6 +142,8 @@ const api = {
         }
     },
 
+
+    
     // Search files by category (combined filters)
     searchFilesByCategory: async (filters) => {
         try {
@@ -144,6 +158,8 @@ const api = {
     },
 
 
+
+    
     //Get preview of the relevant file
     getPreviewUrl: (fileId) => {
         return `${API_BASE_URL}/file/preview/${fileId}`;

@@ -8,7 +8,7 @@ const Footer = () => {
                     <div className="col-md-4">
                         <h5>University Note Sharing System</h5>
                         <p className="text-muted">
-                            Share and discover academic resources to enhance your learning experience.
+                            Share and discover academic resources.
                         </p>
                     </div>
                 </div>
