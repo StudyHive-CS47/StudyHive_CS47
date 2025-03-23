@@ -4,8 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgb(222, 226, 236);
-  border-top: 1px solid #b5c9dc;
+  background: rgb(220, 223, 238);
+  border-top: 1px solid #bcd9f4;
   margin-top: auto;
 }
 
@@ -23,7 +23,7 @@
 .footer-brand {
   font-size: 24px;
   font-weight: 600;
-  color: #2665ee;
+  color: #042774;
   margin: 0;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .footer-center a {
-  color: #b0b4f9;
+  color: #0a3d4e;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
@@ -41,7 +41,7 @@
 }
 
 .footer-center a:hover {
-  color: #8cd6ec;
+  color: #24096a;
 }
 
 .footer-right {
