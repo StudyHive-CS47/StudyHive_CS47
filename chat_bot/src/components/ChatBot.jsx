@@ -124,7 +124,7 @@ const ChatBot = () => {
     setPdfName(chat.pdfName || '');
   };
 
-  // Add a function to clear chat history
+  // Function to clear chat history
   const clearChatHistory = () => {
     if (window.confirm('Are you sure you want to clear all chat history? This cannot be undone.')) {
       localStorage.removeItem('chatHistory');
