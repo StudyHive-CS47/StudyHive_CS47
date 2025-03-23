@@ -15,6 +15,15 @@ body {
   color: var(--text-primary);
 }
 
+/* Remove underlines from links */
+a {
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
 /* File container styles */
 .file-container {
   max-height: 600px;

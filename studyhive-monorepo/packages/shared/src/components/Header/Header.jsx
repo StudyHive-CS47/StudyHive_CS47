@@ -9,7 +9,7 @@ function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isActive = (path) => {
-    return location.pathname === path ? 'text-blue-600 font-medium' : 'text-gray-600 hover:text-blue-500';
+    return location.pathname === path ? 'text-blue-600 font-medium no-underline' : 'text-gray-600 hover:text-blue-500 no-underline';
   };
 
   const navLinks = [
@@ -28,7 +28,7 @@ function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo and Title */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to={routes.protected.home} className="flex items-center">
+            <Link to={routes.protected.home} className="flex items-center no-underline">
               <img src={logo} alt="StudyHive" className="h-8 w-auto" />
               <h1 className="ml-2.5 text-xl font-bold text-blue-700">StudyHive</h1>
             </Link>
@@ -55,7 +55,7 @@ function Header() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`${isActive(link.path)} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 whitespace-nowrap`}
+                className={`${isActive(link.path)} px-3 py-2 rounded-md text-sm font-medium transition-colors duration-150 whitespace-nowrap no-underline`}
               >
                 {link.label}
               </Link>
@@ -66,7 +66,7 @@ function Header() {
           <div className="hidden md:flex md:items-center">
             <Link 
               to={routes.protected.profile} 
-              className="ml-4 p-2 text-gray-500 hover:text-blue-500 rounded-full hover:bg-gray-100 transition-colors duration-150"
+              className="ml-4 p-2 text-gray-500 hover:text-blue-500 rounded-full hover:bg-gray-100 transition-colors duration-150 no-underline"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -82,7 +82,7 @@ function Header() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`${isActive(link.path)} block px-3 py-2.5 rounded-md text-base font-medium text-center`}
+                className={`${isActive(link.path)} block px-3 py-2.5 rounded-md text-base font-medium text-center no-underline`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}
@@ -93,7 +93,7 @@ function Header() {
             <div className="flex justify-center items-center px-3">
               <Link 
                 to={routes.protected.profile} 
-                className="text-gray-500 hover:text-blue-500 p-2 rounded-full hover:bg-gray-100 transition-colors duration-150"
+                className="text-gray-500 hover:text-blue-500 p-2 rounded-full hover:bg-gray-100 transition-colors duration-150 no-underline"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

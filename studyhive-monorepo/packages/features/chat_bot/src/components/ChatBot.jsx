@@ -164,7 +164,7 @@ const ChatBot = () => {
     try {
       setIsLoading(true);
       
-      const OPENROUTER_API_KEY = "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";
+      const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
       const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
       let systemPrompt = "";
