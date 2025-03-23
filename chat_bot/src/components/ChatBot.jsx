@@ -203,7 +203,7 @@ const ChatBot = () => {
     }
   };
 
-  // Modified handleFileChange to handle Word documents
+  // Function to handle Word documents
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
