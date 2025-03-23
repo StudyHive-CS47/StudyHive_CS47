@@ -82,7 +82,9 @@ function SearchQuiz() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto">
-          <BackButton />
+          <div className="mb-8">
+            <BackButton />
+          </div>
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-[#091057] mb-4">Search Quizzes</h1>
             <p className="text-xl text-gray-600">Find and attempt quizzes by subject, creator, or code</p>
