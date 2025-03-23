@@ -422,7 +422,7 @@ const ChatBot = () => {
     event.target.value = ''; // Reset file input
   };
 
-  // Auto-save to localStorage whenever chat history changes
+  // Function to auto save to localStorage whenever chat history changes
   useEffect(() => {
     saveToLocalStorage(chatHistory);
   }, [chatHistory]);
