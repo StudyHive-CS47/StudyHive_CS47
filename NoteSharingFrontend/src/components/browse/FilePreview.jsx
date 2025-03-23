@@ -13,8 +13,6 @@ const FilePreview = ({ selectedFile }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
-
     // Update when selectedFile changes
     useEffect(() => {
         if (selectedFile && selectedFile.id) {
@@ -25,8 +23,6 @@ const FilePreview = ({ selectedFile }) => {
             setPreviewUrl(null);
         }
     }, [selectedFile]);
-
-
 
     // Function to download the file
     const downloadFile = async () => {
@@ -49,8 +45,6 @@ const FilePreview = ({ selectedFile }) => {
             alert("Download failed. Please try again.");
         }
     };
-
-
 
     if (!selectedFile) {
         return (
