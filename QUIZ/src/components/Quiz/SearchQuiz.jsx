@@ -5,7 +5,7 @@ import BackButton from '../common/BackButton';
 
 function SearchQuiz() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchType, setSearchType] = useState('title'); // 'title', 'code', or 'creator'
+  const [searchType, setSearchType] = useState('subject'); // 'subject', 'code', or 'creator'
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -51,8 +51,8 @@ function SearchQuiz() {
         case 'creator':
           query = query.ilike('creator_name', `%${term}%`);
           break;
-        default: // title
-          query = query.ilike('title', `%${term}%`);
+        default: // subject
+          query = query.ilike('subject', `%${term}%`);
       }
 
       const { data, error } = await query;
@@ -82,7 +82,7 @@ function SearchQuiz() {
           <BackButton />
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-[#091057] mb-4">Search Quizzes</h1>
-            <p className="text-xl text-gray-600">Find and attempt quizzes by title, creator, or code</p>
+            <p className="text-xl text-gray-600">Find and attempt quizzes by subject, creator, or code</p>
           </div>
         </div>
 
@@ -99,7 +99,7 @@ function SearchQuiz() {
                     onChange={(e) => setSearchType(e.target.value)}
                     className="px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors bg-white text-[#091057] font-medium"
                   >
-                    <option value="title">Search by Title</option>
+                    <option value="subject">Search by Subject</option>
                     <option value="code">Search by Code</option>
                     <option value="creator">Search by Creator</option>
                   </select>
@@ -136,7 +136,7 @@ function SearchQuiz() {
                   key={quiz.id}
                   className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-1 hover:shadow-2xl"
                 >
-                  <h3 className="text-2xl font-bold mb-4 text-[#091057]">{quiz.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-[#091057]">{quiz.subject}</h3>
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">

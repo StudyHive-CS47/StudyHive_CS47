@@ -161,7 +161,7 @@ function QuizQuestion() {
       <BackButton />
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-[#091057]">{quiz.title}</h1>
+          <h1 className="text-2xl font-bold text-[#091057]">{quiz.subject}</h1>
           <div className="text-gray-600">
             Question {currentQuestionIndex + 1} of {quiz.questions.length}
           </div>

@@ -7,7 +7,7 @@ import SuccessPopup from '../common/SuccessPopup';
 function CreateQuiz() {
   const navigate = useNavigate();
   const [creatorName, setCreatorName] = useState('');
-  const [title, setTitle] = useState('');
+  const [subject, setSubject] = useState('');
   const [hasTimer, setHasTimer] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(30);
   const [questions, setQuestions] = useState([{
@@ -87,8 +87,8 @@ function CreateQuiz() {
 
   const handleSubmit = async () => {
     // Validate basic fields
-    if (!title.trim()) {
-      alert('Please enter a quiz title');
+    if (!subject.trim()) {
+      alert('Please enter a quiz subject');
       return;
     }
     if (!creatorName.trim()) {
@@ -165,7 +165,7 @@ function CreateQuiz() {
       const { data, error } = await supabase
         .from('quizzes')
         .insert({
-          title,
+          subject,
           creator_name: creatorName,
           has_timer: hasTimer,
           timer_seconds: hasTimer ? timerSeconds : null,
@@ -219,14 +219,13 @@ function CreateQuiz() {
                     <span className="text-2xl">📝</span>
                   </div>
                   <div className="flex-grow">
-                    <label className="block text-[#091057] font-semibold mb-2 text-lg">Quiz Title</label>
+                    <label className="block text-[#091057] font-semibold mb-2 text-lg">Quiz Subject</label>
                     <input
                       type="text"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
                       className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
-                      placeholder="Enter quiz title"
-                      required
+                      placeholder="Enter quiz subject (e.g. Mathematics, Physics, History)"
                     />
                   </div>
                 </div>
@@ -265,7 +264,7 @@ function CreateQuiz() {
               <div className="mt-8 flex justify-center">
                 <button
                   onClick={() => {
-                    if (!title.trim() || !creatorName.trim()) {
+                    if (!subject.trim() || !creatorName.trim()) {
                       alert('Please fill in all fields');
                       return;
                     }
