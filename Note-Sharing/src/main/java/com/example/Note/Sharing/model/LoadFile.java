@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
+
 @Document(collection = "files") // MongoDB collection name
 public class LoadFile {
 
@@ -13,10 +14,9 @@ public class LoadFile {
     private String fileType;
     private String fileSize;
     private Date uploadDate;
-
-
+    
     private byte[] file;  // File content stored as byte array
-
+    
     // Fields for categorization
     private String uploaderName;
     private String fileDescription;
