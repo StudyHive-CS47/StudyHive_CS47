@@ -5,7 +5,6 @@ import FilePreview from '../components/browse/FilePreview';
 
 const BrowsePage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
-
     return (
         <div className="container py-4">
             <h1 className="mb-4">StudyHive Note Sharing System</h1>
