@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UploadForm from '../components/upload/UploadForm';
 
+
 const UploadPage = () => {
     return (
         <div className="container-fluid py-4" style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}>
@@ -11,6 +12,7 @@ const UploadPage = () => {
         </div>
     );
 };
+
 
 export default UploadPage;
 
