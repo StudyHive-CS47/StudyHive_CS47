@@ -399,7 +399,7 @@ const ChatBot = () => {
         throw new Error('Invalid chat history file format');
       }
 
-      // Merge with existing history, removing duplicates by ID
+      // Function to merge with existing history, removing duplicates by ID
       const mergedHistory = [...chatHistory];
       importedData.history.forEach(importedChat => {
         const existingIndex = mergedHistory.findIndex(chat => chat.id === importedChat.id);
