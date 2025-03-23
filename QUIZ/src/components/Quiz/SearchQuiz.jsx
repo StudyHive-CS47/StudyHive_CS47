@@ -79,20 +79,20 @@ function SearchQuiz() {
   }, [searchTerm, searchType]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto">
           <BackButton />
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-cyan-800 mb-4">Search Quizzes</h1>
+            <h1 className="text-5xl font-bold text-[#091057] mb-4">Search Quizzes</h1>
             <p className="text-xl text-gray-600">Find and attempt quizzes by subject, creator, or code</p>
           </div>
         </div>
 
         <div className="max-w-4xl mx-auto mb-12">
-          <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-cyan-100">
-            <div className="flex items-center gap-8 p-6 bg-cyan-50 rounded-xl">
-              <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <div className="bg-white p-6 rounded-2xl shadow-xl border-2 border-blue-100">
+            <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                 <span className="text-2xl">🔍</span>
               </div>
               <div className="flex-grow space-y-4">
@@ -100,7 +100,7 @@ function SearchQuiz() {
                   <select
                     value={searchType}
                     onChange={(e) => setSearchType(e.target.value)}
-                    className="px-4 py-3 border-2 border-cyan-100 rounded-lg focus:outline-none focus:border-cyan-300 transition-colors bg-white text-cyan-800 font-medium"
+                    className="px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors bg-white text-[#091057] font-medium"
                   >
                     <option value="subject">Search by Subject</option>
                     <option value="code">Search by Code</option>
@@ -113,7 +113,7 @@ function SearchQuiz() {
                     placeholder={searchType === 'subject' ? 
                       "Search by subject" : 
                       `Search by ${searchType}...`}
-                    className="flex-1 px-4 py-3 border-2 border-cyan-100 rounded-lg focus:outline-none focus:border-cyan-300 transition-colors"
+                    className="flex-1 px-4 py-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
                   />
                 </div>
               </div>
@@ -123,14 +123,14 @@ function SearchQuiz() {
 
         {loading ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 border-4 border-cyan-200 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
             <p className="text-gray-600 mt-4">Loading quizzes...</p>
           </div>
         ) : (
           <>
             {!searchTerm && (
               <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-cyan-800 mb-2">Recently Added Quizzes</h2>
+                <h2 className="text-2xl font-bold text-[#091057] mb-2">Recently Added Quizzes</h2>
                 <p className="text-gray-600">Start exploring our latest quizzes</p>
               </div>
             )}
@@ -139,12 +139,12 @@ function SearchQuiz() {
               {quizzes.map((quiz) => (
                 <div
                   key={quiz.id}
-                  className="bg-white p-8 rounded-2xl shadow-xl border-2 border-cyan-100 hover:border-cyan-300 transition-all transform hover:-translate-y-1 hover:shadow-2xl"
+                  className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100 hover:border-blue-300 transition-all transform hover:-translate-y-1 hover:shadow-2xl"
                 >
-                  <h3 className="text-2xl font-bold mb-4 text-cyan-800">{quiz.subject}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-[#091057]">{quiz.subject}</h3>
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-sm">👨‍🎓</span>
                       </div>
                       <p className="text-gray-600">
@@ -152,7 +152,7 @@ function SearchQuiz() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-sm">📝</span>
                       </div>
                       <p className="text-gray-600">
@@ -160,7 +160,7 @@ function SearchQuiz() {
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                         <span className="text-sm">🎲</span>
                       </div>
                       <p className="text-gray-600">
@@ -172,7 +172,7 @@ function SearchQuiz() {
                     </div>
                     {quiz.has_timer && (
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-cyan-100 rounded-full flex items-center justify-center">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                           <span className="text-sm">⏳</span>
                         </div>
                         <p className="text-gray-600">
@@ -184,7 +184,7 @@ function SearchQuiz() {
                   </div>
                   <Link
                     to={`/quiz/${quiz.code}`}
-                    className="block w-full text-center bg-cyan-500 text-white py-3 rounded-xl hover:bg-cyan-600 transition-colors font-semibold transform hover:-translate-y-1 shadow-md hover:shadow-lg"
+                    className="block w-full text-center bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors font-semibold transform hover:-translate-y-1 shadow-md hover:shadow-lg"
                   >
                     Take Quiz
                   </Link>
@@ -194,10 +194,10 @@ function SearchQuiz() {
             
             {!loading && searchTerm && quizzes.length === 0 && (
               <div className="text-center py-12 bg-white rounded-2xl shadow-md max-w-2xl mx-auto">
-                <div className="w-20 h-20 bg-cyan-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-4xl">🔎</span>
                 </div>
-                <h3 className="text-xl font-bold text-cyan-800 mb-2">No Quizzes Found</h3>
+                <h3 className="text-xl font-bold text-[#091057] mb-2">No Quizzes Found</h3>
                 <p className="text-gray-600">Try adjusting your search terms or browse our recent quizzes</p>
               </div>
             )}

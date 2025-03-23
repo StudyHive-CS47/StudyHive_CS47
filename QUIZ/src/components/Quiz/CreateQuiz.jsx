@@ -182,53 +182,53 @@ function CreateQuiz() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-cyan-50 to-white py-8">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="max-w-4xl mx-auto">
           <BackButton />
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-cyan-800 mb-4">Create New Quiz</h1>
+            <h1 className="text-5xl font-bold text-[#091057] mb-4">Create New Quiz</h1>
             <p className="text-xl text-gray-600">Design your perfect quiz and share it with others</p>
           </div>
 
           {currentStep === 0 ? (
-            <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-cyan-100">
+            <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100">
               <div className="space-y-8">
-                <div className="flex items-center gap-8 p-6 bg-cyan-50 rounded-xl">
-                  <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">👨‍🏫</span>
                   </div>
                   <div className="flex-grow">
-                    <label className="block text-cyan-800 font-semibold mb-2 text-lg">Your Name</label>
+                    <label className="block text-[#091057] font-semibold mb-2 text-lg">Your Name</label>
                     <input
                       type="text"
                       value={creatorName}
                       onChange={(e) => setCreatorName(e.target.value)}
-                      className="w-full p-3 border-2 border-cyan-100 rounded-lg focus:outline-none focus:border-cyan-300 transition-colors"
+                      className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
                       placeholder="Enter your name"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8 p-6 bg-cyan-50 rounded-xl">
-                  <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">📚</span>
                   </div>
                   <div className="flex-grow">
-                    <label className="block text-cyan-800 font-semibold mb-2 text-lg">Quiz Subject</label>
+                    <label className="block text-[#091057] font-semibold mb-2 text-lg">Quiz Subject</label>
                     <input
                       type="text"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="w-full p-3 border-2 border-cyan-100 rounded-lg focus:outline-none focus:border-cyan-300 transition-colors"
+                      className="w-full p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300 transition-colors"
                       placeholder="Enter quiz subject"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8 p-6 bg-cyan-50 rounded-xl">
-                  <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">⏳</span>
                   </div>
                   <div className="flex-grow">
@@ -237,18 +237,18 @@ function CreateQuiz() {
                         type="checkbox"
                         checked={hasTimer}
                         onChange={(e) => setHasTimer(e.target.checked)}
-                        className="w-5 h-5 text-cyan-600 rounded border-cyan-300 focus:ring-cyan-500"
+                        className="w-5 h-5 text-blue-600 rounded border-blue-300 focus:ring-blue-500"
                       />
-                      <span className="text-cyan-800 font-semibold">Enable Timer</span>
+                      <span className="text-[#091057] font-semibold">Enable Timer</span>
                     </label>
                     {hasTimer && (
                       <div className="mt-4">
-                        <label className="block text-cyan-800 font-semibold mb-2">Time per question (seconds)</label>
+                        <label className="block text-[#091057] font-semibold mb-2">Time per question (seconds)</label>
                         <input
                           type="number"
                           value={timerSeconds}
                           onChange={(e) => setTimerSeconds(parseInt(e.target.value))}
-                          className="w-32 p-3 border-2 border-cyan-100 rounded-lg focus:outline-none focus:border-cyan-300"
+                          className="w-32 p-3 border-2 border-blue-100 rounded-lg focus:outline-none focus:border-blue-300"
                           min="20"
                           max="300"
                         />
@@ -267,26 +267,26 @@ function CreateQuiz() {
                     }
                     setCurrentStep(1);
                   }}
-                  className="bg-cyan-500 text-white px-8 py-3 rounded-xl hover:bg-cyan-600 transform hover:-translate-y-1 transition-all duration-200 text-lg font-semibold shadow-lg hover:shadow-xl"
+                  className="bg-blue-600 text-white px-8 py-3 rounded-xl hover:bg-blue-700 transform hover:-translate-y-1 transition-all duration-200 text-lg font-semibold shadow-lg hover:shadow-xl"
                 >
                   Next: Add Questions
                 </button>
               </div>
             </div>
           ) : (
-            <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-cyan-100">
+            <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100">
               <div className="mb-8 text-center">
-                <div className="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">✨</span>
                 </div>
-                <h2 className="text-2xl font-bold text-cyan-800">Add Your Questions</h2>
+                <h2 className="text-2xl font-bold text-[#091057]">Add Your Questions</h2>
                 <p className="text-gray-600">Create up to 20 multiple choice questions</p>
               </div>
 
               {questions.map((q, index) => (
-                <div key={index} className="mb-8 p-6 bg-cyan-50 rounded-xl border-2 border-cyan-100">
+                <div key={index} className="mb-8 p-6 bg-blue-50 rounded-xl border-2 border-blue-100">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-bold text-cyan-800">Question {index + 1}</h3>
+                    <h3 className="text-xl font-bold text-[#091057]">Question {index + 1}</h3>
                     {questions.length > 1 && (
                       <button
                         onClick={() => {
@@ -305,22 +305,22 @@ function CreateQuiz() {
                     type="text"
                     value={q.question}
                     onChange={(e) => updateQuestion(index, 'question', e.target.value)}
-                    className="w-full p-3 border-2 border-cyan-100 rounded-lg mb-4 focus:outline-none focus:border-cyan-300"
+                    className="w-full p-3 border-2 border-blue-100 rounded-lg mb-4 focus:outline-none focus:border-blue-300"
                     placeholder="Enter your question"
                     required
                   />
 
                   <div className="space-y-3">
-                    <p className="text-cyan-800 font-semibold mb-2">Select the correct answer:</p>
+                    <p className="text-[#091057] font-semibold mb-2">Select the correct answer:</p>
                     {q.options.map((option, optIndex) => (
                       <div key={optIndex} className="flex flex-col gap-1">
-                        <div className="flex items-center gap-3 bg-white p-3 rounded-lg border-2 border-cyan-100">
+                        <div className="flex items-center gap-3 bg-white p-3 rounded-lg border-2 border-blue-100">
                           <input
                             type="radio"
                             name={`correct_${index}`}
                             checked={q.correct_answer === optIndex}
                             onChange={() => updateQuestion(index, 'correct_answer', optIndex)}
-                            className="w-5 h-5 text-cyan-600"
+                            className="w-5 h-5 text-blue-600"
                             required
                           />
                           <input
@@ -335,8 +335,8 @@ function CreateQuiz() {
                             className={`flex-1 p-2 border-2 ${
                               optionErrors[index][optIndex] 
                                 ? 'border-red-200' 
-                                : 'border-cyan-50'
-                            } rounded-lg focus:outline-none focus:border-cyan-200`}
+                                : 'border-blue-50'
+                            } rounded-lg focus:outline-none focus:border-blue-200`}
                             placeholder={`Option ${optIndex + 1}`}
                             required
                           />
@@ -363,14 +363,14 @@ function CreateQuiz() {
                   <button
                     onClick={addQuestion}
                     disabled={questions.length >= 20}
-                    className="px-6 py-3 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transition-colors disabled:opacity-50"
+                    className="px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors disabled:opacity-50"
                   >
                     Add Question
                   </button>
                 </div>
                 <button
                   onClick={handleSubmit}
-                  className="px-8 py-3 bg-cyan-500 text-white rounded-xl hover:bg-cyan-600 transform hover:-translate-y-1 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl"
+                  className="px-8 py-3 bg-green-500 text-white rounded-xl hover:bg-green-600 transform hover:-translate-y-1 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl"
                 >
                   Create Quiz
                 </button>
