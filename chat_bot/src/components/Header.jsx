@@ -6,7 +6,7 @@ function Header() {
     <header className="header">
       <div className="header-content">
         <div className="header-left">
-          {/* Temporarily comment out the logo until we have the correct path */}
+          {/* Logo path */}
           {/* <img src={logo} alt="StudyHive" className="header-logo" /> */}
           <h1 className="header-title">StudyHive</h1>
         </div>
