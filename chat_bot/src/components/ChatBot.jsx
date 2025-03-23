@@ -221,7 +221,7 @@ const ChatBot = () => {
         throw new Error('No text could be extracted from the document');
       }
 
-      setPdfContent(extractedText); // We'll keep the same state variable name for simplicity
+      setPdfContent(extractedText);
       setPdfName(file.name);
       setHasPdfLoaded(true);
       setIsPdfMode(true);
