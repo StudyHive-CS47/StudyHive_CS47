@@ -394,7 +394,7 @@ const ChatBot = () => {
       const text = await file.text();
       const importedData = JSON.parse(text);
       
-      // Validate the imported data
+      // Function to validate the imported data
       if (!importedData.version || !importedData.history) {
         throw new Error('Invalid chat history file format');
       }
