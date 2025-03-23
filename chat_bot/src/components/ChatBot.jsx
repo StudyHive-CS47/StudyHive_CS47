@@ -161,7 +161,7 @@ const ChatBot = () => {
     return text.trim();
   };
 
-  // Modified getBotResponse to include PDF context when in PDF mode
+  // Function to include PDF context when in PDF mode
   const getBotResponse = async (userMessage) => {
     try {
       setIsLoading(true);
