@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "jsx": "react-jsx",
     "paths": {
       "@/*": ["src/*"],
       "@landing/*": ["packages/landing/src/*"],
@@ -13,7 +14,8 @@
       "@quiz/*": ["packages/features/quiz/src/*"],
       "@chat_bot/*": ["packages/features/chat_bot/src/*"],
       "@shared/*": ["packages/shared/src/*"]
-    }
+    },
+    "types": ["react", "jest", "@testing-library/jest-dom"]
   },
   "include": ["src/**/*", "packages/**/*"],
   "exclude": ["node_modules"]
