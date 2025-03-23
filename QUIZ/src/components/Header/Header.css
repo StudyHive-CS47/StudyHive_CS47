@@ -1,6 +1,6 @@
 .header {
-  background: rgb(222, 226, 236);
-  border-bottom: 1px solid #3e3760;
+  background: rgb(233, 234, 237);
+  border-bottom: 1px solid #e0edff;
   padding: 8px 0;
   position: sticky;
   top: 0;
@@ -30,7 +30,7 @@
 .header-title {
   font-size: 20px;
   font-weight: 500;
-  color: #000;
+  color: #2206f4;
   margin: 0;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .header-nav a {
-  color: #666;
+  color: #08304c;
   text-decoration: none;
   font-size: 14px;
   white-space: nowrap;
@@ -48,7 +48,7 @@
 }
 
 .header-nav a:hover {
-  color: #b5dbdbc5;
+  color: #79cfe2c5;
 }
 
 .header-nav a.active {

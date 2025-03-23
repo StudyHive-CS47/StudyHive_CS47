@@ -185,9 +185,7 @@ function CreateQuiz() {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-8">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="max-w-4xl mx-auto">
-          <div className="flex justify-start mb-8">
-            <BackButton />
-          </div>
+          <BackButton />
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-[#091057] mb-4">Create New Quiz</h1>
             <p className="text-xl text-gray-600">Design your perfect quiz and share it with others</p>
