@@ -4,8 +4,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  border-top: 1px solid #e0e0e0;
+  background: rgb(222, 226, 236);
+  border-top: 1px solid #b5c9dc;
   margin-top: auto;
 }
 
@@ -23,7 +23,7 @@
 .footer-brand {
   font-size: 24px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #2665ee;
   margin: 0;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .footer-center a {
-  color: #1a1a1a;
+  color: #b0b4f9;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
@@ -41,7 +41,7 @@
 }
 
 .footer-center a:hover {
-  color: #666;
+  color: #8cd6ec;
 }
 
 .footer-right {
@@ -64,6 +64,6 @@
 }
 
 .social-link:hover {
-  color: #666;
+  color: #bcebe0;
   background: #e0e0e0;
 } 
