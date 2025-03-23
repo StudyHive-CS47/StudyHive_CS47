@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FileList from '../components/browse/FileList';
 import FilePreview from '../components/browse/FilePreview';
 
+
 const BrowsePage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -20,5 +21,6 @@ const BrowsePage = () => {
         </div>
     );
 };
+
 
 export default BrowsePage;
