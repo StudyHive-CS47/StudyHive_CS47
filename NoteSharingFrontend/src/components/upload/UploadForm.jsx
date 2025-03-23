@@ -3,6 +3,7 @@ import TermsModal from '../../components/common/TermsModal.jsx';
 import LoadingOverlay from '../../components/common/LoadingOverlay';
 import api from '../../services/api';
 
+
 const UploadForm = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileName, setFileName] = useState('No file selected');
@@ -11,6 +12,7 @@ const UploadForm = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
+    
     // Handle file selection
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -20,12 +22,14 @@ const UploadForm = () => {
         }
     };
 
+    
     // Handle file removal
     const handleRemoveFile = () => {
         setSelectedFile(null);
         setFileName('No file selected');
     };
 
+    
     // Handle drag-and-drop functionality
     const handleDragOver = (event) => {
         event.preventDefault();
@@ -39,6 +43,7 @@ const UploadForm = () => {
         event.currentTarget.classList.remove('drag-over');
     };
 
+    
     const handleDrop = (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -52,6 +57,7 @@ const UploadForm = () => {
         }
     };
 
+    
     // Handle form submission
     const handleSubmit = async (event) => {
         event.preventDefault();
