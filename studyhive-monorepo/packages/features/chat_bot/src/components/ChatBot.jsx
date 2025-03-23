@@ -39,6 +39,9 @@ const ChatBot = () => {
   const [backupStatus, setBackupStatus] = useState('');
   const backupInputRef = useRef(null);
 
+  // Get API key from environment variables
+  const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+
   // Function to group messages by date
   const groupMessagesByDate = () => {
     const groups = {};
@@ -164,7 +167,6 @@ const ChatBot = () => {
     try {
       setIsLoading(true);
       
-      const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
       const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
       let systemPrompt = "";
@@ -271,39 +273,61 @@ const ChatBot = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isLoading) return;
 
-    const userMessage = {
-      role: 'user',
-      content: input.trim(),
-      timestamp: new Date().toLocaleString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
-    };
-
-    setMessages(prev => [...prev, userMessage]);
+    const userMessage = input.trim();
     setInput('');
+    setIsLoading(true);
 
-    const botResponse = await getBotResponse(input);
-    const botMessage = {
-      role: 'assistant',
-      content: botResponse,
-      timestamp: new Date().toLocaleString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })
-    };
+    // Add user message to chat with proper structure
+    const timestamp = new Date().toLocaleString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
 
-    setMessages(prev => [...prev, botMessage]);
+    setMessages(prev => [...prev, {
+      role: 'user',
+      content: userMessage,
+      timestamp
+    }]);
+
+    try {
+      const botResponse = await getBotResponse(userMessage);
+      // Add bot response to chat with proper structure
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: botResponse,
+        timestamp: new Date().toLocaleString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      }]);
+    } catch (error) {
+      // Add error message to chat with proper structure
+      setMessages(prev => [...prev, {
+        role: 'assistant',
+        content: "I apologize, but I encountered an error: " + error.message,
+        timestamp: new Date().toLocaleString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }),
+        isError: true
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleModeToggle = () => {

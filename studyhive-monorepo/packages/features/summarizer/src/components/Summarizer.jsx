@@ -15,8 +15,11 @@ function Summarizer() {
   console.log('Environment variables available:', Object.keys(import.meta.env).filter(key => key.startsWith('VITE_')));
   
   // OpenRouter configuration
-  const OPENROUTER_API_KEY = "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";
+  const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
   const API_URL = "https://openrouter.ai/api/v1/chat/completions";
+
+  // Debug log for API key
+  console.log('API Key available:', !!OPENROUTER_API_KEY);
 
   // Calculate target token length based on input and summary percentage
   const calculateTargetLength = (text, percentage) => {
@@ -27,6 +30,12 @@ function Summarizer() {
 
   const handleSummarize = async () => {
     if (!inputText) return;
+    
+    if (!OPENROUTER_API_KEY) {
+      console.error('OpenRouter API key is missing');
+      alert('API key configuration is missing. Please check your environment setup.');
+      return;
+    }
     
     setIsLoading(true);
     try {
