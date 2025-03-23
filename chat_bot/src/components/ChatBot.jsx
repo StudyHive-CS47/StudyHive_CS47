@@ -132,7 +132,7 @@ const ChatBot = () => {
     }
   };
 
-  // Add this new function to handle individual chat deletion
+  // Function to handle individual chat deletion
   const deleteChat = (chatId, e) => {
     e.stopPropagation(); // Prevent chat selection when clicking delete
     if (window.confirm('Are you sure you want to delete this chat?')) {
