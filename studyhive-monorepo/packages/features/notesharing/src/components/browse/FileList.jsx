@@ -1,14 +1,23 @@
 import React from 'react';
 import api from '../../services/api';
-import './FileList.css';
+
 
 // Helper function to format file size
 const formatFileSize = (bytes) => {
-    if (!bytes) return '0 B';
-    const sizes = ['B', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    if (!bytes || isNaN(bytes)) return '0 Bytes';
+
+    bytes = Number(bytes);
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0) return '0 Bytes';
+
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]}`;
+
     return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
 };
+
+
+
 
 const FileList = ({ files = [], onSelectFile, loading, error }) => {
     // Function to handle file download
@@ -28,6 +37,9 @@ const FileList = ({ files = [], onSelectFile, loading, error }) => {
         }
     };
 
+
+
+
     // Function to handle preview click
     const handlePreview = (file) => {
         // Call the onSelectFile callback to update the selected file in the parent component
@@ -37,87 +49,66 @@ const FileList = ({ files = [], onSelectFile, loading, error }) => {
     };
 
     return (
-        <div className="card h-100">
+        <div className="card">
             <div className="card-header d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">Available Notes</h5>
-                <span className="badge bg-primary">{files?.length || 0}</span>
+                <h5 className="mb-0">Files</h5>
+                <span className="badge bg-primary">{files.length}</span>
             </div>
-            <div className="card-body">
+            <div className="card-body file-container">
                 {/* Error Message */}
                 {error && (
-                    <div className="alert alert-danger m-3" role="alert">
+                    <div className="alert alert-danger" role="alert">
                         {error}
                     </div>
                 )}
 
                 {/* Loading Spinner */}
                 {loading ? (
-                    <div className="text-center p-4">
+                    <div className="d-flex justify-content-center">
                         <div className="spinner-border text-primary" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </div>
                     </div>
                 ) : (
-                    <div className="file-list">
-                        {files?.length > 0 ? (
+                    <ul className="list-group">
+                        {files.length > 0 ? (
                             files.map((file) => (
-                                <div 
-                                    key={file.id} 
-                                    className="file-item p-3"
-                                    onClick={() => onSelectFile(file)}
-                                >
-                                    <div className="d-flex align-items-start gap-3">
-                                        <div className="flex-shrink-0">
-                                            <i className="bi bi-file-earmark-text fs-2 text-primary"></i>
+                                <li key={file.id} className="list-group-item file-item">
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 className="mb-1">{file.filename}</h6>
+                                            <small className="text-muted">
+                                                Uploaded by {file.uploaderName} | {file.moduleCode} | {file.universityName}
+                                            </small>
                                         </div>
-                                        <div className="flex-grow-1">
-                                            <h6 className="mb-1 text-primary">{file.filename}</h6>
-                                            <div className="small text-secondary mb-2">
-                                                <span className="me-2">
-                                                    <i className="bi bi-person me-1"></i>
-                                                    {file.uploaderName}
-                                                </span>
-                                                <span className="me-2">
-                                                    <i className="bi bi-book me-1"></i>
-                                                    {file.moduleCode}
-                                                </span>
-                                                <span>
-                                                    <i className="bi bi-building me-1"></i>
-                                                    {file.universityName}
-                                                </span>
-                                            </div>
-                                            <div className="d-flex align-items-center gap-3">
-                                                <span className="badge bg-light text-secondary">
-                                                    <i className="bi bi-hdd me-1"></i>
-                                                    {formatFileSize(file.fileSize)}
-                                                </span>
-                                                <span className="badge bg-light text-secondary">
-                                                    <i className="bi bi-calendar me-1"></i>
-                                                    {new Date(file.uploadDate).toLocaleDateString()}
-                                                </span>
-                                                <span className="badge bg-light text-secondary">
-                                                    <i className="bi bi-download me-1"></i>
-                                                    {file.downloads || 0}
-                                                </span>
-                                                <span className="badge bg-light text-secondary">
-                                                    <i className="bi bi-star-fill me-1 text-warning"></i>
-                                                    {file.rating || 'N/A'}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="flex-shrink-0">
-                                            <i className="bi bi-chevron-right text-secondary"></i>
+                                        <div className="text-end">
+                                            <small className="text-muted">
+                                                {formatFileSize(file.fileSize)} | {new Date(file.uploadDate).toLocaleDateString()} | {file.downloads || 0} downloads | ⭐ {file.rating || 'N/A'}
+                                            </small>
                                         </div>
                                     </div>
-                                </div>
+                                    <div className="mt-2">
+                                        <button
+                                            className="btn btn-sm btn-primary me-2"
+                                            onClick={() => handleDownload(file.id, file.filename)}
+                                        >
+                                            Download
+                                        </button>
+                                        <button
+                                            className="btn btn-sm btn-secondary"
+                                            onClick={() => handlePreview(file)}
+                                        >
+                                            Preview
+                                        </button>
+                                    </div>
+                                </li>
                             ))
                         ) : (
-                            <div className="text-center p-4">
-                                <i className="bi bi-inbox fs-1 text-secondary"></i>
-                                <p className="text-secondary mt-2">No notes available</p>
+                            <div className="text-center p-3">
+                                <p className="text-muted">No files found</p>
                             </div>
                         )}
-                    </div>
+                    </ul>
                 )}
             </div>
         </div>

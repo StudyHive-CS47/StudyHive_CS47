@@ -3,7 +3,6 @@ import RatingModal from '../common/RatingModal.jsx';
 import ReportModal from '../common/ReportModal.jsx';
 import ShareModal from '../common/ShareModal.jsx';
 import api from '../../services/api';
-import './FilePreview.css';
 
 const FilePreview = ({ selectedFile }) => {
     const [file, setFile] = useState(null);
@@ -14,6 +13,9 @@ const FilePreview = ({ selectedFile }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
+
+
+    // Update when selectedFile changes
     useEffect(() => {
         if (selectedFile && selectedFile.id) {
             setFile(selectedFile);
@@ -24,9 +26,11 @@ const FilePreview = ({ selectedFile }) => {
         }
     }, [selectedFile]);
 
+
+
+    // Function to download the file
     const downloadFile = async () => {
         if (!file || !file.id) return;
-        setLoading(true);
 
         try {
             const response = await api.downloadFile(file.id);
@@ -38,142 +42,142 @@ const FilePreview = ({ selectedFile }) => {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
+
+            console.log("File downloaded successfully.");
         } catch (error) {
             console.error("Download error:", error);
-            setError("Failed to download file. Please try again.");
-        } finally {
-            setLoading(false);
+            alert("Download failed. Please try again.");
         }
     };
 
-    return (
-        <div className="card h-100">
-            <div className="card-header d-flex justify-content-between align-items-center">
-                <h5 className="mb-0">File Preview</h5>
-                {file && (
-                    <div className="d-flex gap-2">
-                        <button 
-                            className="btn btn-primary" 
-                            onClick={downloadFile}
-                            disabled={loading}
-                        >
-                            <i className="bi bi-download me-1"></i>
-                            Download
-                        </button>
-                        <button 
-                            className="btn btn-outline-primary"
-                            onClick={() => setShowShareModal(true)}
-                        >
-                            <i className="bi bi-share me-1"></i>
-                            Share
-                        </button>
+
+
+    if (!selectedFile) {
+        return (
+            <div className="card">
+                <div className="card-header">
+                    <h5 className="mb-0">File Preview</h5>
+                </div>
+                <div className="card-body">
+                    <div className="preview-container">
+                        <div className="text-center text-muted">
+                            <i className="bi bi-file-earmark fs-1"></i>
+                            <p>Select a file to preview</p>
+                        </div>
                     </div>
-                )}
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="card">
+                <div className="card-header">
+                    <h5 className="mb-0">File Preview</h5>
+                </div>
+                <div className="card-body">
+                    <p className="text-danger text-center">{error}</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (loading) {
+        return (
+            <div className="card">
+                <div className="card-header">
+                    <h5 className="mb-0">File Preview</h5>
+                </div>
+                <div className="card-body">
+                    <div className="preview-container">
+                        <div className="text-center text-muted">
+                            <i className="bi bi-file-earmark fs-1"></i>
+                            <p>Loading preview...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="card">
+            <div className="card-header">
+                <h5 className="mb-0">File Preview</h5>
             </div>
             <div className="card-body">
-                {error && (
-                    <div className="alert alert-danger" role="alert">
-                        <i className="bi bi-exclamation-triangle me-2"></i>
-                        {error}
-                    </div>
-                )}
-                
-                {file ? (
+                {file && (
                     <>
-                        <div className="file-details">
-                            <div className="row g-4">
-                                <div className="col-6">
-                                    <div className="detail-item d-flex align-items-center">
-                                        <i className="bi bi-person-circle text-primary"></i>
-                                        <div>
-                                            <small className="text-muted d-block">Uploader</small>
-                                            <span className="fw-medium">{file.uploaderName}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <div className="detail-item d-flex align-items-center">
-                                        <i className="bi bi-building text-primary"></i>
-                                        <div>
-                                            <small className="text-muted d-block">University</small>
-                                            <span className="fw-medium">{file.universityName}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <div className="detail-item d-flex align-items-center">
-                                        <i className="bi bi-book text-primary"></i>
-                                        <div>
-                                            <small className="text-muted d-block">Module Code</small>
-                                            <span className="fw-medium">{file.moduleCode}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-6">
-                                    <div className="detail-item d-flex align-items-center">
-                                        <i className="bi bi-layers text-primary"></i>
-                                        <div>
-                                            <small className="text-muted d-block">Level</small>
-                                            <span className="fw-medium">{file.moduleLevel}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div id="fileMetadata" className="mb-3">
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">File Name:</div>
+                                <div className="col-md-8">{file.filename || "-"}</div>
                             </div>
-                        </div>
-
-                        <div className="description-section">
-                            <div className="d-flex align-items-start">
-                                <i className="bi bi-file-text me-3"></i>
-                                <div>
-                                    <small className="text-muted d-block mb-2">Description</small>
-                                    <p className="mb-0">{file.fileDescription || 'No description provided'}</p>
-                                </div>
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">Uploader:</div>
+                                <div className="col-md-8">{file.uploaderName || "-"}</div>
                             </div>
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">University:</div>
+                                <div className="col-md-8">{file.universityName || "-"}</div>
+                            </div>
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">Module:</div>
+                                <div className="col-md-8">{file.moduleCode || "-"}</div>
+                            </div>
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">Module:</div>
+                                <div className="col-md-8">{file.moduleLevel || "-"}</div>
+                            </div>
+                            <div className="row mb-2">
+                                <div className="col-md-4 fw-bold">Description:</div>
+                                <div className="col-md-8">{file.fileDescription || "-"}</div>
+                            </div>
+                            <hr/>
                         </div>
 
                         <div className="preview-container">
                             {previewUrl ? (
-                                <iframe
-                                    src={previewUrl}
-                                    title={`Preview of ${file.filename}`}
-                                ></iframe>
+                                <div className="text-center">
+                                    <iframe
+                                        src={previewUrl}
+                                        width="100%"
+                                        height="400px"
+                                        frameBorder="0"
+                                        title={`Preview of ${file.filename}`}
+                                    ></iframe>
+                                </div>
                             ) : (
-                                <div className="empty-state">
-                                    <i className="bi bi-file-earmark-x"></i>
+                                <div className="text-center text-muted">
+                                    <i className="bi bi-file-earmark fs-1"></i>
                                     <p>Preview not available</p>
                                 </div>
                             )}
                         </div>
 
-                        <div className="action-buttons">
-                            <button 
-                                className="btn btn-outline-success"
-                                onClick={() => setShowRatingModal(true)}
-                            >
-                                <i className="bi bi-star me-1"></i>
-                                Rate
+                        <div className="d-flex mt-3">
+                            <button className="btn btn-primary" onClick={downloadFile}>
+                                <i className="bi bi-download"></i>
                             </button>
-                            <button 
-                                className="btn btn-outline-danger"
-                                onClick={() => setShowReportModal(true)}
-                            >
-                                <i className="bi bi-flag me-1"></i>
-                                Report
+                            <button className="btn btn-secondary ms-2" onClick={() => setShowShareModal(true)}>
+                                <i className="bi bi-share"></i>
+                            </button>
+                            <button className="btn btn-success ms-2" onClick={() => setShowRatingModal(true)}>
+                                <i className="bi bi-star"></i>
+                            </button>
+                            <button className="btn btn-danger ms-auto" onClick={() => setShowReportModal(true)}>
+                                <i className="bi bi-flag"></i>
                             </button>
                         </div>
                     </>
-                ) : (
-                    <div className="empty-state">
-                        <i className="bi bi-file-earmark"></i>
-                        <p>Select a file to preview</p>
-                    </div>
                 )}
             </div>
 
             {/* Modals */}
-            <RatingModal show={showRatingModal} onHide={() => setShowRatingModal(false)} fileId={file?.id} />
-            <ReportModal show={showReportModal} onHide={() => setShowReportModal(false)} fileId={file?.id} />
-            <ShareModal show={showShareModal} onHide={() => setShowShareModal(false)} shareLink={previewUrl} />
+            <RatingModal show={showRatingModal} onHide={() => setShowRatingModal(false)} />
+            <ReportModal show={showReportModal} onHide={() => setShowReportModal(false)} />
+            <ShareModal show={showShareModal} onHide={() => setShowShareModal(false)} />
         </div>
     );
 };
