@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,9 +36,6 @@ public class FileService {
      * Upload a file with metadata
      */
     public LoadFile uploadFile(MultipartFile upload, String universityName, String moduleCode, String moduleLevel,String uploaderName,String fileDescription) throws IOException {
-
-
-
 
         // Define additional metadata
         DBObject metadata = new BasicDBObject();
@@ -215,33 +211,6 @@ public class FileService {
         return convertGridFSFilesToLoadFiles(fileList, false);
     }
 
-    /**
-     * Download all files as a ZIP
-     */
-    public byte[] downloadFilesAsZip() throws IOException {
-        List<GridFSFile> fileList = new ArrayList<>();
-        template.find(new Query()).into(fileList);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ZipOutputStream zos = new ZipOutputStream(baos);
-
-        try {
-            for (GridFSFile gridFSFile : fileList) {
-                // Create zip entry with the filename
-                ZipEntry entry = new ZipEntry(gridFSFile.getFilename());
-                zos.putNextEntry(entry);
-
-                // Get file content and write to zip
-                byte[] data = IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream());
-                zos.write(data, 0, data.length);
-                zos.closeEntry();
-            }
-            zos.close();
-            return baos.toByteArray();
-        } catch (IOException e) {
-            throw new IOException("Error creating ZIP file: " + e.getMessage(), e);
-        }
-    }
 
     /**
      * Helper method to convert GridFSFile list to LoadFile list
