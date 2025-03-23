@@ -1,7 +1,5 @@
 import React from 'react';
 import './Header.css';
-// Update the logo path or temporarily comment it out
-// import logo from './assets/logo.png';
 
 function Header() {
   return (
