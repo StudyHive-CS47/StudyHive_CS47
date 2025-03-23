@@ -347,7 +347,7 @@ const ChatBot = () => {
     });
   };
 
-  // Enhanced function to save chat history to localStorage
+  // Function to save chat history to localStorage
   const saveToLocalStorage = (history) => {
     try {
       localStorage.setItem('chatHistory', JSON.stringify(history));
