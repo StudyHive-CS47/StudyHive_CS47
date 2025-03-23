@@ -1,6 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+import { routes } from '@shared/routes';
+
 const WatchDemoButton = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(routes.public.login);
+  };
+
   return (
-    <button className="relative px-6 py-3 font-bold text-[#3f87a6] text-base
+    <button 
+      onClick={handleClick}
+      className="relative px-6 py-3 font-bold text-[#3f87a6] text-base
                      transition-all duration-500 bg-transparent border-none
                      hover:text-white group">
       Already a member?

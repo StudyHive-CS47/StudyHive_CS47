@@ -8,10 +8,12 @@ const ChatWindow = ({ groupId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user } = useAuth();
-  const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -27,7 +29,6 @@ const ChatWindow = ({ groupId }) => {
         }, 
         (payload) => {
           setMessages(prev => [...prev, payload.new]);
-          scrollToBottom();
         }
       )
       .subscribe();
@@ -87,17 +88,20 @@ const ChatWindow = ({ groupId }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#EEE5DE] bg-opacity-50">
+    <div className="flex flex-col h-full bg-[#EEF4FE]">
       <div 
-        className="flex-1 overflow-y-auto p-4 space-y-2"
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-2 messages-container"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+          height: 'calc(100vh - 16rem)',
+          backgroundColor: '#ffffff',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E3E8FD' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           backgroundAttachment: 'fixed'
         }}
       >
         {loading ? (
           <div className="flex justify-center items-center h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4051B5]"></div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-full">
@@ -108,7 +112,7 @@ const ChatWindow = ({ groupId }) => {
         ) : messages.length === 0 ? (
           <div className="flex justify-center items-center h-full">
             <div className="text-center text-gray-500">
-              <p className="mb-2">No messages yet</p>
+              <p className="mb-2 font-medium">No messages yet</p>
               <p className="text-sm">Be the first to send a message!</p>
             </div>
           </div>
@@ -124,24 +128,24 @@ const ChatWindow = ({ groupId }) => {
                 className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`relative max-w-[65%] rounded-lg px-3 py-2 shadow-sm
+                  className={`relative max-w-[65%] rounded-xl px-4 py-2.5 shadow-sm
                     ${isCurrentUser 
-                      ? 'bg-[#DCF8C6] mr-2' 
-                      : 'bg-white ml-2'
+                      ? 'bg-[#4051B5] text-white' 
+                      : 'bg-white text-gray-800'
                     }
                     ${showSender ? 'mt-4' : 'mt-1'}
                   `}
                 >
                   {showSender && !isCurrentUser && (
-                    <div className="absolute -top-5 left-0 text-xs font-medium text-blue-600">
+                    <div className="absolute -top-5 left-0 text-xs font-medium text-[#4051B5]">
                       {message.sender?.email.split('@')[0]}
                     </div>
                   )}
-                  <div className="text-gray-800 break-words">{message.content}</div>
-                  <div className="text-[0.65rem] text-gray-500 text-right mt-1">
+                  <div className="break-words">{message.content}</div>
+                  <div className={`text-[0.65rem] text-right mt-1 ${isCurrentUser ? 'text-blue-100' : 'text-gray-400'}`}>
                     {formatTime(message.created_at)}
                     {isCurrentUser && (
-                      <span className="ml-1 text-blue-500">✓✓</span>
+                      <span className="ml-1">✓✓</span>
                     )}
                   </div>
                 </div>
@@ -149,7 +153,6 @@ const ChatWindow = ({ groupId }) => {
             );
           })
         )}
-        <div ref={messagesEndRef} />
       </div>
     </div>
   );

@@ -33,28 +33,28 @@ TeamCard.propTypes = {
 
 const StyledWrapper = styled.div`
   .card-client {
-    background: #EBF8E1;
+    background: #EEF4FE;
     width: 13rem;
     padding: 25px 20px;
-    border: 4px solid #3f87a6;
-    box-shadow: 0 6px 10px rgba(63, 135, 166, 0.15);
+    border: 4px solid #1A237E;
+    box-shadow: 0 6px 10px rgba(26, 35, 126, 0.15);
     border-radius: 10px;
     text-align: center;
-    color: #3f87a6;
+    color: #1A237E;
     font-family: "Poppins", sans-serif;
     transition: all 0.3s ease;
   }
 
   .card-client:hover {
     transform: translateY(-10px);
-    box-shadow: 0 12px 20px rgba(63, 135, 166, 0.2);
+    box-shadow: 0 12px 20px rgba(26, 35, 126, 0.2);
   }
 
   .user-picture {
     overflow: hidden;
     width: 7rem;
     height: 7rem;
-    border: 4px solid #3f87a6;
+    border: 4px solid #1A237E;
     border-radius: 999px;
     display: flex;
     justify-content: center;
@@ -80,7 +80,7 @@ const StyledWrapper = styled.div`
     font-weight: 200;
     font-size: 16px;
     margin-top: 8px;
-    color: #2d6a84;
+    color: #4051B5;
   }
 
   .social-media {
@@ -95,7 +95,7 @@ const StyledWrapper = styled.div`
     width: 100%;
     height: 2px;
     margin: 20px 0;
-    background: #3f87a6;
+    background: #1A237E;
     position: absolute;
     top: -20px;
   }
@@ -103,7 +103,7 @@ const StyledWrapper = styled.div`
   .social-media a {
     position: relative;
     text-decoration: none;
-    color: #3f87a6;
+    color: #1A237E;
     display: flex;
     justify-content: center;
   }
@@ -114,7 +114,7 @@ const StyledWrapper = styled.div`
   }
 
   .tooltip-social {
-    background: #3f87a6;
+    background: #1A237E;
     display: block;
     position: absolute;
     bottom: 0;
@@ -143,7 +143,7 @@ const StyledWrapper = styled.div`
   }
 
   .social-media a .tooltip-social:after {
-    border-top-color: #3f87a6;
+    border-top-color: #1A237E;
   }
 
   .social-media a:hover .tooltip-social {
@@ -158,7 +158,7 @@ const StyledWrapper = styled.div`
   }
 
   .linkedin-btn:hover {
-    background: rgba(63, 135, 166, 0.1);
+    background: rgba(26, 35, 126, 0.1);
   }
 `;
 

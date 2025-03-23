@@ -10,27 +10,27 @@ const Pattern = ({ className = '' }) => {
             linear-gradient(
               transparent 0,
               transparent calc(25px - 1px),
-              rgba(63, 135, 166, 0.15) calc(25px - 1px),
-              rgba(63, 135, 166, 0.15) 25px,
+              rgba(26, 35, 126, 0.1) calc(25px - 1px),
+              rgba(26, 35, 126, 0.1) 25px,
               transparent 25px
             ),
-            /* Vertical red line */
+            /* Vertical accent line */
             linear-gradient(
               90deg,
               transparent 40px,
-              rgba(199, 48, 48, 0.25) 40px,
-              rgba(199, 48, 48, 0.25) 41px,
+              rgba(64, 81, 181, 0.2) 40px,
+              rgba(64, 81, 181, 0.2) 41px,
               transparent 41px
             ),
             /* Subtle grid for texture */
             linear-gradient(
-              rgba(63, 135, 166, 0.05) 1px,
+              rgba(26, 35, 126, 0.05) 1px,
               transparent 1px
             ),
             /* Background color */
             linear-gradient(
-              #ebf8e1 0%,
-              #ebf8e1 100%
+              #EEF4FE 0%,
+              #EEF4FE 100%
             )
           `,
           backgroundSize: `

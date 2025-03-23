@@ -9,6 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import './SignupPage.css';
 import logo from '../../assets/logo.png';
 import logo2 from '../../assets/logo2.png';
+import Footer from '@shared/components/Footer/Footer';
 
 // University and Academic Level data
 const universities = [
@@ -244,157 +245,160 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-box">
-        <div className="signup-left">
-          <img src={logo} alt="StudyHive" className="logo-small" />
-          <h1>Create Account</h1>
-          <p className="subtitle">
-            <span>Collaborate</span>
-            <span className="bullet">•</span>
-            <span>Learn</span>
-            <span className="bullet">•</span>
-            <span>Succeed</span>
-          </p>
-          
-          {error && <div className="error-message">{error}</div>}
-          
-          {showVerification ? (
-            <div className="verification-message">
-              <div className="verification-icon">✉️</div>
-              <h3>Check Your University Email!</h3>
-              <p>A verification link has been sent to:</p>
-              <p className="email-highlight">{verificationEmail}</p>
-              <div className="verification-steps">
-                <p>1. Open your university email inbox</p>
-                <p>2. Look for an email with subject: "Please Confirm Your Signup for StudyHive"</p>
-                <p>3. Check your spam folder if you don't see it</p>
-                <p>4. Click the confirmation link in the email</p>
+    <>
+      <div className="signup-container">
+        <div className="signup-box">
+          <div className="signup-left">
+            <img src={logo} alt="StudyHive" className="logo-small" />
+            <h1>Create Account</h1>
+            <p className="subtitle">
+              <span>Collaborate</span>
+              <span className="bullet">•</span>
+              <span>Learn</span>
+              <span className="bullet">•</span>
+              <span>Succeed</span>
+            </p>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            {showVerification ? (
+              <div className="verification-message">
+                <div className="verification-icon">✉️</div>
+                <h3>Check Your University Email!</h3>
+                <p>A verification link has been sent to:</p>
+                <p className="email-highlight">{verificationEmail}</p>
+                <div className="verification-steps">
+                  <p>1. Open your university email inbox</p>
+                  <p>2. Look for an email with subject: "Please Confirm Your Signup for StudyHive"</p>
+                  <p>3. Check your spam folder if you don't see it</p>
+                  <p>4. Click the confirmation link in the email</p>
+                </div>
+                <p className="note">You must verify your email before logging in.</p>
               </div>
-              <p className="note">You must verify your email before logging in.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="signup-form">
-              <div className="name-fields">
+            ) : (
+              <form onSubmit={handleSubmit} className="signup-form">
+                <div className="name-fields">
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                  />
+                  
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                
                 <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  value={formData.firstName}
+                  type="email"
+                  name="email"
+                  placeholder="University Email Address"
+                  value={formData.email}
                   onChange={handleChange}
                   required
                 />
                 
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              
-              <input
-                type="email"
-                name="email"
-                placeholder="University Email Address"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-              
-              <div className="password-field">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <button 
-                  type="button" 
-                  className="toggle-password"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  <i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-                </button>
-              </div>
-
-              {formData.password && (
-                <div className="password-strength">
-                  <div 
-                    className="strength-bar" 
-                    style={{ 
-                      width: `${(passwordStrength / 5) * 100}%`,
-                      backgroundColor: getPasswordStrengthColor(passwordStrength)
-                    }}
-                  ></div>
-                  <span style={{ color: getPasswordStrengthColor(passwordStrength) }}>
-                    {getPasswordStrengthText(passwordStrength)}
-                  </span>
+                <div className="password-field">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="toggle-password"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
+                  </button>
                 </div>
-              )}
-              
-              <div className="password-field">
-                <input
-                  type={showConfirmPassword ? "text" : "password"}
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
+
+                {formData.password && (
+                  <div className="password-strength">
+                    <div 
+                      className="strength-bar" 
+                      style={{ 
+                        width: `${(passwordStrength / 5) * 100}%`,
+                        backgroundColor: getPasswordStrengthColor(passwordStrength)
+                      }}
+                    ></div>
+                    <span style={{ color: getPasswordStrengthColor(passwordStrength) }}>
+                      {getPasswordStrengthText(passwordStrength)}
+                    </span>
+                  </div>
+                )}
+                
+                <div className="password-field">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button 
+                    type="button" 
+                    className="toggle-password"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    <i className={`fas fa-eye${showConfirmPassword ? '-slash' : ''}`}></i>
+                  </button>
+                </div>
+                
+                <Dropdown
+                  placeholder="Select University"
+                  fluid
+                  search
+                  selection
+                  options={universityOptions}
+                  value={formData.university}
+                  onChange={handleUniversityChange}
+                  className="university-dropdown"
                   required
                 />
-                <button 
-                  type="button" 
-                  className="toggle-password"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  <i className={`fas fa-eye${showConfirmPassword ? '-slash' : ''}`}></i>
-                </button>
-              </div>
-              
-              <Dropdown
-                placeholder="Select University"
-                fluid
-                search
-                selection
-                options={universityOptions}
-                value={formData.university}
-                onChange={handleUniversityChange}
-                className="university-dropdown"
-                required
-              />
 
-              <select
-                name="academicLevel"
-                value={formData.academicLevel}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select Academic Level</option>
-                {academicLevels.map(level => (
-                  <option key={level} value={level}>{level}</option>
-                ))}
-              </select>
-              
-              <button type="submit" disabled={loading}>
-                {loading ? 'Creating Account...' : 'Sign Up'}
-              </button>
-            </form>
-          )}
+                <select
+                  name="academicLevel"
+                  value={formData.academicLevel}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select Academic Level</option>
+                  {academicLevels.map(level => (
+                    <option key={level} value={level}>{level}</option>
+                  ))}
+                </select>
+                
+                <button type="submit" disabled={loading}>
+                  {loading ? 'Creating Account...' : 'Sign Up'}
+                </button>
+              </form>
+            )}
+            
+            <div className="login-link">
+              Already have an account? <a href="/login">Log In</a>
+            </div>
+          </div>
           
-          <div className="login-link">
-            Already have an account? <a href="/login">Log In</a>
+          <div className="signup-right">
+            <img src={logo2} alt="StudyHive" className="glowing-logo" />
           </div>
         </div>
-        
-        <div className="signup-right">
-          <img src={logo2} alt="StudyHive" className="glowing-logo" />
-        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 } 
 

@@ -1,13 +1,13 @@
 /* QnA.css */
 .qna-container {
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background-color: #EEF4FE;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Hero Section */
 .qna-hero {
-  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  background: #4051B5;
   color: white;
   padding: 3rem 1rem;
   text-align: center;
@@ -52,13 +52,13 @@
 }
 
 .sidebar-content h3 {
-  color: #333;
+  color: #1A237E;
   margin-top: 0;
   margin-bottom: 1rem;
   font-weight: 600;
   font-size: 1.2rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid #f0f2f5;
+  border-bottom: 2px solid #EEF4FE;
 }
 
 .no-popular {
@@ -79,11 +79,11 @@
   margin-bottom: 0.8rem;
   cursor: pointer;
   transition: all 0.2s;
-  border: 1px solid #f0f2f5;
+  border: 1px solid #EEF4FE;
 }
 
 .popular-question-item:hover {
-  background-color: #f5f7ff;
+  background-color: #EEF4FE;
   transform: translateY(-2px);
 }
 
@@ -97,7 +97,7 @@
   display: flex;
   gap: 1rem;
   font-size: 0.8rem;
-  color: #666;
+  color: #4051B5;
 }
 
 .user-identity {
@@ -137,7 +137,7 @@
 .post-creation h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  color: #333;
+  color: #1A237E;
   font-weight: 600;
 }
 
@@ -148,7 +148,7 @@
 
 .post-input textarea {
   padding: 1rem;
-  border: 2px solid #e1e5ea;
+  border: 2px solid #EEF4FE;
   border-radius: 8px;
   font-size: 1rem;
   resize: none;
@@ -158,8 +158,8 @@
 }
 
 .post-input textarea:focus {
-  border-color: #a777e3;
-  box-shadow: 0 0 0 3px rgba(126, 142, 251, 0.2);
+  border-color: #4051B5;
+  box-shadow: 0 0 0 3px rgba(64, 81, 181, 0.2);
 }
 
 .form-actions {
@@ -181,15 +181,15 @@
   gap: 6px;
   cursor: pointer;
   padding: 0.6rem 1rem;
-  background-color: #f0f2f5;
-  border-radius: 30px;
+  background-color: #EEF4FE;
+  border-radius: 8px;
   font-size: 0.9rem;
-  color: #555;
+  color: #4051B5;
   transition: all 0.3s;
 }
 
 .image-upload-label:hover {
-  background-color: #e4e6eb;
+  background-color: #E3E8FD;
 }
 
 .upload-icon {
@@ -204,12 +204,11 @@
 }
 
 .post-question-button {
-  font-size: 20px;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #4a7bff 0%, #63a4ff 100%);
+  background-color: #4051B5;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
@@ -217,26 +216,23 @@
 }
 
 .post-question-button:hover {
+  background-color: #1A237E;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .submit-answer-button {
-  font-size: 18px;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  background-color: #4051B5;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .submit-answer-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: #1A237E;
 }
 
 .image-preview {
@@ -294,6 +290,7 @@
   overflow: hidden;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s;
+  border: 1px solid #EEF4FE;
 }
 
 .post-card:hover {
@@ -318,7 +315,7 @@
 .avatar {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  background-color: #4051B5;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -385,20 +382,21 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border: none;
-  background-color: #f0f2f5;
-  border-radius: 30px;
+  background-color: #EEF4FE;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.9rem;
+  color: #4051B5;
   transition: all 0.3s;
 }
 
 .like-button:hover, .answer-toggle:hover {
-  background-color: #e4e6eb;
+  background-color: #E3E8FD;
 }
 
 .answer-toggle.active {
-  background-color: #e6ecff;
-  color: #4a6cf7;
+  background-color: #4051B5;
+  color: white;
 }
 
 .heart-icon, .answer-icon {
@@ -407,9 +405,9 @@
 
 /* Answers Section */
 .answers-section {
-  background-color: #f8f9fa;
+  background-color: #F8FAFF;
   padding: 1.5rem;
-  border-top: 1px solid #e1e5ea;
+  border-top: 1px solid #EEF4FE;
 }
 
 .answers-section h4 {
@@ -427,19 +425,24 @@
 
 .answer-form textarea {
   padding: 1rem;
-  border: 2px solid #e1e5ea;
+  border: 2px solid #EEF4FE;
   border-radius: 8px;
-  font-size: 0.89rem;
+  font-size: 0.9rem;
   resize: none;
   margin-bottom: 1rem;
   outline: none;
   transition: all 0.3s;
 }
 
+.answer-form textarea:focus {
+  border-color: #4051B5;
+  box-shadow: 0 0 0 3px rgba(64, 81, 181, 0.2);
+}
+
 .answers-count {
   margin: 1.5rem 0;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid #e1e5ea;
+  border-bottom: 1px solid #EEF4FE;
 }
 
 .answers-list {
@@ -453,6 +456,7 @@
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #EEF4FE;
 }
 
 .answer-header {

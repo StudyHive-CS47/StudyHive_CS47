@@ -319,10 +319,21 @@ const ChatBot = () => {
     fileInputRef.current.click();
   };
 
-  // Scroll to the bottom of the chat
+  // Update the useEffect for scrolling
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messages.length > 0) {
+      const messagesContainer = document.querySelector('.messages-container');
+      if (messagesContainer) {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    }
   }, [messages]);
+
+  // Update the input handler to prevent scroll
+  const handleInputChange = (e) => {
+    e.preventDefault();
+    setInput(e.target.value);
+  };
 
   // Update message content rendering
   const renderMessageContent = (content) => {
@@ -450,64 +461,26 @@ const ChatBot = () => {
     }
   }, []);
 
-  // Add backup controls to the sidebar
-  const renderBackupControls = () => (
-    <div className="p-4 border-t border-gray-200">
-      <div className="flex flex-col gap-2">
-        <button
-          onClick={exportChatHistory}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-200 to-blue-300 text-blue-700 rounded-lg hover:from-blue-300 hover:to-blue-400"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
-          Export History
-        </button>
-        <button
-          onClick={() => backupInputRef.current?.click()}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-400 to-blue-500 text-white rounded-lg hover:from-blue-500 hover:to-blue-600"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-          Import History
-        </button>
-        <input
-          type="file"
-          ref={backupInputRef}
-          onChange={importChatHistory}
-          accept=".json"
-          className="hidden"
-        />
-        {backupStatus && (
-          <div className="text-sm text-center text-gray-600">
-            {backupStatus}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-
   return (
-    <div className="flex flex-col min-h-screen bg-[#EEF4FE]">
-      <div className="flex flex-1 gap-4 p-4 max-w-[1400px] mx-auto w-full">
+    <div className="flex flex-col h-screen bg-[#EEF4FE]">
+      <div className="flex flex-1 gap-6 p-6 max-w-[1400px] mx-auto w-full h-[calc(100vh-8rem)]">
         {/* Sidebar */}
-        <div className="w-72 bg-white border-r border-gray-200 flex flex-col rounded-lg shadow-lg">
-          <div className="p-4">
+        <div className="w-80 bg-white rounded-xl shadow-md flex flex-col">
+          <div className="p-4 border-b border-gray-100">
             <div className="flex gap-2">
               <button 
                 onClick={startNewChat}
-                className="flex-1 flex items-center justify-center gap-2 p-2 text-blue-500 border-2 border-blue-500 hover:bg-blue-50 rounded-lg transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 p-2.5 text-[#4051B5] border-2 border-[#4051B5] hover:bg-[#EEF4FE] rounded-lg transition-colors"
                 title="Start New Chat"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                 </svg>
-                <span>New Chat</span>
+                <span className="font-medium">New Chat</span>
               </button>
               <button 
                 onClick={clearChatHistory}
-                className="p-2 text-red-500 border-2 border-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-2.5 text-red-500 border-2 border-red-500 hover:bg-red-50 rounded-lg transition-colors"
                 title="Clear All History"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -517,14 +490,16 @@ const ChatBot = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4">
-            <div className="flex flex-col gap-2">
+          <div className="flex-1 overflow-y-auto">
+            <div className="flex flex-col gap-2 p-4">
               {chatHistory.map((chat) => (
                 <div
                   key={chat.id}
                   onClick={() => loadChat(chat)}
-                  className={`p-3 rounded-lg cursor-pointer ${
-                    selectedChat === chat.id ? 'bg-blue-50 text-blue-600' : 'hover:bg-gray-50'
+                  className={`p-3.5 rounded-lg cursor-pointer transition-all ${
+                    selectedChat === chat.id 
+                      ? 'bg-[#EEF4FE] text-[#1A237E] border border-[#4051B5]' 
+                      : 'hover:bg-gray-50 border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -533,11 +508,11 @@ const ChatBot = () => {
                       <span className="block text-xs text-gray-400">{chat.timestamp}</span>
                     </div>
                     {chat.isPdfMode && (
-                      <span className="px-2 py-1 bg-blue-100 text-blue-600 rounded-md text-xs">DOC</span>
+                      <span className="px-2 py-1 bg-[#EEF4FE] text-[#4051B5] rounded-md text-xs font-medium">DOC</span>
                     )}
                     <button
                       onClick={(e) => deleteChat(chat.id, e)}
-                      className="p-1 text-gray-400 hover:text-red-500"
+                      className="p-1 text-gray-400 hover:text-red-500 transition-colors"
                     >
                       ×
                     </button>
@@ -547,22 +522,54 @@ const ChatBot = () => {
             </div>
           </div>
 
-          {/* Add backup controls */}
-          {renderBackupControls()}
+          {/* Backup controls */}
+          <div className="p-4 border-t border-gray-100">
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={exportChatHistory}
+                className="flex items-center gap-2 px-4 py-2.5 bg-[#EEF4FE] text-[#4051B5] rounded-lg hover:bg-[#E3E9FD] transition-colors font-medium"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                Export History
+              </button>
+              <button
+                onClick={() => backupInputRef.current?.click()}
+                className="flex items-center gap-2 px-4 py-2.5 bg-[#4051B5] text-white rounded-lg hover:bg-[#1A237E] transition-colors font-medium"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+                Import History
+              </button>
+              <input
+                type="file"
+                ref={backupInputRef}
+                onChange={importChatHistory}
+                accept=".json"
+                className="hidden"
+              />
+              {backupStatus && (
+                <div className="text-sm text-center text-[#4051B5]">
+                  {backupStatus}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b border-gray-200">
+        {/* Main Chat Container */}
+        <div className="flex-1 flex flex-col bg-white rounded-xl shadow-md overflow-hidden">
+          {/* Header */}
+          <div className="px-6 py-4 border-b border-gray-100 bg-white">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-semibold text-gray-800">
-                ChatBot
-              </h1>
-              <div className="flex items-center bg-gray-100 rounded-lg p-1">
+              <h1 className="text-xl font-semibold text-[#1A237E]">ChatBot</h1>
+              <div className="flex items-center bg-[#EEF4FE] rounded-lg p-1">
                 <button
                   type="button"
-                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    !isPdfMode ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    !isPdfMode ? 'bg-white text-[#4051B5] shadow-sm' : 'text-gray-600 hover:text-[#1A237E]'
                   }`}
                   onClick={() => setIsPdfMode(false)}
                 >
@@ -570,8 +577,8 @@ const ChatBot = () => {
                 </button>
                 <button
                   type="button"
-                  className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                    isPdfMode ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-800'
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isPdfMode ? 'bg-white text-[#4051B5] shadow-sm' : 'text-gray-600 hover:text-[#1A237E]'
                   }`}
                   onClick={handleModeToggle}
                 >
@@ -581,53 +588,57 @@ const ChatBot = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div className={`flex items-start space-x-2 max-w-[80%] ${message.role === 'user' ? 'flex-row-reverse space-x-reverse' : 'flex-row'}`}>
-                  <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
-                    <img
-                      src={message.role === 'user' ? userAvatar : botAvatar}
-                      alt={`${message.role} avatar`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div
-                    className={`px-4 py-2 rounded-lg ${
-                      message.role === 'user'
-                        ? 'bg-blue-500 text-white rounded-br-none'
-                        : 'bg-gray-200 text-gray-800 rounded-bl-none'
-                    }`}
-                  >
-                    <div className="text-sm whitespace-pre-wrap">{renderMessageContent(message.content)}</div>
-                    <span className={`text-xs ${message.role === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
-                      {message.timestamp}
-                    </span>
+          {/* Messages Container */}
+          <div className="flex-1 overflow-y-auto bg-[#F8FAFF] messages-container" style={{ height: 'calc(100vh - 16rem)' }}>
+            <div className="flex flex-col p-6 space-y-6">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  <div className={`flex items-start space-x-3 max-w-[80%] ${message.role === 'user' ? 'flex-row-reverse space-x-reverse' : 'flex-row'}`}>
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 shadow-sm">
+                      <img
+                        src={message.role === 'user' ? userAvatar : botAvatar}
+                        alt={`${message.role} avatar`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div
+                      className={`px-4 py-2.5 rounded-2xl ${
+                        message.role === 'user'
+                          ? 'bg-[#4051B5] text-white rounded-br-none'
+                          : 'bg-white text-gray-800 rounded-bl-none shadow-sm'
+                      }`}
+                    >
+                      <div className="text-sm whitespace-pre-wrap">{renderMessageContent(message.content)}</div>
+                      <span className={`text-xs mt-1 block ${message.role === 'user' ? 'text-blue-100' : 'text-gray-400'}`}>
+                        {message.timestamp}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex gap-2 items-center text-gray-400 p-4">
-                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
-                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:0.2s]" />
-                <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:0.4s]" />
-              </div>
-            )}
-            <div ref={messagesEndRef} />
+              ))}
+              {isLoading && (
+                <div className="flex gap-2 items-center justify-center p-4">
+                  <div className="w-2 h-2 rounded-full bg-[#4051B5] animate-bounce opacity-75" />
+                  <div className="w-2 h-2 rounded-full bg-[#4051B5] animate-bounce [animation-delay:0.2s] opacity-75" />
+                  <div className="w-2 h-2 rounded-full bg-[#4051B5] animate-bounce [animation-delay:0.4s] opacity-75" />
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
           </div>
 
-          <div className="border-t border-gray-200 p-4">
+          {/* Input Form */}
+          <div className="border-t border-gray-100 p-4 bg-white">
             <form onSubmit={handleSubmit} className="flex gap-2">
               <input
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={handleInputChange}
                 placeholder={isPdfMode ? "Ask questions about the document..." : "Message BuzzBuddy..."}
-                className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                className="flex-grow p-3 border border-gray-200 rounded-xl focus:outline-none focus:border-[#4051B5] focus:ring-1 focus:ring-[#4051B5] bg-[#F8FAFF]"
               />
               <input
                 type="file"
@@ -639,7 +650,7 @@ const ChatBot = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+                className="p-3 bg-[#EEF4FE] text-[#4051B5] rounded-xl hover:bg-[#E3E9FD] transition-colors"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M8 4a3 3 0 00-3 3v4a5 5 0 0010 0V7a1 1 0 112 0v4a7 7 0 11-14 0V7a5 5 0 0110 0v4a3 3 0 11-6 0V7a1 1 0 012 0v4a1 1 0 102 0V7a3 3 0 00-3-3z" clipRule="evenodd" />
@@ -648,7 +659,7 @@ const ChatBot = () => {
               <button
                 type="submit"
                 disabled={!input.trim()}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-3 bg-[#4051B5] text-white rounded-xl hover:bg-[#1A237E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

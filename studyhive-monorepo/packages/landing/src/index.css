@@ -9,8 +9,28 @@
   }
 }
 
+/* Reset default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: #EEF4FE;
+}
+
 body {
-  @apply bg-gradient-to-br from-teal-50 to-blue-50;
+  position: relative;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .anim-container::before,
@@ -26,11 +46,4 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Remove conflicting styles that might interfere with Tailwind */
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
 }

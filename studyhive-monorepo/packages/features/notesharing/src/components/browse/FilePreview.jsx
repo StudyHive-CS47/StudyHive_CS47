@@ -13,9 +13,6 @@ const FilePreview = ({ selectedFile }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-
-
-    // Update when selectedFile changes
     useEffect(() => {
         if (selectedFile && selectedFile.id) {
             setFile(selectedFile);
@@ -26,11 +23,9 @@ const FilePreview = ({ selectedFile }) => {
         }
     }, [selectedFile]);
 
-
-
-    // Function to download the file
     const downloadFile = async () => {
         if (!file || !file.id) return;
+        setLoading(true);
 
         try {
             const response = await api.downloadFile(file.id);
@@ -42,142 +37,137 @@ const FilePreview = ({ selectedFile }) => {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
-
-            console.log("File downloaded successfully.");
         } catch (error) {
             console.error("Download error:", error);
-            alert("Download failed. Please try again.");
+            setError("Failed to download file. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
 
-
-
-    if (!selectedFile) {
-        return (
-            <div className="card">
-                <div className="card-header">
-                    <h5 className="mb-0">File Preview</h5>
-                </div>
-                <div className="card-body">
-                    <div className="preview-container">
-                        <div className="text-center text-muted">
-                            <i className="bi bi-file-earmark fs-1"></i>
-                            <p>Select a file to preview</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    if (error) {
-        return (
-            <div className="card">
-                <div className="card-header">
-                    <h5 className="mb-0">File Preview</h5>
-                </div>
-                <div className="card-body">
-                    <p className="text-danger text-center">{error}</p>
-                </div>
-            </div>
-        );
-    }
-
-    if (loading) {
-        return (
-            <div className="card">
-                <div className="card-header">
-                    <h5 className="mb-0">File Preview</h5>
-                </div>
-                <div className="card-body">
-                    <div className="preview-container">
-                        <div className="text-center text-muted">
-                            <i className="bi bi-file-earmark fs-1"></i>
-                            <p>Loading preview...</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className="card">
-            <div className="card-header">
+        <div className="card h-100">
+            <div className="card-header d-flex justify-content-between align-items-center">
                 <h5 className="mb-0">File Preview</h5>
+                {file && (
+                    <div className="d-flex gap-2">
+                        <button 
+                            className="btn btn-sm btn-primary" 
+                            onClick={downloadFile}
+                            disabled={loading}
+                        >
+                            <i className="bi bi-download me-1"></i>
+                            {loading ? 'Downloading...' : 'Download'}
+                        </button>
+                        <button 
+                            className="btn btn-sm btn-outline-primary"
+                            onClick={() => setShowShareModal(true)}
+                        >
+                            <i className="bi bi-share me-1"></i>
+                            Share
+                        </button>
+                    </div>
+                )}
             </div>
             <div className="card-body">
-                {file && (
+                {error && (
+                    <div className="alert alert-danger" role="alert">
+                        <i className="bi bi-exclamation-triangle me-2"></i>
+                        {error}
+                    </div>
+                )}
+                
+                {file ? (
                     <>
-                        <div id="fileMetadata" className="mb-3">
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">File Name:</div>
-                                <div className="col-md-8">{file.filename || "-"}</div>
+                        <div className="bg-light rounded p-3 mb-4">
+                            <div className="row g-3">
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <i className="bi bi-person-circle fs-4 text-primary me-2"></i>
+                                        <div>
+                                            <small className="text-secondary">Uploader</small>
+                                            <div className="fw-medium">{file.uploaderName}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <i className="bi bi-building fs-4 text-primary me-2"></i>
+                                        <div>
+                                            <small className="text-secondary">University</small>
+                                            <div className="fw-medium">{file.universityName}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <i className="bi bi-book fs-4 text-primary me-2"></i>
+                                        <div>
+                                            <small className="text-secondary">Module Code</small>
+                                            <div className="fw-medium">{file.moduleCode}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="d-flex align-items-center">
+                                        <i className="bi bi-layers fs-4 text-primary me-2"></i>
+                                        <div>
+                                            <small className="text-secondary">Level</small>
+                                            <div className="fw-medium">{file.moduleLevel}</div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">Uploader:</div>
-                                <div className="col-md-8">{file.uploaderName || "-"}</div>
-                            </div>
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">University:</div>
-                                <div className="col-md-8">{file.universityName || "-"}</div>
-                            </div>
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">Module:</div>
-                                <div className="col-md-8">{file.moduleCode || "-"}</div>
-                            </div>
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">Module:</div>
-                                <div className="col-md-8">{file.moduleLevel || "-"}</div>
-                            </div>
-                            <div className="row mb-2">
-                                <div className="col-md-4 fw-bold">Description:</div>
-                                <div className="col-md-8">{file.fileDescription || "-"}</div>
-                            </div>
-                            <hr/>
                         </div>
 
-                        <div className="preview-container">
+                        <div className="preview-container mb-4">
                             {previewUrl ? (
-                                <div className="text-center">
-                                    <iframe
-                                        src={previewUrl}
-                                        width="100%"
-                                        height="400px"
-                                        frameBorder="0"
-                                        title={`Preview of ${file.filename}`}
-                                    ></iframe>
-                                </div>
+                                <iframe
+                                    src={previewUrl}
+                                    className="w-100 h-100 rounded"
+                                    style={{ minHeight: "400px" }}
+                                    frameBorder="0"
+                                    title={`Preview of ${file.filename}`}
+                                ></iframe>
                             ) : (
-                                <div className="text-center text-muted">
-                                    <i className="bi bi-file-earmark fs-1"></i>
-                                    <p>Preview not available</p>
+                                <div className="text-center py-5">
+                                    <i className="bi bi-file-earmark-x fs-1 text-secondary"></i>
+                                    <p className="text-secondary mt-3">Preview not available</p>
                                 </div>
                             )}
                         </div>
 
-                        <div className="d-flex mt-3">
-                            <button className="btn btn-primary" onClick={downloadFile}>
-                                <i className="bi bi-download"></i>
-                            </button>
-                            <button className="btn btn-secondary ms-2" onClick={() => setShowShareModal(true)}>
-                                <i className="bi bi-share"></i>
-                            </button>
-                            <button className="btn btn-success ms-2" onClick={() => setShowRatingModal(true)}>
-                                <i className="bi bi-star"></i>
-                            </button>
-                            <button className="btn btn-danger ms-auto" onClick={() => setShowReportModal(true)}>
-                                <i className="bi bi-flag"></i>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <button 
+                                    className="btn btn-outline-success me-2"
+                                    onClick={() => setShowRatingModal(true)}
+                                >
+                                    <i className="bi bi-star-fill me-1"></i>
+                                    Rate
+                                </button>
+                            </div>
+                            <button 
+                                className="btn btn-outline-danger"
+                                onClick={() => setShowReportModal(true)}
+                            >
+                                <i className="bi bi-flag-fill me-1"></i>
+                                Report
                             </button>
                         </div>
                     </>
+                ) : (
+                    <div className="text-center py-5">
+                        <i className="bi bi-file-earmark fs-1 text-secondary"></i>
+                        <p className="text-secondary mt-3">Select a file to preview</p>
+                    </div>
                 )}
             </div>
 
             {/* Modals */}
-            <RatingModal show={showRatingModal} onHide={() => setShowRatingModal(false)} />
-            <ReportModal show={showReportModal} onHide={() => setShowReportModal(false)} />
-            <ShareModal show={showShareModal} onHide={() => setShowShareModal(false)} />
+            <RatingModal show={showRatingModal} onHide={() => setShowRatingModal(false)} fileId={file?.id} />
+            <ReportModal show={showReportModal} onHide={() => setShowReportModal(false)} fileId={file?.id} />
+            <ShareModal show={showShareModal} onHide={() => setShowShareModal(false)} shareLink={previewUrl} />
         </div>
     );
 };

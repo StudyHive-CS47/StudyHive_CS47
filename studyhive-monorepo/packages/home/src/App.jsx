@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Footer from '../../shared/src/components/Footer/Footer';
+import { Footer, routes } from '@shared';
 import './App.css';
 import image1 from './assets/image1.jpg';
 import image2 from './assets/image2.jpg';
@@ -46,6 +46,7 @@ const StyledFeatureCard = styled.div`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    cursor: pointer;
 
     &::before {
       content: '';
@@ -60,6 +61,7 @@ const StyledFeatureCard = styled.div`
 
     &:hover {
       transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 
       &::before {
         background: rgba(0, 0, 0, 0.45);
@@ -67,6 +69,15 @@ const StyledFeatureCard = styled.div`
 
       .content {
         transform: translateY(-3px);
+      }
+
+      h3 {
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      p {
+        color: rgba(255, 255, 255, 0.9);
       }
     }
   }
@@ -96,6 +107,14 @@ const StyledFeatureCard = styled.div`
     opacity: 0.15;
     filter: blur(20px);
     animation: blob-float 8s infinite ease-in-out;
+  }
+
+  h3 {
+    transition: all 0.3s ease;
+  }
+
+  p {
+    transition: all 0.3s ease;
   }
 
   @keyframes blob-float {
@@ -178,23 +197,25 @@ const TestimonialCard = styled.div`
 `;
 
 // Feature Card Component
-function FeatureCard({ icon, title, description, blobColor }) {
+function FeatureCard({ icon, title, description, blobColor, path }) {
     return (
-        <StyledFeatureCard $blobColor={blobColor}>
-            <div className="card" style={{ backgroundImage: `url(${icon})` }}>
-                <div className="blob" />
-                <div className="content">
-                    <h3 className="text-xl font-semibold text-white mb-3 w-full">{title}</h3>
-                    <p className="text-gray-200 text-base leading-relaxed w-full">{description}</p>
+        <Link to={path} className="block">
+            <StyledFeatureCard $blobColor={blobColor}>
+                <div className="card" style={{ backgroundImage: `url(${icon})` }}>
+                    <div className="blob" />
+                    <div className="content">
+                        <h3 className="text-xl font-semibold text-white mb-3 w-full">{title}</h3>
+                        <p className="text-gray-200 text-base leading-relaxed w-full">{description}</p>
+                    </div>
                 </div>
-            </div>
-        </StyledFeatureCard>
+            </StyledFeatureCard>
+        </Link>
     );
 }
 
 function App() {
     return (
-        <div className="min-h-screen w-full">
+        <div className="relative min-h-screen bg-[#EEF4FE]">
             {/* Hero Section */}
             <section className="w-full bg-transparent py-24">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,7 +228,7 @@ function App() {
                             Connect, collaborate, and conquer your academic goals with StudyHive's comprehensive learning platform.
                         </p>
                     </div>
-                        </div>
+                </div>
             </section>
 
             {/* Features Section */}
@@ -219,43 +240,49 @@ function App() {
                             icon={featureNoteSharing} 
                             title="Note Sharing" 
                             description="Share and access study materials easily"
-                            blobColor="#4F46E5" // Indigo
+                            blobColor="#4F46E5"
+                            path={routes.protected.notesharing}
                         />
                         <FeatureCard 
                             icon={featureNoteSummarize} 
                             title="Note Summarize" 
                             description="Get AI-powered note summaries"
-                            blobColor="#EC4899" // Pink
+                            blobColor="#EC4899"
+                            path={routes.protected.summarizer}
                         />
                         <FeatureCard 
                             icon={featureChatbot} 
                             title="ChatBot" 
                             description="24/7 study assistance"
-                            blobColor="#10B981" // Emerald
+                            blobColor="#10B981"
+                            path={routes.protected.chatbot}
                         />
                         <FeatureCard 
                             icon={featureQA} 
                             title="Q & A" 
                             description="Get answers to your questions"
-                            blobColor="#F59E0B" // Amber
+                            blobColor="#F59E0B"
+                            path={routes.protected.qna}
                         />
                         <FeatureCard 
                             icon={featureGroupChat} 
                             title="Group Chat" 
                             description="Collaborate with peers"
-                            blobColor="#6366F1" // Purple
+                            blobColor="#6366F1"
+                            path={routes.protected.groupchat}
                         />
                         <FeatureCard 
                             icon={featureQuiz} 
                             title="Quizzer" 
                             description="Test your knowledge"
-                            blobColor="#EF4444" // Red
+                            blobColor="#EF4444"
+                            path={routes.protected.quiz}
                         />
                     </div>
                 </div>
             </section>
 
-                    {/* Mission Section */}
+            {/* Mission Section */}
             <section className="w-full py-20 bg-transparent">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="lg:flex lg:items-center lg:gap-12 max-w-6xl mx-auto">
@@ -276,13 +303,13 @@ function App() {
                                     className="w-full h-auto transform transition-transform duration-500 hover:scale-103 object-cover"
                                     style={{ maxHeight: '400px' }}
                                 />
-                        </div>
+                            </div>
                         </div>
                     </div>
-                        </div>
-                    </section>
+                </div>
+            </section>
 
-                    {/* Team Section */}
+            {/* Team Section */}
             <section className="w-full py-20 bg-gradient-to-b from-white/30 to-white/50 backdrop-blur-lg">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 className="text-4xl font-bold text-center text-gray-900 mb-3">Meet Our Team</h2>
@@ -360,20 +387,20 @@ function App() {
                                                 <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                 </svg>
-                            </div>
+                                            </div>
                                             <p className="name">Senuri Hansamini</p>
                                             <p className="role">Student</p>
-                            </div>
-                            </div>
+                                        </div>
+                                    </div>
                                     <p className="message">
                                         "Study Hive is an exceptional platform for students! Its features like advanced keyword search,
                                         automated note summaries, and personalized resource suggestions make studying so much easier.
                                         The chatbot is incredibly helpful, and the integration with LMS keeps everything organized.
                                         This app has transformed the way I approach my studies. Highly recommended!"
                                     </p>
-                            </div>
+                                </div>
                             </TestimonialCard>
-                            </div>
+                        </div>
                         <div className="mt-8 lg:mt-0 lg:w-1/2">
                             <div className="relative rounded-xl overflow-hidden shadow-lg flex justify-center items-center">
                                 <img 
@@ -384,9 +411,9 @@ function App() {
                                 />
                             </div>
                         </div>
-                            </div>
-                        </div>
-                    </section>
+                    </div>
+                </div>
+            </section>
 
             <Footer />
         </div>
