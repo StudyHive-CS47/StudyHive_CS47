@@ -100,7 +100,7 @@ const ChatBot = () => {
     saveToHistory();
     setMessages([{
       role: 'assistant',
-      content: "**WELCOME! TO BUZZBUDDY**",
+      content: "**WELCOME TO BUZZBUDDY**",
       timestamp: new Date().toLocaleString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
