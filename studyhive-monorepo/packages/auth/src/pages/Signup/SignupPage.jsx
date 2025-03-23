@@ -388,7 +388,7 @@ export default function SignupPage() {
             )}
             
             <div className="login-link">
-              Already have an account? <a href="/login">Log In</a>
+              Already have an account? <Link to={routes.public.login}>Log In</Link>
             </div>
           </div>
           
