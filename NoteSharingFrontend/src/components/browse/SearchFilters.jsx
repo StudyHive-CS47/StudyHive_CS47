@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const SearchFilters = () => {
     return <div>SearchFilters</div>;
 };
