@@ -143,7 +143,7 @@ function SearchQuiz() {
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm">👤</span>
+                        <span className="text-sm">👨‍🎓</span>
                       </div>
                       <p className="text-gray-600">
                         <span className="font-medium">Creator:</span> {quiz.creator_name}
@@ -151,7 +151,7 @@ function SearchQuiz() {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm">🎯</span>
+                        <span className="text-sm">📝</span>
                       </div>
                       <p className="text-gray-600">
                         <span className="font-medium">Questions:</span> {quiz.questions.length}
@@ -159,7 +159,7 @@ function SearchQuiz() {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <span className="text-sm">🔑</span>
+                        <span className="text-sm">🎲</span>
                       </div>
                       <p className="text-gray-600">
                         <span className="font-medium">Code:</span>{' '}
@@ -171,7 +171,7 @@ function SearchQuiz() {
                     {quiz.has_timer && (
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <span className="text-sm">⏱️</span>
+                          <span className="text-sm">⏳</span>
                         </div>
                         <p className="text-gray-600">
                           <span className="font-medium">Time Limit:</span>{' '}
@@ -193,7 +193,7 @@ function SearchQuiz() {
             {!loading && searchTerm && quizzes.length === 0 && (
               <div className="text-center py-12 bg-white rounded-2xl shadow-md max-w-2xl mx-auto">
                 <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-4xl">🔍</span>
+                  <span className="text-4xl">🔎</span>
                 </div>
                 <h3 className="text-xl font-bold text-[#091057] mb-2">No Quizzes Found</h3>
                 <p className="text-gray-600">Try adjusting your search terms or browse our recent quizzes</p>

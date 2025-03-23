@@ -142,11 +142,11 @@ function CreateQuiz() {
           <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 shadow-xl">
             <div class="flex items-center gap-3 mb-4">
               <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                <span class="text-2xl">⚠️</span>
+                <span className="text-2xl">⚠️</span>
               </div>
-              <h2 class="text-2xl font-bold text-red-600">Error</h2>
+              <h2 className="text-2xl font-bold text-red-600">Error</h2>
             </div>
-            <p class="text-gray-600 mb-6">${errorMessage}</p>
+            <p className="text-gray-600 mb-6">${errorMessage}</p>
             <button
               class="w-full px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
               onclick="this.parentElement.parentElement.remove()"
@@ -199,7 +199,7 @@ function CreateQuiz() {
               <div className="space-y-8">
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">👤</span>
+                    <span className="text-2xl">👨‍🏫</span>
                   </div>
                   <div className="flex-grow">
                     <label className="block text-[#091057] font-semibold mb-2 text-lg">Your Name</label>
@@ -216,7 +216,7 @@ function CreateQuiz() {
 
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📝</span>
+                    <span className="text-2xl">📚</span>
                   </div>
                   <div className="flex-grow">
                     <label className="block text-[#091057] font-semibold mb-2 text-lg">Quiz Subject</label>
@@ -232,7 +232,7 @@ function CreateQuiz() {
 
                 <div className="flex items-center gap-8 p-6 bg-blue-50 rounded-xl">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">⏱️</span>
+                    <span className="text-2xl">⏳</span>
                   </div>
                   <div className="flex-grow">
                     <label className="flex items-center space-x-3 text-lg">
@@ -280,7 +280,7 @@ function CreateQuiz() {
             <div className="bg-white p-8 rounded-2xl shadow-xl border-2 border-blue-100">
               <div className="mb-8 text-center">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">❓</span>
+                  <span className="text-2xl">✨</span>
                 </div>
                 <h2 className="text-2xl font-bold text-[#091057]">Add Your Questions</h2>
                 <p className="text-gray-600">Create up to 20 multiple choice questions</p>
@@ -298,7 +298,7 @@ function CreateQuiz() {
                         }}
                         className="text-red-500 hover:text-red-700 flex items-center gap-2"
                       >
-                        <span className="text-lg">🗑️</span>
+                        <span className="text-lg">❌</span>
                         Remove
                       </button>
                     )}
